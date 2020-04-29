@@ -180,7 +180,6 @@ C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Debug\netcoreapp3.1\Razor\Views\A
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Debug\netcoreapp3.1\Razor\Views\Administration\AddToDolly.cshtml.g.cs
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Debug\netcoreapp3.1\Razor\Views\Administration\StudentCourseDolly.cshtml.g.cs
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Debug\netcoreapp3.1\Razor\Views\Administration\RegisterMark.cshtml.g.cs
-C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Debug\netcoreapp3.1\Gamal.csprojAssemblyReference.cache
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Debug\netcoreapp3.1\Razor\Views\Administration\CourseProgram.cshtml.g.cs
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Debug\netcoreapp3.1\Razor\Views\Administration\StudentEnrollment.cshtml.g.cs
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Debug\netcoreapp3.1\Razor\Views\Administration\Graduation.cshtml.g.cs
