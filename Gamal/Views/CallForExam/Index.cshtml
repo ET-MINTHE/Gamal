@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Student.cshtml";
+}
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <h6 style="text-align:center; color:green">
+            @ViewBag.Message
+        </h6>
+    }
+
+    <span style="font-size:12pt;">
+        Vous trouverez ci-dessous des informations générales sur la situation universitaire et sur les inscriptions effectuées au fil des ans.
+    </span>
+    <br />
+    <fieldset class="border p-3" style="border:3px solid red">
+        <legend class="w-auto" style="font-size:14pt; font-weight:bold; border-bottom: 5px solid red">Informations sur l'étudiant</legend>
+        <table class="table">
+            <tbody>
+                <tr class="td1">
+                    <td scope="col"><span style="color:#150517">Type de Course</span></td>
+                    <td scope="col">Model.CourseType</td>
+                </tr>
+                <tr class="td1">
+                    <td><span style="color:#150517">Profile de l'Etudiant</span></td>
+                    <td>Model.StudentProfile</td>
+                </tr>
+                <tr class="td1">
+                    <td><span style="color:#150517">Année en Cours</span></td>
+                    <td>
+                        Model.CurrentYear
+                    </td>
+                </tr>
+                <tr class="td1">
+                    <td><span style="color:#150517">Date d'Immatriculation</span></td>
+                    <td>
+                        Model.EnrollmentYear
+                    </td>
+                </tr>
+                <tr class="td1">
+                    <td><span style="color:#250517">Département</span></td>
+                    <td>Model.Course</td>
+                </tr>
+                <tr class="td1">
+                    <td><span style="color:#250517">Part Time</span></td>
+                    <td>Model.PartTime</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <br />
+
+    <span style="font-size:13pt; font-weight:bold">Situation des Inscriptions</span>
+    <br />
+    <table style="border:1px solid black" class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col"><span style="font-size:9pt">Année Accademique</span></th>
+                <th scope="col"><span style="font-size:9pt">Département</span></th>
+                <th scope="col"><span style="font-size:9pt">Année</span></th>
+                <th scope="col"><span style="font-size:9pt">Date</span></th>
+                <th scope="col"><span style="font-size:9pt">Type</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row">Model.AccademicYear</td>
+                <td>Model.Course</td>
+                <td>Model.CurrentYear</td>
+                <td>Model.EnrollmentYear</td>
+                <td>En cours</td>
+            </tr>
+        </tbody>
+    </table>
+
+}
+
+
+
+

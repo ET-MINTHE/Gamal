@@ -1,0 +1,84 @@
+﻿@model Gamal.ViewModel.RegisterMarkViewModel
+@{
+    ViewData["Title"] = "RegisterMark";
+    Layout = "~/Views/Shared/_Teacher.cshtml";
+}
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée de l'enseignant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+
+    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <br />
+    <br />
+    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
+    <br />
+    <br />
+    <span style="font-size:20pt">ENREGISTREMENT DES NOTES ANNÉE ACADÉMIQUE 2019/2020</span>
+    <br />
+    <br />
+
+    @if (!String.IsNullOrEmpty(@ViewBag.Error))
+    {
+        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
+    }
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
+    }
+    <br />
+    <form asp-controller="Administration" asp-action="RegisterMark" method="post">
+        <div class="form-group">
+            <input asp-for="StudentSerialNumber" class="form-control fr-date-datepicker" placeholder="Inserer le numero de matricule de l'étudiant">
+            <span asp-validation-for="StudentSerialNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            @Html.DropDownListFor(model => model.CourseName, Model.AllCourses as SelectList, "Selectioner la matière", new { @class = "form-control" })
+            <span asp-validation-for="CourseName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            @Html.DropDownListFor(model => model.Mark, Model.AllMarks as SelectList, "Selectioner la note", new { @class = "form-control" })
+            <span asp-validation-for="Mark" class="text-danger"></span>
+        </div>
+        <span id="confirmAddMarkSpan" style="display:none">
+            <span>Vous etes sur de vouloir attribuer la note?</span>
+            <button type="submit" class="btn btn-danger">
+                OUI
+            </button>
+            <a href="#" onclick="confirmAddMark(false)" class="btn btn-primary">NON</a>
+        </span>
+        <span id="addMarkSpan">
+            <a href="#" onclick="confirmAddMark(true)" class="btn1 btn btn-primary">Enregister</a>
+        </span>
+    </form>
+}
+
+@section Scripts{
+    <script src="~/js/custom.js"></script>
+}
+

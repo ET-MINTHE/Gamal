@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_PrivateHome.cshtml";
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+    <img src="~/images/no_user.jpg" width="100" height="100" style="border-radius:50%; margin-left:30%; border:1px solid #2B547E" />
+    <h6 style="text-align:center; color:#150517">MINTHE</h6>
+    <h6 style="text-align:center; color:#150517">ELHADJ TAHIROU</h6>
+    <span style="color:#150517">Mtricule:</span> <br />
+    <span style="color:#150517">Faculté:</span><br />
+    <span style="color:#150517">Département:</span><br />
+}
+
+@section leftPanelBody
+{
+    <table class="table" style="font-size: 10pt; margin-top: 50px; color:#250517">
+        <tbody>
+            <tr>
+                <td scope="row"> <a asp-controller="Speaker" asp-action="Evaluations"><span style="color:#250517; font-size:12pt">Enregistrement</span></a></td>
+            </tr>
+            <tr>
+                <td scope="row"><a asp-controller="Speaker" asp-action="Evaluations" style="color:#150517; height:10px;"><span style="color:#250517; font-size:12pt">Inscription</span></a></td>
+            </tr>
+
+            <tr>
+                <td scope="row"><a asp-controller="Speaker" asp-action="Evaluations" style="color:#150517; height:10px;"><span style="color:#250517; font-size:12pt">Appels d'Exam</span></a></td>
+            </tr>
+            <tr>
+                <td scope="row"><a asp-controller="Speaker" asp-action="Evaluations" style="color:#150517"><span style="color:#250517; font-size:12pt">Livret</span></a></td>
+            </tr>
+            <tr>
+                <td scope="row"><a asp-controller="Speaker" asp-action="Evaluations" style="color: #150517"><span style="color:#250517; font-size:12pt">Tableau de Reservation</span></a></td>
+            </tr>
+            <tr>
+                <td scope="row"> <a asp-controller="Speaker" asp-action="Evaluations" style="color: #150517"><span style="color:#250517; font-size:12pt">Optention Titres</span></a></td>
+            </tr>
+            <tr>
+                <td scope="row"> <a asp-controller="Speaker" asp-action="Evaluations" style="color: #150517"><span style="color:#250517; font-size:12pt">Taxes</span></a></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@section middlePanelHeader{
+    <h5 style="color:white; text-align:center">UNIVERSITE GAMAL ABDEL NASSER DE CONAKRY</h5>
+    <h6 style="text-align:center; color:white">
+        <span class="first-letter">S</span>ervices<span class="first-letter"> W</span>eb pour <span class="first-letter"> E</span>tudiants et <span class="first-letter"> E</span>nseignants
+    </h6>
+}
+
+@section middlePanelBody
+{
+   
+}
+
+@section rightPanelHeader{
+   <h6 style="color:white; text-align:center">Informations Importantes</h6>
+}
+
+@section rightPanelBody
+{
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+}

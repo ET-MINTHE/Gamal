@@ -1,0 +1,72 @@
+﻿@model Gamal.ViewModel.HighSchoolInfoViewModel
+@{
+    ViewData["Title"] = "HighSchoolInfos";
+    Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+}
+
+@section leftPanelBody
+{
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée du secrétaire </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    <div style="">
+        <div class="card">
+            <div style="text-align:center">
+                <span style="font-size:18pt; font-weight:bold; color:red">Processus d'Immatriculation des Etudiants</span>
+                <br />
+                <span style="font-weight:bold">Inserer les informations du lycée frequenté</span>
+            </div>
+            <br />
+            <div class="row" style="padding-left:7%">
+                <div class="col-md-11">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.HighSchool, Model.AllHighSchools as SelectList, "Selectioner le Lycée", new { @class = "form-control" })
+                            <span asp-validation-for="HighSchool" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.HighSchoolOption, Model.AllHighSchoolOptions as SelectList, "Selectioner l'Option", new { @class = "form-control" })
+                            <span asp-validation-for="HighSchoolOption" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.HighSchoolMark, Model.AllHighSchoolMarks as SelectList, "Selectioner la moyenne du lycée", new { @class = "form-control" })
+                            <span asp-validation-for="HighSchoolMark" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="HighSchoolGraduateYear"></label>
+                            <input asp-for="HighSchoolGraduateYear" class="form-control fr-date-datepicker" placeholder="Inserer la data de l'optention du bac">
+                            <span asp-validation-for="HighSchoolGraduateYear" class="text-danger"></span>
+                        </div>
+                        <button type="submit" name="button" value="first" class="btn1 btn btn-primary">Precedent</button>
+                        <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Suivant</button>
+                    </form>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

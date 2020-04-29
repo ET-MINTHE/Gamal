@@ -1,0 +1,144 @@
+﻿@model List<Gamal.ViewModel.BookletViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Student.cshtml";
+}
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:22pt; text-align:justify">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    <div style="text-align:justify">
+        <span style="font-size:12pt;">
+            Vous trouverez ci-dessous des informations générales sur la situation universitaire et le livret.
+            Cette page affiche des informations relatives aux activités pédagogiques du cahier de l'élève. Pour les activités pédagogiques non encore réussies et suivies, le lien est actif sur l'icône de la rubrique «Appels» qui permet d'accéder à la liste des appels définie par le secrétariat pédagogique.
+
+            Pour remplir le questionnaire d'évaluation de l'enseignement, suivez le lien Services universitaires dans le menu latéral. La compilation n'est possible que pour les étudiants inscrits aux formations diplômantes participant à l'expérimentation, pour les autres veuillez remplir le questionnaire papier fourni par l'enseignant à la fin du cours.
+        </span>
+    </div>
+    
+    <br />
+    <span style="font-size:12pt; font-weight:bold">Livret de:</span> <span style="font-size:12pt; font-weight:bold; color:red"> @ViewBag.FirstName @ViewBag.LastName - [MAT. @ViewBag.SerialNumber]</span>
+    <br />
+    <span style="font-size:12pt; font-weight:bold">Moyenne Arithmétique: </span><span style="font-size:12pt; font-weight:bold; color:red"> @ViewBag.EverageMark/20</span>
+    <br />
+    <span style="font-size:12pt; font-weight:bold">Moyenne Pondérée: </span><span style="font-size:12pt; font-weight:bold; color:red"> @ViewBag.WeightedEverageMark/20 </span>
+    <br />
+    <div class="border border-#6D7B8D">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col"><span style="font-size:9pt">Activité Didactique</span></th>
+                    <th scope="col"><span style="font-size:9pt">Année</span></th>
+                    <th scope="col"><span style="font-size:9pt">Coefficient</span></th>
+                    <th scope="col"><span style="font-size:9pt">Etat</span></th>
+                    <th scope="col"><span style="font-size: 9pt">AA Freq.</span></th>
+                    <th scope="col"><span style="font-size:9pt">Note-Date Examen</span></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr style="line-height: 0.6;">
+                        <th scope="row">
+                            <span style="font-size:11pt; color:indianred">
+                                <a class="a-booklet" asp-route-courseId=@item.CourseCode asp-route-departmentCode=@item.DepartmentCode asp-controller="CourseDescription"
+                                   asp-action="Index">
+                                    @item.Course.ToLower()
+                                </a>
+                            </span>
+                        </th>
+                        <td>1</td>
+                        <td>@item.Weight</td>
+                        <td>
+                            @if (item.Status == true)
+                            {
+                                <figure class="circle-passed"></figure>
+                            }
+                            else
+                            {
+                                <figure class="circle-attended"></figure>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Status == true)
+                            {
+                                <span style="font-size:9pt">@item.Year</span>
+                            }
+                            else
+                            {
+                                <span style="font-size: 9pt">AAAA</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Status == true)
+                            {
+                                <span style="font-size:9pt">@item.Mark</span>
+                            }
+                            else
+                            {
+                                <span style="font-size: 9pt">En Cours</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <span style="font-size:12pt">Légende</span>
+    <hr />
+    <table>
+        <tr>
+            <td>
+                <figure class="circle-scheduled"></figure>
+            </td>
+            <td>
+                <span style="font-size:11pt"> Matrière Programmée</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <figure class="circle-passed"></figure>
+            </td>
+            <td>
+                <span style="font-size:11pt"> Matière Fréquentée</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <figure class="circle-attended"></figure>
+            </td>
+            <td>
+                <span style="font-size:11pt">  Matière Passée</span>
+            </td>
+        </tr>
+    </table>
+}
+
+

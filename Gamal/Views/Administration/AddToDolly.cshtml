@@ -1,0 +1,128 @@
+﻿@model Gamal.ViewModel.UploadToDollyViewModel
+@{
+    ViewData["Title"] = "AddToDolly";
+    Layout = "~/Views/Shared/_Teacher.cshtml";
+}
+
+
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée de l'enseignant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    @if (!String.IsNullOrEmpty(@ViewBag.Error))
+    {
+        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
+    }
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
+    }
+    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <br />
+    <br />
+    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
+    <br />
+    <br />
+    <span style="font-size:20pt">DIDACTIQUE EN LIGNE ANNÉE ACADÉMIQUE 2019/2020</span>
+    <br />
+    <br />
+    <p>
+        <span style="font-size:18pt">
+            Ci-dessous vous pouvez charger des fichiers format PDF pour la matière @Model.CourseName
+        </span>
+    </p>
+    <br />
+    <br />
+
+    <form enctype="multipart/form-data" asp-route-courseCode="@Model.CourseCode"  method="post">
+        <div class="form-group">
+            <input asp-for="FileName" class="form-control fr-date-datepicker" placeholder="Inserer le nom du fichier">
+            <span asp-validation-for="FileName" class="text-danger"></span>
+        </div>
+        <input type="hidden" id="serialNumber" name="serialNumber" value="@ViewBag.SerialNumber">
+        <input type="hidden" id="courseCode" name="courseCode" value="@Model.CourseCode">
+        <input type="hidden" id="departmentCode" name="departmentCode" value="@Model.DepartmentCode">
+        <div class="custom-file">
+            <input asp-for="FileToUpload" class="form-control custom-file-input">
+            <label class="custom-file-label">Choisr le Fichier....</label>
+        </div>
+        <br />
+        <br />
+        <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Charger</button>
+    </form>
+
+    <br />
+    <br />
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Liste Materiels</th>
+                <th scope="col">Modification fichier</th>
+                <th scope="col">Suppression fichier</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var material in Model.Dollies)
+            {
+                var path = "/dolly/" + @material.FilePath;
+            <tr>
+                <th scope="col" style="color:red">
+                    <span style="font-size:20pt; color:indianred">
+                        <a class="aa" href=@path>@material.FileName</a>
+                    </span>
+                </th>
+                <td>
+                    <a asp-controller="Administration"
+                       asp-action="RemoveFromDolly" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Modifier le fichier</a>
+                </td>
+                <td>
+                    <a asp-controller="Administration"
+                       asp-action="RemoveFromDolly" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Supprimer le fichier</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
+}
+
+

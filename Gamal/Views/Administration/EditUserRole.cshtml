@@ -1,0 +1,30 @@
+﻿@model Gamal.ViewModel.UserRoleViewModel
+@{
+    ViewData["Title"] = "EditUserRole";
+}
+
+<h1 style="text-align:center">Editer le role de l'utilisateur</h1>
+
+<div class="row" style="margin-left:24%">
+        <div class="card col-md-8">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    @*<label asp-for="UserName"></label>*@
+                    <input asp-for="UserName" class="form-control" placeholder="Inserer le nom d'utilisateur" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @*<label asp-for="RoleName"></label>*@
+                    @Html.DropDownListFor(model => model.RoleName, Model.AllRoles as SelectList, "Selectioner le role", new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <input asp-for="IsSelected" class="form-control" />
+                    <label asp-for="IsSelected"></label>
+                </div>
+                <button type="submit" class="btn1 btn btn-primary">Creer Role</button>
+                <br />
+                <br />
+            </form>
+        </div>
+    </div>

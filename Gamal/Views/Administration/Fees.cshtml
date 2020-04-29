@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Fees";
+    Layout = "~/Views/Shared/_Student.cshtml";
+}
+
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <h6 style="text-align:center; color:green">
+            @ViewBag.Message
+        </h6>
+    }
+
+    <span style="font-size:18pt; text-align:center"> Taxes</span>
+    <br />
+    <span style="font-size:25pt; text-align:center; font-weight:bold"> Page en construction</span>
+}
+
+

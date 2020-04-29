@@ -1,0 +1,232 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_Secretary</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gamal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .first-letter {
+            font-size: 15px;
+            line-height: 25px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .btn1 {
+            background-color: #BEBEBE;
+            width: 150px;
+            color: black;
+            border: 1px solid #BEBEBE;
+        }
+
+        .btn1:disabled {
+            background-color: #BEBEBE;
+            color: black;
+            border: 1px solid #BEBEBE;
+        }
+
+        .btn1:hover {
+            background-color: #BEBEBE;
+            color: black;
+            border: 1px solid #BEBEBE;
+        }
+
+        td {
+            border-left-style: solid;
+            border-left-color: #BEBEBE;
+            border-left-width: 12px;
+        }
+
+        .aexam {
+            font-size: 12pt;
+            color: red;
+        }
+
+        .aexam:hover {
+            font-size: 12pt;
+            color: red;
+            text-decoration: none;
+        }
+        .aheader {
+            font-size: 12pt;
+            color: black;
+        }
+
+        .aheder:hover {
+            text-decoration-line: none;
+            text-decoration: none;
+        }
+
+        .aheder:link {
+            text-decoration-line: none;
+            text-decoration: none;
+        }
+
+        .a {
+            font-size: 12pt;
+            color: black;
+        }
+
+        .aa {
+            font-size: 18pt;
+            color: red;
+        }
+
+        .aa:hover {
+            font-size: 18pt;
+            color: red;
+            text-decoration:underline;
+        }
+
+        .aheader {
+            font-size: 12pt;
+            color: black;
+        }
+
+        .aheder:hover {
+            text-decoration-line: none;
+            text-decoration: none;
+        }
+
+        .aheder:link {
+            text-decoration-line: none;
+            text-decoration: none;
+        }
+
+        .a:hover {
+            text-decoration-line: none;
+            text-decoration: none;
+            color: black;
+        }
+
+        .tr:hover {
+            background-color: #BEBEBE;
+        }
+
+        .tr:hover td > a {
+            background-color: #BEBEBE;
+            color: black;
+            font-size: 12pt;
+        }
+
+        td {
+            line-height: 0.6;
+        }
+
+        .a-secretary {
+            text-decoration: none;
+            color: red;
+        }
+
+        .a-secretary:hover {
+            text-decoration-color: red;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav style="height:80px; border-bottom:8px solid #BEBEBE; background-color:#F8F8F8" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
+            <div class="container" align="left">
+                <p><span style="font-size: 25pt; color: red; font-weight: bold">UGANC</span> <span style="margin-left:12px; font-size:25pt;">Université Gamal Abdel Nasser de Conakry</span></p>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            <div class="container-fluid">
+                <div class="row">
+                    @RenderSection("container", required: true)
+                    <div class="col-xl-3" style="min-height:200px;">
+                        <div class="card">
+                            <div class="card-header" style="background-color:#F8F8F8; color:white; height:75px">
+                                <div>
+                                    <img src="~/images/profile.jpg" width="100" height="100" style="border-radius:50%; margin-left:30%; border:1px solid #BEBEBE" />
+                                    <h6 style="text-align:center; color:#150517">@RenderSection("UserLastName", required: true)</h6>
+                                    <h6 style="text-align:center; color:#150517">@RenderSection("UserFirstName", required: true)</h6>
+                                </div>
+                                @RenderSection("leftPanelHeader", required: true)
+                            </div>
+                            <div class="card-body" style="margin-top:80px">
+                                <div>
+                                    <a class="aheader" asp-controller="Account" asp-action="Logout">Deconnexion</a><br />
+                                    <a class="aheader" asp-controller="Speaker" asp-action="Evaluations">Zone Reservée</a><br />
+                                    <a class="aheader" asp-controller="Speaker" asp-action="Evaluations">Changer mot de passe</a><br />
+                                    <a class="aheader" asp-controller="Speaker" asp-action="Evaluations">Mon Email</a>
+                                </div>
+                                <br />
+                                @RenderSection("leftPanelBody", required: true)
+                                <table class="table" style="font-size: 10pt; margin-top: 10px; color:#250517">
+                                    <tbody>
+                                        <tr class="tr">
+                                            <td scope="row"> <a class="a" asp-controller="Teacher" asp-action="Teacher">Home</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"> <a class="a" asp-controller="Administration" asp-action="CallForExam">Appels d'Examens</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"> <a class="a" asp-controller="Administration" asp-action="TeacherDolly">Didactique en Ligne</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"><a class="a" asp-controller="Administration" asp-action="RegisterMark">Enregistrer des notes</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"><a class="a" asp-controller="Speaker" asp-action="Evaluations">Appels d'Exam</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"><a class="a" asp-controller="Speaker" asp-action="Evaluations">Livret</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"><a class="a" asp-controller="Speaker" asp-action="Evaluations">Tableau de Reservation</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"> <a class="a" asp-controller="Speaker" asp-action="Evaluations">Optention Titres</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"> <a class="a" asp-controller="Speaker" asp-action="Evaluations">Taxes</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="card">
+                            <div class="card-header" style="background-color:#BEBEBE; height:75px">
+                                @RenderSection("middlePanelHeader", required: true)
+                            </div>
+                            <div class="card-body">
+                                @RenderSection("middlePanelBody", required: true)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - Gamal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+

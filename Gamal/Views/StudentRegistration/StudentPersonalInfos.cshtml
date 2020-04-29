@@ -1,0 +1,90 @@
+﻿@model Gamal.ViewModel.StudentPersonalInfoViewModel
+
+@{
+    ViewData["Title"] = "StudentPersonalInfor";
+    Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+
+@section container{
+
+}
+
+@section UserFirstName{
+    @ViewBag.FirstName
+
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+@section leftPanelHeader{
+
+}
+@section leftPanelBody
+{
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée du secrétaire </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    <div style="">
+        <div class="card">
+            <div align="center">
+                <span style="font-size:18pt; font-weight:bold; color:red">Processus d'Immatriculation des Etudiants</span>
+                <br />
+                <span style="font-weight:bold; color:black">Informations personnelles de l'étudiant</span>
+            </div>
+            <div class="row" style="padding-left:7%">
+                <div class="col-md-11">
+                    <form method="post">
+                        <br />
+                        <div class="form-group">
+                            <input asp-for="FirstName" placeholder="Inserer le prénom" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="LastName" placeholder="Inserer le nom" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Email" placeholder="Inserer l'adresse electronique" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="CityOfBirth" placeholder="Inserer la ville de naissance" class="form-control" />
+                            <span asp-validation-for="CityOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Nationality" placeholder="Inserer la nationalité" class="form-control" />
+                            <span asp-validation-for="Nationality" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DateOfBirth"></label>
+                            <input asp-for="DateOfBirth" class="form-control fr-date-datepicker" placeholder="inserisci la data in formato gg/mm/aaaa">
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <button disabled type="submit" name="button" value="first" class="btn1 btn btn-primary">Precedent</button>
+                        <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Suivant</button>
+                    </form>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@*@section rightPanelHeader{
+        <h6 style="color:white; text-align:center">Informations Importantes</h6>
+    }
+
+    @section rightPanelBody
+    {
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    }*@
+

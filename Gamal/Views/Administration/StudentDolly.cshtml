@@ -1,0 +1,59 @@
+﻿@model List<Gamal.Models.Domain.Course>
+@{
+    ViewData["Title"] = "StudentDolly";
+    Layout = "~/Views/Shared/_Student.cshtml";
+}
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+    <br />
+}
+
+@section middlePanelBody
+{
+    <span style="font-size:15pt;">Le matériel didactique et pédagogique : soutien à l’appropriation ou déterminant de l’intervention éducative </span>
+    <br />
+    <span style="font-size:15pt;">Vous trouverez ci-dessous le matériel didactiques relatifs aux différentes matières du département </span><span style="font-weight:bold">@ViewBag.Department</span>
+    <br />
+    <br />
+    <table class="table">
+        <tbody>
+            @foreach (var course in @Model)
+            {
+                <tr class="td1">
+                    <th scope="col" style="color:red">
+                        <span style="font-size:13pt; color:indianred">
+                            <a class="a-booklet" asp-route-courseId=@course.CourseCode asp-route-departmentId=@course.DepartmentCode asp-controller="Administration"
+                               asp-action="StudentCourseDolly">
+                                @course.CourseName.ToLower()
+                            </a>
+                        </span>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

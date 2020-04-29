@@ -1,0 +1,76 @@
+﻿@model Gamal.ViewModel.StudentContactViewModel
+@{
+    ViewData["Title"] = "StudentContact";
+    Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée du secrétaire </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody{
+    <div>
+        <div class="card">
+            <div style="text-align:center">
+                <span style="font-size:18pt; font-weight:bold; color:red">Processus d'Immatriculation des Etudiants</span>
+                <br />
+                <span style="font-weight:bold; color:black">Adresse de l'étudiant</span>
+            </div>
+            <br />
+            <div class="row" style="padding-left:7%">
+                <div class="col-md-11">
+                    <form method="post">
+                        <div class="form-group">
+                            <input asp-for="Address" placeholder="Inserer l'adresse" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PhoneNumber" placeholder="Inserer le numero de téléphone" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="CityOfResidence" placeholder="Inserer la ville de residence" class="form-control" />
+                            <span asp-validation-for="CityOfResidence" class="text-danger"></span>
+                        </div>
+                        <button type="submit" name="button" value="first" class="btn1 btn btn-primary">Precedent</button>
+                        <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Suivant</button>
+                    </form>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@*@section rightPanelHeader{
+        <h6 style="color:white; text-align:center">Informations Importantes</h6>
+    }
+
+    @section rightPanelBody
+    {
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    }*@
+
+

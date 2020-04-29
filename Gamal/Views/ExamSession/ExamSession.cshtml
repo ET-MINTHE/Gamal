@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "ExamSession";
+    Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée du secrétaire </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    @if (!String.IsNullOrEmpty(@ViewBag.Error))
+    {
+        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
+    }
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
+    }
+    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <br />
+    <br />
+    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
+    <br />
+    <br />
+    <span style="font-size:20pt">GESTION DES APPELS D'EXAMENS</span>
+    <br />
+    <br />
+    <p>
+        <span style="font-size:15pt">Ci-dessous vous pouvez ajouter ou supprimer des sessions d'examen </span>
+    </p>
+    <br />
+    <p>
+        <a asp-controller="ExamSession"
+           asp-action="AddExamSession" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Ajouter une session d'Examen</a>
+    </p>
+    <br />
+    <p>
+        <a asp-controller="ExamSession"
+           asp-action="Index" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Supprimer une session d'Examen</a>
+    </p>
+}

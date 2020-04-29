@@ -1,0 +1,90 @@
+﻿@model List<Gamal.ViewModel.ELSVIEViewModel>
+@{
+    ViewData["Title"] = "ExamListForStudent";
+    Layout = "~/Views/Shared/_Student.cshtml";
+}
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    <span style="font-size:20pt">SESSION D'EXAMENS ANNÉE ACADÉMIQUE 2019/2020</span>
+    <br />
+    <br />
+    <span style="font-size:15pt">Ci-dessous vous verez la liste des examens disponibles avec leurs dates respectives. </span>
+
+    <span style="font-size:15pt">Pour reserver l'examen d'une matière cliquer sur le nom de la matière</span>
+    <br />
+    <br />
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Matière</th>
+                <th scope="col">Description</th>
+                <th scope="col">Salle</th>
+                <th scope="col">Date</th>
+                <th scope="col">Heure</th>
+                <th scope="col">Etat de la reservation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exam in @Model)
+            {
+                <tr>
+                    <th scope="row">
+                        <span style="font-size:11pt; color:indianred">
+                            <a class="a-booklet" asp-route-examId=@exam.ExamId asp-route-isReserved="@exam.IsResered" asp-controller="Administration"
+                               asp-action="ExamEnrollment">
+                                @exam.Name.ToLower()
+                            </a>
+                        </span>
+                    </th>
+                    <td>@exam.Description</td>
+                    <td>@exam.Classroom</td>
+                    <td>@exam.Date</td>
+                    <td>@exam.Hour</td>
+                    <td>
+                        @if (exam.IsResered == "Reservé")
+                        {
+                            <span style="color:green">
+                                @exam.IsResered
+                            </span>
+                        }
+                        else
+                        {
+                            <span style="color:red">
+                                @exam.IsResered
+                            </span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+

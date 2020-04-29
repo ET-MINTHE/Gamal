@@ -1,0 +1,122 @@
+﻿@model List<Gamal.Models.Domain.Exam>
+@{
+    ViewData["Title"] = "TeacherCallForExam";
+    Layout = "~/Views/Shared/_Teacher.cshtml";
+}
+
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée de l'enseignant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    @if (!String.IsNullOrEmpty(@ViewBag.Error))
+    {
+        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
+    }
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
+    }
+    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <br />
+    <br />
+    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
+    <br />
+    <br />
+    <span style="font-size:20pt">GESTION DES APPELS D'EXAMENS</span>
+    <br />
+    <br />
+    <p>
+        <span style="font-size:15pt">Ci-dessous vous pouvez ajouter ou supprimer des APPELS d'examen </span>
+    </p>
+    <br />
+    <p>
+        
+    @*</p>
+    <br />
+    <p>
+        <a asp-controller="ExamSession"
+           asp-action="Index" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Supprimer un appel d'Examen</a>
+    </p>*@
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <a asp-controller="Administration"
+                       asp-action="AddExam" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Ajouter un appel d'Examen</a>
+                </th>
+                @*<th scope="col">
+                    <a  asp-controller="ExamSession"
+                       asp-action="Index" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Supprimer un appel d'Examen</a>
+                </th>*@
+            </tr>
+        </thead>
+    </table>
+    <br />
+    <br />
+        <span>Liste des appels d'exam</span>
+        <br />
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Matière</th>
+                <th scope="col">Description</th>
+                <th scope="col">Salle</th>
+                <th scope="col">Date</th>
+                <th scope="col">Heure</th>
+                <th scope="col">Suppression</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exam in @Model)
+            {
+                <tr>
+                    <th scope="row">
+                        <span style="font-size:11pt; color:indianred">
+                            <a class="aexam" asp-route-examId=@exam.ExamId asp-controller="Administration"
+                               asp-action="ExamEnrollment">
+                                @exam.Name.ToLower()
+                            </a>
+                        </span>
+                    </th>
+                    <td>@exam.Description</td>
+                    <td>@exam.Classroom</td>
+                    <td>@exam.Date</td>
+                    <td>@exam.Hour</td>
+                    <td>
+                        <a asp-controller="ExamSession"
+                           asp-action="Index" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Supprimer l'appel d'Examen</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+

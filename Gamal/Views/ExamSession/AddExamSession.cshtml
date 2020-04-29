@@ -1,0 +1,83 @@
+﻿@model Gamal.ViewModel.ExamSessionViewModel
+@{
+    ViewData["Title"] = "AddExamSession";
+    Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée du secrétaire </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <br />
+    <br />
+    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
+    <br />
+    <br />
+    <span style="font-size:20pt">GESTION DES APPELS D'EXAMENS</span>
+    <br />
+    <br />
+    <p>
+        <span style="font-size:15pt">Ci-dessous vous pouvez ajouter ou supprimer des sessions d'examen </span>
+    </p>
+    @if (!String.IsNullOrEmpty(@ViewBag.Error))
+    {
+        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
+    }
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
+    }
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <span style="font-size:15pt"> Inserer les informations de la session</span>
+            <form method="post">
+                <br />
+                <div class="form-group">
+                    <input asp-for="Name" placeholder="Inserer le nom de la session" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Start" class="form-control fr-date-datepicker" placeholder="Inserer la date de début de la session">
+                    <span asp-validation-for="Start" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="End" class="form-control fr-date-datepicker" placeholder="Inserer la date de fin de la session">
+                    <span asp-validation-for="End" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Description" placeholder="Inserer la description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <button type="reset" name="button" value="first" class="btn1 btn btn-primary">Effacer</button>
+                <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Enregister</button>
+            </form>
+        </div>
+    </div>
+}
+

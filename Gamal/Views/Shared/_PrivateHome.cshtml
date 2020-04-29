@@ -1,0 +1,150 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gamal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .first-letter {
+            font-size: 15px;
+            line-height: 25px;
+            font-weight: bold;
+            color: white;
+        }
+        .btn1 {
+            background-color: #2B547E;
+            width:150px;
+        }
+
+        .btn1:disabled {
+            background-color: #25587E;
+        }
+        .btn1:hover {
+            background-color: #25587E;
+        }
+        td {
+            border-left-style: solid;
+            border-left-color: #25587E;
+            border-left-width: 12px;
+        }
+        a{
+           font-size:12pt;
+           color:black;
+        }
+        a:hover {
+            text-decoration:none;
+            color:white;
+        }
+        tr:hover {
+            background-color:#2B547E;
+        }
+        tr:hover td > a {
+            background-color: #2B547E;
+            color: white;
+            font-size: 12pt;
+        }
+        td{
+            line-height:0.6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Gamal</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                        </ul>
+                    }
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            <div class="container-fluid">
+                <div class="row">
+                    @RenderSection("container", required: true)
+                    <div class="col-xl-3" style="min-height:200px;">
+                        <div class="card">
+                            <div class="card-header" style="background-color:#2B547E; color:white; height:75px">
+                                @RenderSection("leftPanelHeader", required: true)
+                            </div>
+                            <div class="card-body" style="margin-top:100px">
+                                @RenderSection("leftPanelBody", required: true)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-7">
+                        <div class="card">
+                            <div class="card-header" style="background-color:#2B547E; height:75px">
+                                @RenderSection("middlePanelHeader", required: true)
+                            </div>
+                            <div class="card-body">
+                                @RenderSection("middlePanelBody", required: true)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="card">
+                            <div class="card-header" style="background-color:#2B547E; color:white; height:75px">
+                                @RenderSection("rightPanelHeader", required: true)
+                            </div>
+                            <div class="card-body">
+                                @RenderSection("rightPanelBody", required: true)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - Gamal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

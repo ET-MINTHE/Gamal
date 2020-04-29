@@ -1,0 +1,92 @@
+﻿@model Gamal.ViewModel.AddExamViewModel
+@{
+    ViewData["Title"] = "AddExam";
+    Layout = "~/Views/Shared/_Teacher.cshtml";
+}
+
+@section UserFirstName{
+    @ViewBag.FirstName
+}
+
+@section UserLastName{
+    @ViewBag.LastName
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+    <span style="font-size:20pt;">Zone réservée de l'enseignant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+    <br />
+}
+
+@section middlePanelBody
+{
+   
+    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <br />
+    <br />
+    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
+    <br />
+    <br />
+    <span style="font-size:20pt">GESTION DES APPELS D'EXAMENS</span>
+    <br />
+    <br />
+    <div class="card">
+        <div class="card-body">
+            @if (!String.IsNullOrEmpty(@ViewBag.Error))
+            {
+                <span style="color:red; font-weight:bold">@ViewBag.Error</span>
+            }
+            @if (!String.IsNullOrEmpty(@ViewBag.Message))
+            {
+                <span style="color:green; font-weight:bold">@ViewBag.Message</span>
+            }
+            <br />
+            <span style="font-size:15pt"> Inserer les informations de l'examen</span>
+            <form method="post">
+                <br />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Course, Model.AllCourses as SelectList, "Selectioner la matière", new { @class = "form-control" })
+                    <span asp-validation-for="Course" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Session, Model.AllSessions as SelectList, "Selectioner la session", new { @class = "form-control" })
+                    <span asp-validation-for="Session" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input asp-for="Hour" class="form-control fr-date-datepicker" placeholder="Inserer l'heure de l'examen">
+                    <span asp-validation-for="Hour" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Classroom" class="form-control fr-date-datepicker" placeholder="Inserer la salle">
+                    <span asp-validation-for="Classroom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Description" class="form-control fr-date-datepicker" placeholder="Inserer la description">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date"></label>
+                    <input asp-for="Date" class="form-control fr-date-datepicker" placeholder="inserer la date de l'examen gg/mm/aaaa">
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <button type="reset" name="button" value="first" class="btn1 btn btn-primary">Effacer</button>
+                <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Enregister</button>
+            </form>
+        </div>
+    </div>
+}
+

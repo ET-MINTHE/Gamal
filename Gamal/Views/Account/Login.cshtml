@@ -1,0 +1,59 @@
+﻿
+
+@model Gamal.ViewModel.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_EmptyView.cshtml";
+}
+<style>
+    .btn-primary {
+        background-color: #F8F8F8;
+        width: 150px;
+        border: 1px solid #BEBEBE;
+        color: black;
+    }
+
+        .btn-primary:hover {
+            background-color: #F8F8F8;
+            width: 150px;
+            border: 1px solid #BEBEBE;
+            color: black;
+        }
+</style>
+<div style="margin-left:28%; width:44%; margin-top:100px">
+    <div class="card">
+        <div class="card-header" style=" background-color: #F8F8F8; color: black;
+        text-align: center">
+            <span style="font-size:25pt; font-weight:bold">UGANC</span>
+        </div>
+        <div class="row" style="padding-left:7%">
+            <div class="col-md-11">
+                <br />
+                <form method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-checkbox">
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe" />
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Connexion</button>
+                    <br />
+                    <br />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
