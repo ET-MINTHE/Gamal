@@ -1,6 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 @{
     Layout = null;
 }
@@ -20,34 +24,27 @@
     <style>
         body {
             background-color: #F2F4F4;
+            height: 100%;
         }
 
         .circle-passed {
             display: block;
             background: Green;
             border-radius: 50%;
-            height: 10px;
-            width: 10px;
-            margin: 0;
-        }
-        .circle-scheduled {
-            display: block;
-            background: #7E3117;
-            border-radius: 50%;
-            height: 10px;
-            width: 10px;
+            height: 15px;
+            width: 15px;
             margin: 0;
         }
 
-        .circle-attended {
+        .circle-not-passed {
             display: block;
-            background: #FDD017;
+            background: #7E3117;
             border-radius: 50%;
-            height: 10px;
-            width: 10px;
+            height: 15px;
+            width: 15px;
             margin: 0;
         }
-        
+
         .first-letter {
             font-size: 15px;
             line-height: 25px;
@@ -55,33 +52,59 @@
             color: black;
         }
 
-        .btn1:disabled {
-            background-color: #BEBEBE;
-            color: black;
-            border: 1px solid #BEBEBE;
+        .btn1 {
+            background-color: #25587E;
+            width: 150px;
+            color: white;
+            border: 1px solid #25587E;
         }
 
-        .btn1 {
-            background-color: #BEBEBE;
-            color: black;
-            border: 1px solid #BEBEBE;
+        .btn1:disabled {
+            background-color: #25587E;
+            color: white;
+            border: 1px solid #25587E;
         }
 
         .btn1:hover {
-            background-color: #BEBEBE;
-            color: black;
-            border: 1px solid #BEBEBE;
+            background-color: #25587E;
+            color: white;
+            border: 1px solid #25587E;
+        }
+
+        .btn2 {
+            background-color: #25383C;
+            width: 280px;
+            color: white;
+            border: 1px solid #25383C;
+        }
+
+        .btn2:disabled {
+            background-color: #25383C;
+            color: white;
+            border: 1px solid #25383C;
+        }
+
+        .btn2:hover {
+            background-color: #4C7D7E;
+            color: white;
+            border: 1px solid #4C7D7E;
         }
 
         .td {
             border-left-style: solid;
-            border-left-color: #BEBEBE;
+            border-left-color: #25587E;
             border-left-width: 12px;
+            line-height: 0.5;
         }
 
         .td1 {
             line-height: 0.5;
         }
+
+        .th1 {
+            line-height: 0.5;
+        }
+
         .a {
             font-size: 12pt;
             color: black;
@@ -94,7 +117,7 @@
 
         .aheader:hover {
             text-decoration: underline;
-            color:black;
+            color: black;
         }
 
         .a:hover {
@@ -104,60 +127,86 @@
         }
 
         .tr:hover {
-            background-color: #F8F8F8;
+            background-color: #25587E;
+            color: white;
         }
 
-        .tr:hover td > a {
-            background-color: #F8F8F8;
-            color: black;
+        tr:hover td > a {
+            background-color: #25587E;
+            color: white;
             font-size: 12pt;
         }
 
-        .td {
-            line-height: 0.6;
+        .a-secretary {
+            text-decoration: none;
+            color: red;
         }
-        .a-booklet
-        {
-            color:red;
+
+        .a-secretary:hover {
+            text-decoration-color: red;
+            color: red;
         }
+
+        .a-booklet {
+            color: #25587E;
+        }
+
         .a-booklet:hover {
             text-decoration: underline;
+            color: #25587E
+        }
+
+        .a-link {
+            color: red;
+            font-weight: bold;
+        }
+
+        .a-link:hover {
+            text-decoration: underline;
             color: #616D7E
+        }
+
+        .page-item.active .page-link {
+            color: white !Important;
+            background-color: #25587E !important;
+            border: 1px solid #25587E !important;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav style="height:80px; border-bottom:8px solid #BEBEBE; background-color:#F8F8F8" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
-            <div class="container" align="left">
-                <p><span style="font-size: 25pt; color: red; font-weight: bold">UGANC</span> <span style="margin-left:12px; font-size:25pt;">Université Gamal Abdel Nasser de Conakry</span></p>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container-fluid">
+    <div style="background-image: url('images/uganc-logo.png');
+        width: 100%;
+        height: 100px">
+        <img src="~/images/uganc-logo.png" />
+    </div>
+    <div class="container-fluid" style="height:95%">
         <main role="main" class="pb-3">
             @RenderBody()
-            <div class="container-fluid">
-                <div class="row">
+            <div class="container-fluid" style="height:100%">
+                <div class="row" style="height:100%">
                     @RenderSection("container", required: true)
-                    <div class="col-xl-3" style="min-height:200px;">
-                        <div class="card">
-                            <div class="card-header" style="background-color:#F8F8F8; color:white; height:75px">
+                    <div class="col-xl-3" style="height:auto">
+                        <div class="card h-100">
+                            <div class="card-header" style="background-color: #25587E;color: white; height:55px">
                                 <div>
-                                    <img src="~/images/profile.jpg" width="100" height="100" style="border-radius:50%; margin-left:30%; border:1px solid #BEBEBE" />
-                                    <h6 style="text-align: center; color: #150517 ">@RenderSection("UserLastName", required: true)</h6>
-                                    <h6 style="text-align: center; color: #150517">@RenderSection("UserFirstName", required: true)</h6>
+                                    @{
+                                        var path = "/profiles/" + @HttpContextAccessor.HttpContext.Session.GetString("ProfilePath");
+                                    }
+                                    <a asp-action="UpdateStudentProfile" asp-controller="Administration">
+                                        <img src="@path" width="100" height="100" style="border-radius: 50%; margin-left: 38%; border: 1px solid #BEBEBE" />
+                                    </a>
+                                    <h6 style="text-align: center; color: #150517 ">@HttpContextAccessor.HttpContext.Session.GetString("UserLastName")</h6>
+                                    <h6 style="text-align: center; color: #150517">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName")</h6>
                                 </div>
                                 @RenderSection("leftPanelHeader", required: true)
                             </div>
                             <div class="card-body" style="margin-top:80px">
                                 <div>
                                     <a class="aheader" asp-controller="Account" asp-action="Logout">Deconnexion</a><br />
-                                    <a class="aheader" asp-controller="Speaker" asp-action="Evaluations">Zone Reservée</a><br />
-                                    <a class="aheader" asp-controller="Speaker" asp-action="Evaluations">Autres Carrières</a><br />
-                                    <a class="aheader" asp-controller="Speaker" asp-action="Evaluations">Changer mot de passe</a><br />
-                                    <a class="aheader" asp-controller="Speaker" asp-action="Evaluations">Mon Email</a>
+                                    <a class="aheader" asp-controller="Student" asp-action="Home">Zone Reservée</a><br />
+                                    <a class="aheader" href="#">Autres Carrières</a><br />
+                                    <a class="aheader" asp-controller="Account" asp-action="ChangePassword">Changer mot de passe</a><br />
+                                    <a class="aheader" href="#">@HttpContextAccessor.HttpContext.Session.GetString("Email")</a>
                                 </div>
                                 <br />
                                 @RenderSection("leftPanelBody", required: true)
@@ -198,15 +247,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-9">
-                        <div class="card">
-                            <div class="card-header" style="background-color:#F8F8F8; height:75px">
+                    <div class="col-xl-9" style="height:auto">
+                        <div class="card h-100">
+                            <div class="card-header my-auto" style="background-color:#25587E; color:white; height:55px;">
+                                <span style="font-size:15pt;">Zone réservée de l'étudiant </span><span style="font-size:15pt;">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") @{@ViewBag.LastName}-[MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]</span>
                                 @RenderSection("middlePanelHeader", required: true)
                             </div>
                             <div class="card-body">
-                                <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+                                <span style="font-size:18pt; font-weight:bold; color:red; font-family:'The lazy dog'">Direction du service pour les étudiants - Services Didactiques</span>
                                 <br />
-                                <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
+                                <span style="color:black; font-size:15pt; font-family:'The lazy dog'; border-bottom:5px solid red">ESSE4</span>
                                 <br />
                                 <br />
                                 @RenderSection("middlePanelBody", required: true)

@@ -21,6 +21,7 @@ namespace Gamal.ViewModel
         public string Sector { get; set; }
 
         public float EverageMark { get; set; }
-        public float WeightedEverageMark { get; set; }      
+        public float WeightedEverageMark { get; set; }
+        public string SearchTerm { get; set; }  
     }
 }

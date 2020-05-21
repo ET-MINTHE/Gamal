@@ -9,14 +9,15 @@ namespace Gamal.ViewModel
 {
     public class RegisterMarkViewModel
     {
-        [Required]
-        public string StudentSerialNumber { get; set; }
-        [Required]
-        public int Mark { get; set; }
+        [Required(ErrorMessage ="Le nom de l'étudiant est obligatoire")]
+        public string Student { get; set; }
+        [Required(ErrorMessage ="La note est obligatoire")]
+        public int? Mark { get; set; }
         public IEnumerable<SelectListItem> AllMarks { get; set; }
-
+        [Required(ErrorMessage ="La matière est obligatoire")]
         public string CourseName { get; set; }
-        public IEnumerable<SelectListItem> AllCourses { get; set; } 
+        public IEnumerable<SelectListItem> AllCourses { get; set; }
+        public string SearchTerm { get; set; }
     }
 }
     

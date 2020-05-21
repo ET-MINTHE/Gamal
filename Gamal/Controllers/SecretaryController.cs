@@ -11,10 +11,6 @@ namespace Gamal.Controllers
     {
         public IActionResult Home()
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
-
             ViewBag.Message = TempData["Message"]?.ToString();
             TempData["Message"] = "";
             return View();

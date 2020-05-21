@@ -9,9 +9,11 @@ namespace Gamal.ViewModel
 {
     public class AddExamViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Le matière est obligatoire")]
         public string Course { get; set; }
-        [Required]  
+        [Required(ErrorMessage ="La date de l'examen est obligatoire")]
+        [DataType(DataType.Date)]
+        [Display(Name ="Date de l'examen")]
         public DateTime Date { get; set; }
         [Required]
         public string Hour { get; set; }

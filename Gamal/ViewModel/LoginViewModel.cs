@@ -8,11 +8,11 @@ namespace Gamal.ViewModel
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="L'adresse electronique est obligatoire")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Le mot de passe est obligatoire")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

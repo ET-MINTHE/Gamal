@@ -1,15 +1,10 @@
-﻿@model List<Gamal.Models.Domain.Course>
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core.Common;
+@model Gamal.ViewModel.StudentDollyViewModel
 @{
     ViewData["Title"] = "StudentDolly";
     Layout = "~/Views/Shared/_Student.cshtml";
-}
-
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
 }
 
 @section container{
@@ -26,34 +21,72 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
-    <br />
 }
 
 @section middlePanelBody
 {
-    <span style="font-size:15pt;">Le matériel didactique et pédagogique : soutien à l’appropriation ou déterminant de l’intervention éducative </span>
+    <span style="font-size:12pt;">Le matériel didactique et pédagogique : soutien à l’appropriation ou déterminant de l’intervention éducative </span>
     <br />
-    <span style="font-size:15pt;">Vous trouverez ci-dessous le matériel didactiques relatifs aux différentes matières du département </span><span style="font-weight:bold">@ViewBag.Department</span>
+    <span style="font-size:12pt;">Vous trouverez ci-dessous le matériel didactiques relatifs aux différentes matières du département </span><span style="font-weight:bold">@ViewBag.Department</span>
     <br />
     <br />
-    <table class="table">
+    <form method="get" asp-controller="Administration" asp-action="StudentDolly">
+        <div class="input-group">
+            <input id="search" class="form-control" placeholder="Chercher une matière" asp-for="SearchTerm" />
+            <div class="input-group-append">
+                <button type="submit" class="btn1 btn-primary">Chercher</button>
+            </div>
+        </div>
+    </form>
+    <br />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width:50%">
+                   @Html.ActionLink("Matière", "StudentDolly", new { sortBy = ViewBag.SortNameParameter}, new { @class = "a-booklet" })
+                </th>
+                <th>
+                    @Html.ActionLink("Année", "StudentDolly", new { sortBy = ViewBag.SortYearParameter}, new { @class = "a-booklet" })
+                </th>
+            </tr>
+        </thead>
         <tbody>
-            @foreach (var course in @Model)
+            @foreach (var course in @Model.ViewModel)
             {
                 <tr class="td1">
                     <th scope="col" style="color:red">
                         <span style="font-size:13pt; color:indianred">
                             <a class="a-booklet" asp-route-courseId=@course.CourseCode asp-route-departmentId=@course.DepartmentCode asp-controller="Administration"
                                asp-action="StudentCourseDolly">
-                                @course.CourseName.ToLower()
+                                @{ var courseName = char.ToUpper(course.CourseName[0]) + course.CourseName.Substring(1).ToLower();}
+                                @courseName
                             </a>
                         </span>
                     </th>
+                    <td>
+                        @course.Year
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+    <br />
+    @Html.PagedListPager(Model.ViewModel, page => Url.Action("StudentDolly", new { page = page, sortBy = HttpContextAccessor.HttpContext.Request.Query["sortBy"].ToString() }), new PagedListRenderOptions
+    {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })
+}
+@section Scripts{
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery/jquery-ui.js"></script>
+    <link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search').autocomplete({
+                source: '/Administration/AutocompleteCourse'
+            });
+        });
+    </script>
 }
 

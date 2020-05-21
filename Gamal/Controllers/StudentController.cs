@@ -24,9 +24,6 @@ namespace Gamal.Controllers
         }
         public async Task<IActionResult> Home() 
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
             var user = await userManager.FindByEmailAsync(HttpContext.Session.GetString("Email"));
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
@@ -40,7 +37,7 @@ namespace Gamal.Controllers
             model.Course = department.DepartmentName;
             model.CourseType = department.CourseType;
             model.CurrentYear = user.CurrentYear;
-            model.EnrollmentYear = user.YearOfEnrolement.ToString("dd:MM:yyyy");
+            model.EnrollmentYear = user.YearOfEnrolement.ToString("yyyy");
             model.PartTime = student.PartTime == true? "SI": "NO";
             model.StudentProfile = student.Profile;
             var date = user.YearOfEnrolement.AddYears(1);

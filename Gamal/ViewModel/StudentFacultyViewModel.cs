@@ -15,10 +15,10 @@ namespace Gamal.ViewModel
         public string Faculty { get; set; }
         [Required(ErrorMessage ="Le département est un champ obligatoire")]
         public string Department { get; set; }
-        [Required(ErrorMessage ="L'année d'inscription est un champ obligatoire")]
-        [DataType(DataType.DateTime)]
-        [Display(Name ="Année d'Inscription")]
-        public DateTime YearOfEnrolement { get; set; }
+        //[Required(ErrorMessage ="L'année d'inscription est un champ obligatoire")]
+        //[DataType(DataType.DateTime)]
+        //[Display(Name ="Année d'Inscription")]
+        //public DateTime YearOfEnrolement { get; set; }
         [Required(ErrorMessage ="Part Time est un champ obligatoire")]
         public string PartTime { get; set; }
         [Required(ErrorMessage ="Le profile étudiant est un champ obligatoire")]

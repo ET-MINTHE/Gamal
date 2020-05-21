@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "WatchVideo";
+    Layout = "~/Views/Shared/_Student.cshtml";
+}
+
+
+@section container{
+}
+
+@section leftPanelHeader{
+}
+
+@section leftPanelBody
+{
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+    @{
+        var path = "/dolly_videos/" + ViewBag.Path;
+    }
+    <iframe src="@path" style="width:100%; height:600px" type='application/video'>
+    </iframe>
+}
+

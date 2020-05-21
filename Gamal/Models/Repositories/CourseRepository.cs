@@ -37,6 +37,45 @@ namespace Gamal.Models.Repositories
                    .Where(c => c.Teacher.SerialNumber == teacherSerialNumber).ToList();
         }
 
+        public IEnumerable<Course> SearchInDepartment(string department, string searchTerm)
+        {
+            if (String.IsNullOrEmpty(searchTerm))
+            {
+                return AppContext.Courses
+                   .Include(c => c.Department)
+                   .Include(c => c.Faculty)
+                   .Where(c => c.Department.DepartmentName == department).ToList();
+            }
+            else
+            {
+                return AppContext.Courses
+                   .Include(c => c.Department)
+                   .Include(c => c.Faculty)
+                   .Where(c => c.Department.DepartmentName == department && c.CourseName.Contains(searchTerm)).ToList();
+            }
+        }
+
+        public IEnumerable<string> GetCourseNameByDepartment(string department, string searchTerm) {
+            if (String.IsNullOrEmpty(searchTerm))
+            {
+                return AppContext.Courses
+                   .Include(c => c.Department)
+                   .Include(c => c.Faculty)
+                   .Where(c => c.Department.DepartmentName == department).Select(c => c.CourseName).ToList();
+            }
+            else
+            {
+                return AppContext.Courses
+                   .Include(c => c.Department)
+                   .Include(c => c.Faculty)
+                   .Where(c => c.Department.DepartmentName == department && c.CourseName.Contains(searchTerm)).Select(c => c.CourseName).ToList();
+            }
+        }
+
+        public Course GetCourseByName(string courseName)
+        {
+            return AppContext.Courses.Where(b => b.CourseName == courseName).First();
+        }
 
         public AppDbContext AppContext
         {

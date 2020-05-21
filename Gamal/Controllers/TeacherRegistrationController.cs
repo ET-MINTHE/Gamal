@@ -31,11 +31,18 @@ namespace Gamal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index(TeacherRegistrationViewModel model)
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
+            if (TempData["enrolementState"]?.ToString() == "succeed")
+            {
+                ViewBag.message = "succeed";
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
             ViewBag.Message = TempData["Message"];
             TempData["Message"] = "";
 
@@ -57,16 +64,16 @@ namespace Gamal.Controllers
             return View(model);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Index(TeacherRegistrationViewModel model)
+        public async Task<IActionResult> Register(TeacherRegistrationViewModel model)
         {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
             if (ModelState.IsValid)
             {
                 var teacher = new UserTeacher();
                 teacher.SerialNumber = model.SerialNumber;
-
-                var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-                var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
 
                 var department = unitOfWork.Departments.Find(d => d.DepartmentName == model.Department).FirstOrDefault();
 
@@ -94,7 +101,7 @@ namespace Gamal.Controllers
                         unitOfWork.Teachers.Add(teacher);
                         unitOfWork.Complete();
                         TempData["Message"] = $"Inscription de l'enseignant {model.FirstName} {model.LastName} completée avec succes!";
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Register");
                     }
                     ViewBag.Error = $"Une erreur est survenue durant l'inscription de l'enseignant {model.FirstName} {model.LastName}!";
                     return View(model);
@@ -102,7 +109,14 @@ namespace Gamal.Controllers
                 ViewBag.Error = $"Une erreur est survenue durant l'inscription de l'enseignant {model.FirstName} {model.LastName}!";
                 return View(model);
             }
-            ViewBag.Error = $"Une erreur est survenue durant l'inscription de l'enseignant {model.FirstName} {model.LastName}!";
+            var departments = unitOfWork.Departments.GetAll().ToList();
+            var departmentList = new List<string>();
+
+            foreach (var item in departments)
+            {
+                departmentList.Add(item.DepartmentName);
+            }
+            model.Departments = new SelectList(departmentList);
             return View(model);
         }
     }

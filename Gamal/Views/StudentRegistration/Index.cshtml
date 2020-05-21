@@ -1,7 +1,8 @@
-﻿
+﻿@model Gamal.ViewModel.StudentPersonalInfoViewModel
+
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_PrivateHome.cshtml";
+    ViewData["Title"] = "StudentPersonalInfor";
+    Layout = "~/Views/Shared/_Secretary.cshtml";
 }
 
 @section container{
@@ -9,110 +10,72 @@
 }
 
 @section leftPanelHeader{
-    <img src="~/images/no_user.jpg" width="100" height="100" style="border-radius:50%; margin-left:30%; border:1px solid #2B547E" />
-    <h6 style="text-align:center; color:#150517">MINTHE</h6>
-    <h6 style="text-align:center; color:#150517">ELHADJ TAHIROU</h6>
-}
 
+}
 @section leftPanelBody
 {
-    <table class="table" style="font-size: 10pt; margin-top: 50px; color:#250517">
-        <tbody>
-            <tr height="10px">
-                <td scope="row" style="line-height: 0.5"> <a asp-controller="StudentRegistration" asp-action="Index">Home</a></td>
-            </tr>
-            <tr>
-                <td scope="row" style="line-height: 0.5"> <a asp-controller="Speaker" asp-action="Evaluations">Immatriculation Etudiants</a></td>
-            </tr>
-            <tr>
-                <td scope="row" style="line-height: 0.5"><a asp-controller="Speaker" asp-action="Evaluations">Inscription</a></td>
-            </tr>
-            <tr>
-                <td scope="row" style="line-height: 0.5"><a asp-controller="Speaker" asp-action="Evaluations">Appels d'Exam</a></td>
-            </tr>
-            <tr>
-                <td scope="row" style="line-height: 0.5"><a asp-controller="Speaker" asp-action="Evaluations">Livret</a></td>
-            </tr>
-            <tr>
-                <td scope="row" style="line-height: 0.5"><a asp-controller="Speaker" asp-action="Evaluations">Tableau de Reservation</a></td>
-            </tr>
-            <tr>
-                <td scope="row" style="line-height: 0.5"> <a asp-controller="Speaker" asp-action="Evaluations">Optention Titres</a></td>
-            </tr>
-            <tr>
-                <td scope="row" style="line-height: 0.5"> <a asp-controller="Speaker" asp-action="Evaluations">Taxes</a></td>
-            </tr>
-        </tbody>
-    </table>
 }
 
 @section middlePanelHeader{
-    <h5 style="color:white; text-align:center">UNIVERSITE GAMAL ABDEL NASSER DE CONAKRY</h5>
-    <h6 style="text-align:center; color:white">
-        <span class="first-letter">S</span>ervices<span class="first-letter"> W</span>eb pour <span class="first-letter"> E</span>tudiants et <span class="first-letter"> E</span>nseignants
-    </h6>
 }
 
 @section middlePanelBody
 {
-    <div style="">
-        <div class="card">
-            <div class="row" style="padding-left:7%">
-                <div class="col-md-11">
-                    @if (ViewBag.message == "succeed")
-                    {
-                        <h6 style="color:forestgreen; text-align:center">L'immatriculation de l'etudiant a été couronée de succès</h6>
-                    }
-                </div>
+    <div id="content">
+        <div class="card" data-ajax="true" data-ajax-complete="begin" data-ajax-begin="begin" data-ajax-loading="#spinner" data-ajax-method="post">
+            <div class="card-body">
+                <span style="font-size:15pt; font-family:'Times New Roman'">INSCRIPTIONS ET REINSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020</span>
+                <br />
+                <span style="font-family:'Times New Roman'">
+                    Pour y accéder, sélectionnez le menu (ouverture-fermeture) en haut à droite. Il s'agit de mettre à jour le navigateur.
+                    INSCRIPTIONS ET INSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020 La procédure en ligne est ouverte pour les frais d'évaluation pour
+                    les masters de deuxième niveau. Pour connaître les procédures et les délais, consultez les appels
+                </span>
+                <br />
+                <br />
+                Cliquez sur le button ci-dessous pour proceder à l'inscription. Toutes les informations
+                sont obligatoires
+                <br />
+                <br />
+                <span style="color:green">@ViewBag.Message</span>
+                <br />
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                @*
+                                data-ajax="true" data-ajax-begin="loading" data-ajax-complete="loading"
+                                data-ajax-loading="#spinner" data-ajax-method="GET"*@
+                                <a class="btn2 btn btn-primary" asp-action="StudentPersonalInfos" asp-controller="StudentRegistration">
+                                    Aller à la page de l'inscriptions des étudiants
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <br />
+                L'eCampus University est l'une des principales universités en ligne en Italie avec plus de
+                100 000 étudiants inscrits. Vous pouvez choisir entre 49 cursus traditionnels et innovants,
+                tous facilement accessibles en toute sécurité et directement depuis chez vous, répartis en 5
+                facultés: économie, droit, ingénierie, lettres et psychologie.
             </div>
         </div>
     </div>
-    <div>
-        <div class="card" style="margin-top:25px">
-            <div class="row" style="padding-left:7%;">
-                <div class="col-md-11">
-                    <br />
-                    <h5>INSCRIPTIONS ET INSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020</h5>
-                    <h6 style="color:black; text-align:center; text-align:justify">
-                        Pour y accéder, sélectionnez le menu (ouverture-fermeture) en haut à droite. Il s'agit de mettre à jour le navigateur.
-                        INSCRIPTIONS ET INSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020
-                        La procédure en ligne est ouverte pour les frais d'évaluation pour les masters de deuxième niveau. Pour connaître les procédures et les délais, consultez les appels
-                    </h6>
-                    <hr />
-                    <h5>Pubblicato il Bando Visiting Professor a.a. 2020/21.</h5>
-                    <h6 style="color:black; text-align:center; text-align:justify">
-                        Pubblicato il Bando Visiting Professor a.a. 2020/21.
-                        Si rende noto che sul sito di Ateneo alla pagina https://www.unimore.it/bandi/Visiting-Bandi.html è stato pubblicato il Bando Visiting
-                        Professor a.a. 2020/21. La scadenza per l'invio delle candidature è il 20 Aprile 2020. L'Ufficio è a disposizione per ogni eventuale chiarimento.
-                        A tal proposito, considerata la situazione emergenziale in base alla quale il personale dell'ufficio si trova in lavoro agile si prega di preferire
-                        l'utilizzo della posta elettronica (relint@unimore.it) onde evitare problemi di connessione telefonica.
-                    </h6>
-                    <hr />
-                    <h5>
-                        PRIX "SANDRO SALVATI" DE LA SÉCURITÉ ROUTIÈRE
-                    </h5>
-                    <h6 style="color:black; text-align:center; text-align:justify">
-                        L'Ing. Marcello Prestianni laureato in Ingegneria per la Sostenibilità Ambientale presso il DIEF ha visto premiato il suo elaborato
-                        sperimentale dalla rivista "L'Ingegnere Italiano"
-                        L'Ing. Marcello Prestianni, laureato con 110/110 e Lode in Ingegneria per la Sostenibilità Ambientale presso il DIEF nel 2018 con
-                        la tesi dal titolo: "Membrane ceramiche a base di BaCe0.65Zr0.20Y0.15O3-?-Ce0.85Gd0.15O2-? tramite 3D-printing", ha visto premiato
-                        il suo elaborato sperimentale come migliore nel settore Oil&Gas dalla rivista: "L’Ingegnere Italiano"
-                    </h6>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    @*<a class="btn btn-success" data-ajax="true" data-ajax-begin="loading" data-ajax-complete="onAjaxComplete" data-ajax-loading="#spinner" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#UpdateContentDiv" href="">List Data</a>*@
 }
 
-@section rightPanelHeader{
-    <h6 style="color:white; text-align:center">Informations Importantes</h6>
-}
+@section scripts{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script>
+        loading = function () {
+            document.getElementById("content").style.display = "none";
+            window.location.href = '@Url.Content("~/StudentRegistration/StudentPersonalInfos")';
+        };
 
-@section rightPanelBody
-{
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-}
+        complete = function () {
 
-
+        };
+    </script>
+}     

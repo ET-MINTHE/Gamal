@@ -5,55 +5,24 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_EmptyView.cshtml";
 }
-<style>
-    .btn-primary {
-        background-color: #F8F8F8;
-        width: 150px;
-        border: 1px solid #BEBEBE;
-        color: black;
-    }
 
-        .btn-primary:hover {
-            background-color: #F8F8F8;
-            width: 150px;
-            border: 1px solid #BEBEBE;
-            color: black;
-        }
-</style>
-<div style="margin-left:28%; width:44%; margin-top:100px">
-    <div class="card">
-        <div class="card-header" style=" background-color: #F8F8F8; color: black;
-        text-align: center">
-            <span style="font-size:25pt; font-weight:bold">UGANC</span>
+<div style="width:100%; margin-top:150px">
+    <div class="card w-50" style="margin-left:25%">
+        <div class="card-header" style="text-align:center; background-color:#25587E">
+            <span style="color: white; font-size: 18pt">Connexion au système</span>
         </div>
-        <div class="row" style="padding-left:7%">
-            <div class="col-md-11">
-                <br />
-                <form method="post">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Email"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Password"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-checkbox">
-                            <label asp-for="RememberMe">
-                                <input asp-for="RememberMe" />
-                                @Html.DisplayNameFor(m => m.RememberMe)
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Connexion</button>
-                    <br />
-                    <br />
-                </form>
-            </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <input asp-for="Email" placeholder="Inserer le mot de passe" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Password" placeholder="Inserer le mot de passe" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <button type="submit" name="button" value="second" class="btn btn-primary" style="float:right; background-color:#25587E">Se connecter</button>
+            </form>
         </div>
     </div>
 </div>

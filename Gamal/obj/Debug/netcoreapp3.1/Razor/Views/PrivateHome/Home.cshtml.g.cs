@@ -26,8 +26,15 @@ using Gamal.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Http;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1895f116bd11c45a55658afc518b8ade5d567834", @"/Views/PrivateHome/Home.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"00b07e519be85c819db8ca31c5e161827274582b", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"53a3cbe1952b84b6404f0a9759f671554cf5a320", @"/Views/_ViewImports.cshtml")]
     public class Views_PrivateHome_Home : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("src", new global::Microsoft.AspNetCore.Html.HtmlString("~/images/no_user.jpg"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -82,7 +89,7 @@ using Gamal.Models;
             WriteLiteral("\r\n");
             DefineSection("leftPanelHeader", async() => {
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "1895f116bd11c45a55658afc518b8ade5d5678346882", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "1895f116bd11c45a55658afc518b8ade5d5678347065", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -110,7 +117,7 @@ using Gamal.Models;
             WriteLiteral("\r\n");
             DefineSection("leftPanelBody", async() => {
                 WriteLiteral("\r\n    <table class=\"table\" style=\"font-size: 10pt; margin-top: 50px; color:#250517\">\r\n        <tbody>\r\n            <tr>\r\n                <td scope=\"row\"> ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d5678348867", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d5678349050", async() => {
                     WriteLiteral("<span style=\"color:#250517; font-size:12pt\">Enregistrement</span>");
                 }
                 );
@@ -128,7 +135,7 @@ using Gamal.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</td>\r\n            </tr>\r\n            <tr>\r\n                <td scope=\"row\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783410441", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783410624", async() => {
                     WriteLiteral("<span style=\"color:#250517; font-size:12pt\">Inscription</span>");
                 }
                 );
@@ -147,7 +154,7 @@ using Gamal.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</td>\r\n            </tr>\r\n\r\n            <tr>\r\n                <td scope=\"row\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783412104", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783412287", async() => {
                     WriteLiteral("<span style=\"color:#250517; font-size:12pt\">Appels d\'Exam</span>");
                 }
                 );
@@ -166,7 +173,7 @@ using Gamal.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</td>\r\n            </tr>\r\n            <tr>\r\n                <td scope=\"row\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783413766", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783413949", async() => {
                     WriteLiteral("<span style=\"color:#250517; font-size:12pt\">Livret</span>");
                 }
                 );
@@ -185,7 +192,7 @@ using Gamal.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</td>\r\n            </tr>\r\n            <tr>\r\n                <td scope=\"row\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783415420", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783415603", async() => {
                     WriteLiteral("<span style=\"color:#250517; font-size:12pt\">Tableau de Reservation</span>");
                 }
                 );
@@ -204,7 +211,7 @@ using Gamal.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</td>\r\n            </tr>\r\n            <tr>\r\n                <td scope=\"row\"> ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783417091", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783417274", async() => {
                     WriteLiteral("<span style=\"color:#250517; font-size:12pt\">Optention Titres</span>");
                 }
                 );
@@ -223,7 +230,7 @@ using Gamal.Models;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</td>\r\n            </tr>\r\n            <tr>\r\n                <td scope=\"row\"> ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783418756", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1895f116bd11c45a55658afc518b8ade5d56783418939", async() => {
                     WriteLiteral("<span style=\"color:#250517; font-size:12pt\">Taxes</span>");
                 }
                 );
@@ -271,6 +278,8 @@ using Gamal.Models;
             );
         }
         #pragma warning restore 1998
+        [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
+        public IHttpContextAccessor HttpContextAccessor { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]

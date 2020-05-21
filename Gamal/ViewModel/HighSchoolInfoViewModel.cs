@@ -17,6 +17,7 @@ namespace Gamal.ViewModel
         public int HighSchoolMark { get; set; }
         [Required(ErrorMessage ="L'année d'optention du bac est un champ obligatoire")]
         [Display(Name ="Année d'optention du bac")]
+        [DataType(DataType.Date)]
         public DateTime HighSchoolGraduateYear { get; set; }
         public IEnumerable<SelectListItem> AllHighSchools { get; set; }
         public IEnumerable<SelectListItem> AllHighSchoolOptions { get; set; }

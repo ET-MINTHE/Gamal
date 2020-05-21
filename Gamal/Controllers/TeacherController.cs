@@ -25,9 +25,6 @@ namespace Gamal.Controllers
         [HttpGet]
         public async Task<IActionResult> Teacher()
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
             var user = await userManager.FindByEmailAsync(HttpContext.Session.GetString("Email"));
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();

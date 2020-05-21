@@ -26,6 +26,10 @@ namespace Gamal.Models
             CourseExamSessions = new CourseExamSessionRepository(_context);
             ExamEnrollments = new ExamEnrollmentRepository(_context);
             Dollies = new DollyRepository(_context);
+            Profiles = new ProfileRepository(_context);
+            UniversityFees = new UniversityFeesRepository(_context);
+            StudentFees = new StudentFeeRepository(_context);
+            DollyVideos = new DollyVideoRepository(_context);
         }
             
         public IFacultyRepository Faculties { get; private set; }
@@ -39,9 +43,12 @@ namespace Gamal.Models
         public IExamRepository Exams { get; set; }
         public ICourseExamSessionRepository CourseExamSessions { get; set; }
         public IExamEnrollmentRepository ExamEnrollments { get; set; }
-        public IDollyRepository Dollies { get; set; }   
-
-        public int Complete()   
+        public IDollyRepository Dollies { get; set; }
+        public IProfileRepository Profiles { get; set; }
+        public IUniversityFeesRepository UniversityFees { get; set; }
+        public IStudentFeeRepository StudentFees { get; set; }
+        public IDollyVideoRepository DollyVideos { get; set; }
+        public int Complete()           
         {   
             return _context.SaveChanges();
         }

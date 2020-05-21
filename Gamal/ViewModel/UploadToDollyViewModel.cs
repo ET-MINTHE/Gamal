@@ -21,5 +21,6 @@ namespace Gamal.ViewModel
         public string FileName { get; set; }
 
         public List<Dolly> Dollies { get; set; }
+        public List<DollyVideo> DollyVideos { get; set; }   
     }   
 }

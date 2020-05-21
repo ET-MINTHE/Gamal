@@ -8,6 +8,7 @@ namespace Gamal.Models.IRepositories
 {
     public interface ITeacherRepository : IRepository<UserTeacher>
     {
-        
+        public IEnumerable<UserTeacher> GetTeacherBySerialNumber(string searchTerm);
     }
 }
+    

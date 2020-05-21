@@ -1,16 +1,7 @@
-﻿
+﻿@model Gamal.ViewModel.StudentEnrollmentViewModel;
 @{
     ViewData["Title"] = "StudentEnrollment";
     Layout = "~/Views/Shared/_Student.cshtml";
-}
-
-
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
 }
 
 @section container{
@@ -27,8 +18,6 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
 }
 
 @section middlePanelBody
@@ -40,8 +29,114 @@
         </h6>
     }
 
-    <span style="font-size:18pt; text-align:center"> Inscription et Réinscription</span>
+    <span style="font-size:12pt; text-align:center">Situation des Inscriptions</span>
     <br />
-    <span style="font-size:25pt; text-align:center; font-weight:bold"> Page en construction</span>
+    <span style="font-size:12pt; text-align:center; font-weight:bold">Vous trouverez ci-dessous des informations générales sur la situation universitaire et sur les inscriptions effectuées au fil des ans.</span>
+    <br />
+    <fieldset class="border p-3">
+        <legend class="w-auto" style="font-size:12pt; font-weight:bold; border-bottom: 3px solid red">Détail d'inscription @Model.AccademicYear</legend>
+        <table class="table">
+            <tbody>
+                <tr class="td1">
+                    <th scope="col"><span style="color:#150517">Année Académique</span></th>
+                    <td scope="col">@Model.AccademicYear</td>
+                </tr>
+                <tr class="td1">
+                    <th><span style="color:#150517">Date d'inscription</span></th>
+                    <td>@Model.EnrollmentYear</td>
+                </tr>
+                <tr class="td1">
+                    <th><span style="color:#150517">Département</span></th>
+                    <td>@Model.Department</td>
+                </tr>
+                <tr class="td1">
+                    <th><span style="color:#150517">Année en cours</span></th>
+                    <td>@Model.Year</td>
+                </tr>
+                <tr class="td1">
+                    <th><span style="color:#250517">Type d'inscription</span></th>
+                    <td>
+                        @if (Model.PartTime)
+                        {
+                            <span>SI</span>
+                        }
+                        else
+                        {
+                            <span>NO</span>
+                        }
+                    </td>
+                </tr>
+                <tr class="td1">
+                    <th><span style="color:#250517">Etat</span></th>
+                    <td>
+                        @if (Model.State)
+                        {
+                            <img src="~/images/active-icon.png" width="25px" height="25px" />
+                            <span>ACTIF</span>
+                        }
+                        else
+                        {
+                            <span>NON ACTIF</span>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <br />
+    <br />
+    <fieldset class="border p-3" style="border:3px solid red">
+        <legend class="w-auto" style="font-size:10pt; font-weight:bold;">Liste des inscriptions</legend>
+        <table class="table">
+            <thead class="thead-light">
+                <tr class="td1">
+                    <th scope="col"><span style="color:#150517">Année Académique</span></th>
+                    <th><span style="color:#150517">Date d'inscription</span></th>
+                    <th><span style="color:#150517">Département</span></th>
+                    <th><span style="color:#250517">Type d'inscription</span></th>
+                    <th><span style="color:#150517">Année en cours</span></th>
+                    <th><span style="color:#250517">Etat</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="td1">
+                    <td scope="col">
+                        <span style="font-size:11pt; color:indianred">
+                            <a class="a-link"  asp-controller="Administration"
+                               asp-action="StudentEnrollment">
+                                @Model.AccademicYear
+                            </a>
+                        </span>
+                    </td>
+                    <td>@Model.EnrollmentYear</td>
+                    <td>@Model.Department</td>
+                    <td>@Model.Year</td>
+                    <td>
+                        @if (Model.PartTime)
+                        {
+                            <span>SI</span>
+                        }
+                        else
+                        {
+                            <span>NO</span>
+                        }
+                    </td>
+                    <td>
+                        @if (Model.State)
+                        {
+                            <img src="~/images/active-icon.png" width="25px" height="25px" />
+                            <span>ACTIF</span>
+                        }
+                        else
+                        {
+                            <span>
+                                NON ACTIF
+                            </span>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Gamal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gamal.Controllers
 {
@@ -17,7 +18,8 @@ namespace Gamal.Controllers
         {
             _logger = logger;
         }
-
+        [HttpGet]
+        //[AllowAnonymous]
         public IActionResult Index()
         {
             return View();

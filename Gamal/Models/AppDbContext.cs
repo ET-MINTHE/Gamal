@@ -25,7 +25,11 @@ namespace Gamal.Models
         public DbSet<Booklet> Booklets { get; set; }
         public DbSet<Secretary> Secretaries { get; set; }
         public DbSet<Dolly> Dollies { get; set; }
-            
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<UniversityFee> UniversityFees { get; set; }
+        public DbSet<StudentFee> StudentFees { get; set; }
+        public DbSet<DollyVideo> DollyVideos { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -130,6 +134,15 @@ namespace Gamal.Models
                 .HasOne(b => b.Course)
                 .WithMany(c => c.Booklets)
                 .HasForeignKey(c => c.CourseCode);
+
+            modelBuilder.Entity<UniversityFee>()
+               .HasKey(u => new { u.AcademicYear, u.StartDate, u.ExpirationDate });
+
+            modelBuilder.Entity<StudentFee>()
+               .HasKey(sf => new { sf.AccademicYear, sf.StudentSerialNumber});
+
+            modelBuilder.Entity<Booklet>()
+               .HasKey(b => new { b.CourseCode, b.StudentSerialNumber, b.TeacherSerialNumber});
 
             base.OnModelCreating(modelBuilder);
         }

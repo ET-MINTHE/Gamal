@@ -4,14 +4,6 @@
     Layout = "~/Views/Shared/_Secretary.cshtml";
 }
 
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
-}
-
 @section container{
 
 }
@@ -26,19 +18,16 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:20pt;">Zone réservée du secrétaire </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
 }
 
 @section middlePanelBody
 {
-    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <span style="font-size:15pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <br />
+    <span style="color:black; font-size:15pt; border-bottom:5px solid red">ESSE4</span>
     <br />
     <br />
-    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
-    <br />
-    <br />
-    <span style="font-size:20pt">GESTION DES APPELS D'EXAMENS</span>
+    <span style="font-size:15pt">GESTION DES APPELS D'EXAMENS</span>
     <br />
     <br />
     <p>

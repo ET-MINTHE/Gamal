@@ -4,14 +4,6 @@
     Layout = "~/Views/Shared/_Student.cshtml";
 }
 
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
-}
-
 @section container{
 
 }
@@ -26,13 +18,11 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
 }
 
 @section middlePanelBody
 {
-    <span style="font-size:20pt">SESSION D'EXAMENS ANNÉE ACADÉMIQUE 2019/2020</span>
+    <span style="font-size:15pt">SESSION D'EXAMENS ANNÉE ACADÉMIQUE 2019/2020</span>
     <br />
     <br />
     <span style="font-size:15pt">Ci-dessous vous verez la liste des examens disponibles avec leurs dates respectives. </span>
@@ -85,6 +75,9 @@
             }
         </tbody>
     </table>
-
+    @if (Model.Count() == 0)
+    {
+        <span style="color:red; font-size:12pt; font-weight:bold">Aucun appel d'examen n'est disponible</span>
+    }
 }
 

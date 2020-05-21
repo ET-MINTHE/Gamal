@@ -1,0 +1,70 @@
+﻿@model Gamal.ViewModel.ProfileViewModel
+@{
+    ViewData["Title"] = "UpdateStudentProfile";
+    Layout = "~/Views/Shared/_Student.cshtml";
+}
+
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+    <span style="font-size:20pt; color:black">Changer votre photo de profile</span>
+    <br />
+    @if (!String.IsNullOrEmpty(@ViewBag.Error))
+    {
+        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
+    }
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
+    }
+    <br />
+    @{
+        var path = "/profiles/" + ViewBag.ProfilePath;
+    }
+    <div style="align-items:center">
+        <a asp-action="UpdateProfile" asp-controller="Administration">
+            <img src="@path" width="350" height="400" style="border:1px solid #BEBEBE" />
+        </a>
+    </div>
+
+    <form enctype="multipart/form-data" method="post" asp-action="UpdateProfile">
+        <div class="custom-file">
+            <input asp-for="FileToUpload" class="form-control custom-file-input">
+            <label class="custom-file-label">Choisr la Photo....</label>
+            <span asp-validation-for="FileToUpload" class="text-danger"></span>
+        </div>
+        <br />
+        <br />
+        <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Charger</button>
+    </form>
+    <br />
+    <br />
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
+}
+

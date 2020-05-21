@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Gamal.Models;
 using Gamal.Models.Domain;
@@ -23,7 +24,6 @@ namespace Gamal.Controllers
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration config;
-
         public StudentRegistrationController(SignInManager<ApplicationUser>
             signInManager, UserManager<ApplicationUser> userManager, IConfiguration config)
         {
@@ -34,30 +34,37 @@ namespace Gamal.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()    
+        public async Task<IActionResult> Index()    
         {
-            if (TempData["enrolementState"]?.ToString() == "succeed")
-            {
-                ViewBag.message = "succeed";
-            }
-            return View();
+            var model = new StudentPersonalInfoViewModel();
+            ViewBag.Message = TempData["Message"]?.ToString();
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult StudentPersonalInfos()
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
             var model = new StudentPersonalInfoViewModel();
+            model.DateOfBirth = DateTime.Now;
+            //Thread.Sleep(3000);
             return View(model);
         }
             
         [HttpPost]
-        public IActionResult StudentPersonalInfos(StudentPersonalInfoViewModel model, string button)
+        public async Task<IActionResult> StudentPersonalInfos(StudentPersonalInfoViewModel model, string button)
         {
             if (ModelState.IsValid)
             {
+                //var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+                //var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+                var student = await userManager.FindByEmailAsync(model.Email);
+               
+                if (student != null)
+                {
+                    ViewBag.ErrorMessage = $"L'adresse electronique {model.Email} existe déjà dans la base de donnée";
+                    return View(model);
+                }
+
                 TempData["FirstName"] = model.FirstName;
                 TempData["LastName"] = model.LastName;
                 TempData["DateOfBirth"] = model.DateOfBirth;
@@ -66,18 +73,13 @@ namespace Gamal.Controllers
                 TempData["Email"] = model.Email;
                 return RedirectToAction("StudentContact");
             }
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
+            
             return View(model);
         }
 
         [HttpGet]
         public IActionResult StudentContact()
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
             return View();
         }
 
@@ -103,9 +105,6 @@ namespace Gamal.Controllers
                 return RedirectToAction("StudentPersonalInfos");
             }
 
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
             return View(model);
         }
 
@@ -132,9 +131,7 @@ namespace Gamal.Controllers
             model.AllHighSchoolOptions = new SelectList(allHighSchoolOptions);
             model.AllHighSchools = new SelectList(allHighSchools);
 
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
+            model.HighSchoolGraduateYear = DateTime.Now;
 
             return View(model);
         }
@@ -183,9 +180,7 @@ namespace Gamal.Controllers
                     model.AllHighSchoolMarks = new SelectList(allMarks);
                     model.AllHighSchoolOptions = new SelectList(allHighSchoolOptions);
                     model.AllHighSchools = new SelectList(allHighSchools);
-                    ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-                    ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-                    ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
+                   
                     return View(model);
                 }
             }
@@ -224,81 +219,20 @@ namespace Gamal.Controllers
             model.AllFaculties = new SelectList(allFaculties);
             model.AllCurrentYears = new SelectList(allYears);
 
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> StudentFacultyInfos(StudentFacultyViewModel model, string button)
+        public IActionResult StudentFacultyInfos(StudentFacultyViewModel model, string button)
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
-            if (button == "first")
-            {
-                return RedirectToAction("HighSchoolInfos");
-            }
-
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser
-                {
-                    FirstName = TempData["FirstName"]?.ToString(),
-                    LastName = TempData["LastName"]?.ToString(),
-                    DateOfBirth = (DateTime)TempData["DateOfBirth"],
-                    Nationality = TempData["Nationality"]?.ToString(),
-                    CityOfBirth = TempData["CityOfBirth"]?.ToString(),
-                    Email = TempData["Email"]?.ToString(),
-                    Address = TempData["Address"]?.ToString(),
-                    CityOfResidence = TempData["CityOfResidence"]?.ToString(),
-                    PhoneNumber = TempData["PhoneNumber"]?.ToString(),
-                    UserName = TempData["Email"]?.ToString(),
-                    HighSchool = TempData["HighSchool"]?.ToString(),
-                    HighSchoolOption = TempData["HighSchoolOption"]?.ToString(),
-                    HighSchoolMark = (int)TempData["HighSchoolMark"],
-                    HighSchoolGraduateYear = (DateTime)TempData["HighSchoolGraduateYear"],
-                    CurrentYear = model.CurrentYear,
-                    Department = model.Department,
-                    Faculty = model.Faculty,
-                    YearOfEnrolement = model.YearOfEnrolement,
-                    SerialNumber = model.SerialNumber
-                };
-
-                var result = await userManager.CreateAsync(user, "Fantabamba25?!1_");
-                if (result.Succeeded)
-                {
-                    result = await userManager.AddToRoleAsync(user, "Student");
-                    if (result.Succeeded)
-                    {
-                        TempData["enrolementState"] = "succeed";
-                        TempData["Message"] = "L'inscription a été completée avec succes";
-
-                        var student = new UserStudent();
-                        var department = unitOfWork.Departments.Find(d => d.DepartmentName == model.Department).FirstOrDefault();
-
-                        student.DepartmentCode = department.DepartmentCode;
-                        // student.Department = department;
-                        student.SerialNumber = model.SerialNumber;
-                        student.Profile = model.StudentProfile;
-                        student.PartTime = model.PartTime == "SI" ? true : false;
-                        unitOfWork.UserStudents.Add(student);
-                        student.Email = TempData["Email"]?.ToString();
-                        unitOfWork.Complete();
-
-                        SendEmailConfirmation(student.Email);
-                        return RedirectToAction("Home", "Secretary");
-                    }
-                }
-            }
-
-            ViewBag.ErrorMessage = $"Impossible d'inscrire l'étudiant {TempData["FirstName"]?.ToString()} {TempData["LastName"]?.ToString()}";
             var allYears = new List<int>();
             for (int mark = 1; mark <= 6; mark++)
             {
                 allYears.Add(mark);
             }
-                
+
             var allDepartments = new List<string>();
             var allFaculties = new List<string>();
             allDepartments.Add("Selectionner le Département");
@@ -319,11 +253,133 @@ namespace Gamal.Controllers
             model.AllDepartments = new SelectList(allDepartments);
             model.AllFaculties = new SelectList(allFaculties);
             model.AllCurrentYears = new SelectList(allYears);
+            
+            if (button == "first")
+            {
+                return RedirectToAction("HighSchoolInfos");
+            }
 
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
+            if (ModelState.IsValid)
+            {
+                var existStudent = unitOfWork.UserStudents.ExistStudentWithSerialNumber(model.SerialNumber);
+                
+                if (existStudent)
+                {
+                    ViewBag.ErrorMessage = $"L'étudiant avec le matricule {model.SerialNumber} existe déjà dans la base de donnée";
+                    return View(model);
+                }
+                DateTime enrollmentYear = DateTime.Now;
+                string monthOfEnrollment = DateTime.Now.ToString("MM");
+                if (!(Int32.Parse(monthOfEnrollment) > 9 && Int32.Parse(monthOfEnrollment) < 12))
+                {
+                    enrollmentYear = enrollmentYear.AddYears(-1);
+                }
+
+                TempData["CurrentYear"] = model.CurrentYear;
+                TempData["Department"] = model.Department;
+                TempData["Faculty"] = model.Faculty;
+                TempData["YearOfEnrolement"] = enrollmentYear;
+                TempData["SerialNumber"] = model.SerialNumber;
+                TempData["PartTime"] = model.PartTime;
+                TempData["StudentProfile"] = model.StudentProfile;
+
+                return RedirectToAction("ConfirmStudentEnrollment");
+            }
+
+            ViewBag.ErrorMessage = $"Impossible d'inscrire l'étudiant {TempData["FirstName"]?.ToString()} {TempData["LastName"]?.ToString()}";
+           
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmStudentEnrollment()
+        {
+            var model = new StudentRegistrationViewModel();
+            model.FirstName = TempData["FirstName"]?.ToString();
+            model.LastName = TempData["LastName"]?.ToString();
+            model.DateOfBirth = (DateTime)TempData["DateOfBirth"];
+            model.Nationality = TempData["Nationality"]?.ToString();
+            model.CityOfBirth = TempData["CityOfBirth"]?.ToString();
+            model.Email = TempData["Email"]?.ToString();
+            model.Address = TempData["Address"]?.ToString();
+            model.CityOfResidence = TempData["CityOfResidence"]?.ToString();
+            model.PhoneNumber = TempData["PhoneNumber"]?.ToString();
+            model.UserName = TempData["Email"]?.ToString();
+            model.HighSchool = TempData["HighSchool"]?.ToString();
+            model.HighSchoolOption = TempData["HighSchoolOption"]?.ToString();
+            model.HighSchoolMark = (int)TempData["HighSchoolMark"];
+            model.HighSchoolGraduateYear = (DateTime)TempData["HighSchoolGraduateYear"];
+            model.CurrentYear = (int)TempData["CurrentYear"];
+            model.Department = TempData["Department"]?.ToString();
+            model.Faculty = TempData["Faculty"]?.ToString();
+            model.YearOfEnrolement = (DateTime)TempData["YearOfEnrolement"];
+            model.SerialNumber = TempData["SerialNumber"]?.ToString();
+            model.StudentProfile = TempData["StudentProfile"]?.ToString();
+            model.PartTime = TempData["PartTime"]?.ToString();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async  Task<ActionResult> ConfirmStudentEnrollment(StudentRegistrationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    DateOfBirth = model.DateOfBirth,
+                    Nationality = model.Nationality,
+                    CityOfBirth = model.CityOfBirth,
+                    Email = model.Email,
+                    Address = model.Address,
+                    CityOfResidence = model.CityOfResidence,
+                    PhoneNumber = model.PhoneNumber,
+                    UserName = model.Email,
+                    HighSchool = model.HighSchool,
+                    HighSchoolOption = model.HighSchoolOption,
+                    HighSchoolMark = model.HighSchoolMark,
+                    HighSchoolGraduateYear = model.HighSchoolGraduateYear,
+                    CurrentYear = model.CurrentYear,
+                    Department = model.Department,
+                    Faculty = model.Faculty,
+                    YearOfEnrolement = model.YearOfEnrolement,
+                    SerialNumber = model.SerialNumber,
+                };
+
+                var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+                var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+
+                var result = await userManager.CreateAsync(user, "Fantabamba25?!1_");
+                if (result.Succeeded)
+                {
+                    result = await userManager.AddToRoleAsync(user, "Student");
+                    if (result.Succeeded)
+                    {
+                        TempData["enrolementState"] = "succeed";
+                        TempData["Message"] = $"L'inscription de l'étudiant {user.FirstName} {user.LastName} a été completée avec succes";
+
+                        var student = new UserStudent();
+                        var department = unitOfWork.Departments.Find(d => d.DepartmentName == model.Department).FirstOrDefault();
+
+                        student.DepartmentCode = department.DepartmentCode;
+                        // student.Department = department;
+                        student.SerialNumber = model.SerialNumber;
+                        student.Profile = model.StudentProfile;
+                        student.PartTime = model.PartTime == "SI" ? true : false;
+                        student.Email = model.Email;
+                        student.DepartmentCode = department.DepartmentCode;
+                        unitOfWork.UserStudents.Add(student);
+                        
+                        unitOfWork.Complete();
+
+                        SendEmailConfirmation(student.Email);
+                        return RedirectToAction("Index", "StudentRegistration");
+                    }
+                }
+            }
+
+            return View();
         }
 
         [HttpGet]

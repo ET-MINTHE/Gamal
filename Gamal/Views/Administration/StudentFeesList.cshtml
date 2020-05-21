@@ -1,0 +1,102 @@
+﻿@model Gamal.ViewModel.ListStudentPayedFeesViewModel
+@{
+    ViewData["Title"] = "StudentFeesList";
+    Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+    <span style="font-size:15pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
+    <br />
+    <span style="color:black; font-size:15pt; border-bottom:5px solid red">ESSE4</span>
+    <br />
+    <br />
+    <span style="font-size:15pt">LISTE DES ETUDIANTS QUI ONT PAYE LES TAXES ANNÉE ACADÉMIQUE 2019/2020</span>
+    <br />
+    <br />
+    <form method="get" asp-controller="Administration" asp-action="StudentFeesList">
+        <div class="input-group">
+            <input id="searchStudent" class="form-control" placeholder="Chercher une matière" asp-for="SearchTerm" />
+            <div class="input-group-append">
+                <button type="submit" class="btn1 btn-primary">Chercher</button>
+            </div>
+        </div>
+    </form>
+    <br />
+    @if (Model.Model != null)
+    {
+        <div class="border border-#6D7B8D">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col"><span style="font-size:9pt">Nom</span></th>
+                        <th scope="col"><span style="font-size:9pt">Année Académique</span></th>
+                        <th scope="col"><span style="font-size:9pt">Montant</span></th>
+                        <th scope="col"><span style="font-size:9pt">Date de payement</span></th>
+                        <th scope="col"><span style="font-size:9pt">Etat</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Model)
+                    {
+                        <tr style="line-height: 0.6;">
+                            <td>
+                                <span style="font-size:11pt; color:red">
+                                    <a class="a-booklet" href"#">
+                                        @item.Name
+                                    </a>
+                                </span>
+                            </td>
+                            <td>
+                                blablaba
+                            </td>
+                            <td>@item.Ammount</td>
+                            <td>
+                                @item.DateOfPayment
+                            </td>
+                            <td>
+                                Payé
+                                <img src="~/images/active-icon.png" width="35px" height="35px" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <span style="color:red">L'étudiant que vous cherchez n'a pas encore payé les taxes univisersitaires</span>
+    }
+}
+
+@section Scripts{
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery/jquery-ui.js"></script>
+    <link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#searchStudent').val("");
+            $('#searchStudent').autocomplete({
+                source: '/Administration/AutocompleteStudent'
+            });
+        });
+    </script>
+}

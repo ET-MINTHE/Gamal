@@ -1,0 +1,166 @@
+﻿@model Gamal.ViewModel.StudentRegistrationViewModel
+@{
+    ViewData["Title"] = "ConfirmStudentEnrollment";
+    Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+@section leftPanelBody
+{
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+    <div style="">
+        <div class="card">
+            <div align="center">
+                <span style="font-size:15pt; font-family:'Times New Roman'">Processus d'Inscription des Etudiants</span>
+                <div style="vertical-align: central"><label style="background-color:#25383C; color:white; font-family:'Times New Roman'; height:45px; width:200px; font-weight:bold; padding-top:10px; vertical-align:central">Phase de Confirmation</label></div>
+                @if (!String.IsNullOrEmpty(@ViewBag.ErrorMessage))
+                {
+                    <span style="font-size:15pt; color:red">@ViewBag.ErrorMessage</span><br />
+                }
+            </div>
+            <div class="row" style="padding-left:7%">
+                <div class="col-md-11 overflow-auto">
+                    <form method="post">
+                        <div class="overflow-auto" style="height:550px">
+                            <div class="form-group">
+                                <label asp-for="FirstName"></label>
+                                <input asp-for="FirstName" style="color:red" placeholder="Inserer le prénom" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="LastName"></label>
+                                <input asp-for="LastName" style="color:red" placeholder="Inserer le nom" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" style="color:red" placeholder="Inserer l'adresse electronique" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CityOfBirth"></label>
+                                <input asp-for="CityOfBirth" style="color:red" placeholder="Inserer la ville de naissance" class="form-control" />
+                                <span asp-validation-for="CityOfBirth" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Nationality"></label>
+                                <input asp-for="Nationality" style="color:red" placeholder="Inserer la nationalité" class="form-control" />
+                                <span asp-validation-for="Nationality" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DateOfBirth"></label>
+                                <input asp-for="DateOfBirth" style="color:red" class="form-control fr-date-datepicker" placeholder="inserisci la data in formato gg/mm/aaaa">
+                                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Address"></label>
+                                <input asp-for="Address" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CityOfResidence"></label>
+                                <input asp-for="CityOfResidence" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="CityOfResidence" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber"></label>
+                                <input asp-for="PhoneNumber" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="UserName"></label>
+                                <input asp-for="UserName" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HighSchool"></label>
+                                <input asp-for="HighSchool" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="HighSchool" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HighSchoolOption"></label>
+                                <input asp-for="HighSchoolOption" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="HighSchoolOption" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HighSchoolMark"></label>
+                                <input asp-for="HighSchoolMark" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="HighSchoolMark" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="HighSchoolGraduateYear"></label>
+                                <input asp-for="HighSchoolGraduateYear" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="HighSchoolGraduateYear" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CurrentYear"></label>
+                                <input asp-for="CurrentYear" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="CurrentYear" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Department"></label>
+                                <input asp-for="Department" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="Department" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Faculty"></label>
+                                <input asp-for="Faculty" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="Faculty" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="YearOfEnrolement"></label>
+                                <input asp-for="YearOfEnrolement" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="YearOfEnrolement" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SerialNumber"></label>
+                                <input asp-for="SerialNumber" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PartTime"></label>
+                                <input asp-for="PartTime" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="PartTime" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="StudentProfile"></label>
+                                <input asp-for="StudentProfile" style="color:red" class="form-control fr-date-datepicker">
+                                <span asp-validation-for="StudentProfile" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <a style="background-color:#25383C; color:white" class="btn btn-primary" asp-controller="StudentRegistration" asp-action="Index">Annuller</a>
+                        <span id="confirmDeleteSpan" style="display:none">
+                            <span>Vous etes sur de vouloir inscrire l'étudiant?</span>
+                            <button type="submit" class="btn btn-danger">
+                                OUI
+                            </button>
+                            <a href="#" onclick="confirmEnrollment(false)" style="background-color:#25383C; color:white" class="btn btn-primary">NON</a>
+                        </span>
+                        <span id="deleteSpan">
+                            <a onclick="confirmEnrollment(true)"
+                               class="btn btn-primary" name="button" value="second" style="background-color:#25383C; color:white">Confirmer</a>
+                        </span>
+                        <br />
+                        <br />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/js/custom.js"></script>
+}

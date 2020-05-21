@@ -4,15 +4,6 @@
     Layout = "~/Views/Shared/_Student.cshtml";
 }
 
-
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
-}
-
 @section container{
 
 }
@@ -27,9 +18,6 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
-    <br />
 }
 
 @section middlePanelBody
@@ -40,7 +28,7 @@
     <br />
     <br />
     <fieldset class="border p-3" style="border:3px solid red">
-        <legend class="w-auto" style="font-size:18pt; font-weight:bold; border-bottom: 5px solid red">@Model.Department</legend>
+        <legend class="w-auto" style="font-size:15pt; font-weight:bold; border-bottom: 5px solid red">@Model.Department</legend>
         <table class="table">
             <tbody>
                 <tr class="td1">

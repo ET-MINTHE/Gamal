@@ -8,13 +8,7 @@
 @section container{
 
 }
-@section UserFirstName{
-    @ViewBag.FirstName
-}
 
-@section UserLastName{
-    @ViewBag.LastName
-}
 @section leftPanelHeader{
 
 }
@@ -24,66 +18,66 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:20pt;">Zone réservée du secrétaire </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
 }
 
 @section middlePanelBody
 {
-    <br />
-    <span style="color:red">
-        @ViewBag.ErrorMessage
-    </span>
     <div style="">
         <div class="card">
-            <div style="text-align:center">
-                <span style="font-size:18pt; font-weight:bold; color:red">Processus d'Immatriculation des Etudiants</span>
-                <br />
-                <span style="font-weight:bold">Informations du département de la faculté</span>
+            <div align="center">
+                <span style="font-size:18pt; color:#1C2833; font-weight:100; font-family:'Times New Roman'">Processus d'Inscription des Etudiants</span>
+                <div class="row align-items-center align-self-center justify-content-center" style="padding:0px">
+                    <div class=" col-sm-4 col-lg-4" style="padding:0px">
+                        <div class="card h-25 w-25" style="background-color:#25587E; padding:0px">
+                            <div class="card-body" style="padding:0px">
+                                <span style="font-size:15pt; color:white; font-weight:bold; font-family:'Times New Roman'">Phase 4/4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <br />
-            <div class="row" style="padding-left:7%">
-                <div class="col-md-11">
-                    <form method="post">
-                        <div class="form-group">
-                            <input asp-for="SerialNumber" class="form-control fr-date-datepicker" placeholder="Inserer le numero de matricule">
-                            <span asp-validation-for="SerialNumber" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <select id="FacultyId" asp-for="Faculty" class="form-control" asp-items="Model.AllFaculties">
-                                <option value="">Select Faculty</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select id="DepartementId" asp-for="Department" class="form-control" asp-items="Model.AllDepartments">
-                                <option value="">Select Department</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            @Html.DropDownListFor(model => model.StudentProfile, Model.StudentProfiles as SelectList, "Selectioner le profile de l'étudiant", new { @class = "form-control" })
-                            <span asp-validation-for="StudentProfile" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            @Html.DropDownListFor(model => model.CurrentYear, Model.AllCurrentYears as SelectList, "Selectioner l'année courante", new { @class = "form-control" })
-                            <span asp-validation-for="CurrentYear" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            @Html.DropDownListFor(model => model.PartTime, Model.PartTimes as SelectList, "Etudiant PartTime", new { @class = "form-control" })
-                            <span asp-validation-for="PartTime" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="YearOfEnrolement"></label>
-                            <input asp-for="YearOfEnrolement" class="form-control fr-date-datepicker" placeholder="Inserer l'année d'inscription">
-                            <span asp-validation-for="YearOfEnrolement" class="text-danger"></span>
-                        </div>
-                        <button type="submit" name="button" value="first" class="btn1 btn btn-primary">Precedent</button>
-                        <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Suivant</button>
-                    </form>
-                    <br />
+            @if (!String.IsNullOrEmpty(@ViewBag.ErrorMessage))
+            {
+                <span style="font-size:15pt; color:red">@ViewBag.ErrorMessage</span><br />
+            }
+                <div class="row" style="padding-left:7%">
+                    <div class="col-md-11">
+                        <form method="post">
+                            <div class="form-group">
+                                <input asp-for="SerialNumber" class="form-control fr-date-datepicker" placeholder="Inserer le numero de matricule">
+                                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <select id="FacultyId" asp-for="Faculty" class="form-control" asp-items="Model.AllFaculties">
+                                    @*<option value="">Select Faculty</option>*@
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="DepartementId" asp-for="Department" class="form-control" asp-items="Model.AllDepartments">
+                                    @*<option value="">Select Department</option>*@
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.StudentProfile, Model.StudentProfiles as SelectList, "Selectioner le profile de l'étudiant", new { @class = "form-control" })
+                                <span asp-validation-for="StudentProfile" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.CurrentYear, Model.AllCurrentYears as SelectList, "Selectioner l'année courante", new { @class = "form-control" })
+                                <span asp-validation-for="CurrentYear" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.PartTime, Model.PartTimes as SelectList, "Etudiant PartTime", new { @class = "form-control" })
+                                <span asp-validation-for="PartTime" class="text-danger"></span>
+                            </div>
+                            <button type="submit" name="button" value="first" class="btn1 btn btn-primary">Precedent</button>
+                            <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float: right">Inscrire</button>
+                        </form>
+                        <br />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 }
 
 @section Scripts{

@@ -4,15 +4,6 @@
     Layout = "~/Views/Shared/_Student.cshtml";
 }
 
-
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
-}
-
 @section container{
 
 }
@@ -27,8 +18,7 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:22pt;">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
+   
 }
 
 @section middlePanelBody

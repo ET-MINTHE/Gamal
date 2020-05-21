@@ -16,23 +16,17 @@ namespace Gamal.Controllers
         [HttpGet]
         public IActionResult ExamSession()
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
-
             return View();
         }
 
         [HttpGet]
         public IActionResult AddExamSession()
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
-
             var model = new ExamSessionViewModel();
             ViewBag.Message = TempData["Message"]?.ToString();
             TempData["Message"] = "";
+            model.Start = DateTime.Now;
+            model.End = DateTime.Now;
             return View(model);
         }
         [HttpPost]
@@ -40,16 +34,18 @@ namespace Gamal.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-                ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-                ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
-
                 var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
                 var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
 
+                if ((model.Start < DateTime.Now) || (model.End < DateTime.Now) || (model.Start > model.End))
+                {
+                    ViewBag.Error = $"La de début doit etre inférieur à la date de fin";
+                    return View(model);
+                }
+
                 var examSession = new ExamSession();
-                examSession.Start = model.Start;
-                examSession.End = model.End;
+                examSession.Start = model.Start ?? default(DateTime);
+                examSession.End = model.End ?? default(DateTime);
                 examSession.Name = model.Name;
                 examSession.Description = model.Description;
                 examSession.IsActive = true;
@@ -57,29 +53,6 @@ namespace Gamal.Controllers
                 unitOfWork.ExamSessions.Add(examSession);
                 
                 unitOfWork.Complete();
-                //var examSessionId = examSession.ExamSessionId;
-                //var courses = unitOfWork.Courses.GetAll();
-
-                //foreach (var course in courses)
-                //{
-                //    var courseExamSession = new CourseExamSession();
-                //    courseExamSession.CourseCode = course.CourseCode;
-
-                //    courseExamSession.ExamSessionId = examSessionId;
-                //    unitOfWork.CourseExamSessions.Add(courseExamSession);
-                //    unitOfWork.Complete();
-
-                //    var exam = new Exam();
-                //    exam.Name = course.CourseName;
-                //    exam.Description = $"Session d'exam du cours {course.CourseName}";
-                //    exam.CourseExamSessionId = courseExamSession.CourseExamSessionId;
-                //    unitOfWork.Exams.Add(exam);
-                //    unitOfWork.Complete();
-               // }
-                
-                //exam.Date = model.Date;
-                //exam.CourseExamSessionId = examSession.ExamSessionId;
-
 
                 TempData["Message"] = "La session a été enregistrer avec succès";
                 return RedirectToAction("AddExamSession"); ;

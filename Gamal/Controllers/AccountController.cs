@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using Gamal.Models;
-using Gamal.Models.Domain;
+﻿using Gamal.Models;
 using Gamal.Models.IRepositories;
 using Gamal.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Esse3Gamal.Controllers
 {
@@ -39,12 +37,14 @@ namespace Esse3Gamal.Controllers
             this.facultyRepository = facultyRepository;
         }
         [HttpGet]
+        //[Authorize(Roles = "Secretary")]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        //[Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -85,12 +85,14 @@ namespace Esse3Gamal.Controllers
         }
 
         [HttpGet]
+        //[AllowAnonymous]
         public async Task<IActionResult> Login()
         {
             return View();
         }
 
         [HttpPost]
+        //[AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -106,12 +108,24 @@ namespace Esse3Gamal.Controllers
                     var userVector = model.Email.Split("@");
                     var firstName = (userVector[0].Split(".")[0]).ToUpper();
                     var lastName = (userVector[0].Split(".")[1]).ToUpper();
-                    
+
+                    var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+                    var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+                    var profile = unitOfWork.Profiles.Find(p => p.SerialNumber == user.SerialNumber).FirstOrDefault();
                     HttpContext.Session.SetString("UserFirstName", firstName);
                     HttpContext.Session.SetString("UserLastName", lastName);
                     HttpContext.Session.SetString("Email", model.Email);
                     HttpContext.Session.SetString("SerialNumber", user.SerialNumber);
 
+                    if (profile != null)
+                    {
+                        HttpContext.Session.SetString("ProfilePath", profile.FilePath);
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("ProfilePath", "no-user.jpg");
+                    }
+                    
                     if ((await userManager.IsInRoleAsync(user, "Secretary")) == true)
                     {
                         return RedirectToAction("Home", "Secretary");
@@ -234,6 +248,40 @@ namespace Esse3Gamal.Controllers
                 Credentials = credentials
             };
             smtpClient.Send(mailMessage);
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            //Change password should be reached only by asigned user
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    ViewBag.Error = "Utilisateur non trouvé!";
+                    return View(model);
+                }
+                var result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                        ViewBag.Error = "Une erreur est survenue!";
+                            return View(model);
+                    }
+                }
+                await signInManager.RefreshSignInAsync(user);
+                return RedirectToAction("Login");
+            }
+            return View(model);
         }
     }   
 }   

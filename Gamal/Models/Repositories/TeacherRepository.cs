@@ -13,6 +13,11 @@ namespace Gamal.Models.Repositories
            : base(context)
         {   
         }
+        public IEnumerable<UserTeacher> GetTeacherBySerialNumber(string searchTerm)
+        {
+            return AppContext.Teachers
+                  .Where(s => s.SerialNumber == searchTerm).ToList();
+        }
 
         public AppDbContext AppContext
         {

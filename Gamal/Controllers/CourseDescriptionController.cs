@@ -27,10 +27,6 @@ namespace Gamal.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string courseId, string departmentCode)
         {
-            ViewBag.FirstName = HttpContext.Session.GetString("UserFirstName");
-            ViewBag.LastName = HttpContext.Session.GetString("UserLastName");
-            ViewBag.SerialNumber = HttpContext.Session.GetString("SerialNumber");
-
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
             var course = await unitOfWork.Courses.GetCourseWithDepartment(courseId);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -7,14 +8,19 @@ using System.Threading.Tasks;
 using Gamal.Models;
 using Gamal.Models.IRepositories;
 using Gamal.Models.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Nancy;
 
 namespace Gamal
 {
@@ -32,6 +38,31 @@ namespace Gamal
         {
             //services.AddDbContextPool<AppDbContext>(
             //    options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+
+            services.AddLocalization(option => option.ResourcesPath = "Resources");
+
+            services.Configure<RequestLocalizationOptions>(
+            opts =>
+            {
+                var supportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en-GB"),
+                    new CultureInfo("en-US"),
+                    new CultureInfo("en"),
+                    new CultureInfo("fr-FR"),
+                    new CultureInfo("fr"),
+                };
+
+                opts.DefaultRequestCulture = new RequestCulture("fr-FR");
+                // Formatting numbers, dates, etc.
+                opts.SupportedCultures = supportedCultures;
+                // UI strings that we have localized.
+                opts.SupportedUICultures = supportedCultures;
+                opts.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(async context =>
+                {
+                    return new ProviderCultureResult("fr-FR");
+                }));
+            });
 
             services.AddDbContext<AppDbContext>((serviceProvider, optionsBuilder) =>
             {
@@ -54,6 +85,14 @@ namespace Gamal
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
 
             services.AddControllersWithViews();
+            //services.AddMvc(options => {
+            //    var policy = new AuthorizationPolicyBuilder()
+            //                   .RequireAuthenticatedUser()
+            //                   .Build();
+            //    options.Filters.Add(new AuthorizeFilter(policy));
+            //}).AddXmlSerializerFormatters();
+            services.AddAuthentication();
+            services.AddAuthorization();
             services.AddMvc();
         } 
 
@@ -71,13 +110,16 @@ namespace Gamal
                 app.UseHsts();
             }
 
+            //app.UseRequestLocalization(requestLocalizationOptions);
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
             app.UseSession();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

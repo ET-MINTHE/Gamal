@@ -167,16 +167,16 @@ namespace Gamal.Migrations
                     b.Property<string>("StudentSerialNumber")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("TeacherSerialNumber")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Mark")
                         .HasColumnType("int");
 
-                    b.Property<string>("TeacherSerialNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CourseCode", "StudentSerialNumber", "Date");
+                    b.HasKey("CourseCode", "StudentSerialNumber", "TeacherSerialNumber");
 
                     b.HasIndex("StudentSerialNumber");
 
@@ -293,6 +293,30 @@ namespace Gamal.Migrations
                     b.ToTable("Dollies");
                 });
 
+            modelBuilder.Entity("Gamal.Models.Domain.DollyVideo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CourseCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeacherSerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DollyVideos");
+                });
+
             modelBuilder.Entity("Gamal.Models.Domain.Exam", b =>
                 {
                     b.Property<int>("ExamId")
@@ -390,6 +414,24 @@ namespace Gamal.Migrations
                     b.ToTable("Faculties");
                 });
 
+            modelBuilder.Entity("Gamal.Models.Domain.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profiles");
+                });
+
             modelBuilder.Entity("Gamal.Models.Domain.Secretary", b =>
                 {
                     b.Property<string>("SerialNumber")
@@ -401,6 +443,56 @@ namespace Gamal.Migrations
                     b.HasKey("SerialNumber");
 
                     b.ToTable("Secretaries");
+                });
+
+            modelBuilder.Entity("Gamal.Models.Domain.StudentFee", b =>
+                {
+                    b.Property<DateTime>("AccademicYear")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StudentSerialNumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("Ammount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PayementDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AccademicYear", "StudentSerialNumber");
+
+                    b.ToTable("StudentFees");
+                });
+
+            modelBuilder.Entity("Gamal.Models.Domain.UniversityFee", b =>
+                {
+                    b.Property<DateTime>("AcademicYear")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("Ammount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AcademicYear", "StartDate", "ExpirationDate");
+
+                    b.ToTable("UniversityFees");
                 });
 
             modelBuilder.Entity("Gamal.Models.Domain.UserStudent", b =>

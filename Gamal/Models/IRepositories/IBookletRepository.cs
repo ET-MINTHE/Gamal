@@ -8,9 +8,10 @@ namespace Gamal.Models.IRepositories
 {
     public interface IBookletRepository : IRepository<Booklet>
     {
-        public IEnumerable<Booklet> GetBookletByStudent(string studentSerialNumber);
+        public IEnumerable<Booklet> GetBookletByStudent(string studentSerialNumber, string searchTerm);
         public Task<bool> IsExamPassedByStudent(string serialNumber, string courseCode);
         public Task<Booklet> GetStudentMarkByCourse(string serialNumber, string courseCode);
+        public bool ExistStudentMarkForCourse(string studentSerialNumber, string teacherSerialNumber, string courseCode);
     }   
 }
     

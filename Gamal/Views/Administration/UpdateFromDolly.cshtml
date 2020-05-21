@@ -1,0 +1,73 @@
+﻿@model Gamal.ViewModel.UploadToDollyViewModel
+@{
+    ViewData["Title"] = "UpdateFromDolly";
+    Layout = "~/Views/Shared/_Teacher.cshtml";
+}
+
+@section container{
+}
+
+@section leftPanelHeader{
+}
+
+@section leftPanelBody
+{
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+    @if (!String.IsNullOrEmpty(@ViewBag.Error))
+    {
+        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
+    }
+    @if (!String.IsNullOrEmpty(@ViewBag.Message))
+    {
+        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
+    }
+    <span style="font-size:15pt">DIDACTIQUE EN LIGNE ANNÉE ACADÉMIQUE 2019/2020</span>
+    <br />
+    <span>Choisir un autre fichier ou modifier le nom du fichier</span>
+    <br />
+    @{
+        var path = "/dolly/" + ViewBag.OldPath;
+    }
+    <iframe src="@path" width="100%" height="400" type='application/pdf'>
+    </iframe>
+
+    <form enctype="multipart/form-data" asp-route-courseCode="@Model.CourseCode" method="post">
+        <div class="form-group">
+            <input asp-for="FileName" class="form-control fr-date-datepicker" placeholder="Inserer le nom du fichier">
+            <span asp-validation-for="FileName" class="text-danger"></span>
+        </div>
+        <input type="hidden" id="courseCode" name="courseCode" value="@ViewBag.CourseCode">
+        <input type="hidden" id="departmentCode" name="departmentCode" value="@ViewBag.DepartmentCode">
+        <input type="hidden" id="oldpath" name="oldpath" value="@ViewBag.Oldpath">
+        <div class="custom-file">
+            <input asp-for="FileToUpload" class="form-control custom-file-input">
+            <label class="custom-file-label">Choisr le Fichier....</label>
+        </div>
+        <br />
+        <br />
+        <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Charger</button>
+    </form>
+}
+
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
+}
+
+
+
+

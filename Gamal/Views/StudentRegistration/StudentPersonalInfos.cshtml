@@ -9,14 +9,6 @@
 
 }
 
-@section UserFirstName{
-    @ViewBag.FirstName
-
-}
-
-@section UserLastName{
-    @ViewBag.LastName
-}
 @section leftPanelHeader{
 
 }
@@ -25,8 +17,6 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:20pt;">Zone réservée du secrétaire </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
 }
 
 @section middlePanelBody
@@ -34,14 +24,26 @@
     <div style="">
         <div class="card">
             <div align="center">
-                <span style="font-size:18pt; font-weight:bold; color:red">Processus d'Immatriculation des Etudiants</span>
                 <br />
-                <span style="font-weight:bold; color:black">Informations personnelles de l'étudiant</span>
+                <span style="font-size:18pt; color:#1C2833; font-weight:100; font-family:'Times New Roman'">Processus d'Inscription des Etudiants</span>
+                <div class="row align-items-center align-self-center justify-content-center" style="padding:0px">
+                    <div class=" col-sm-4 col-lg-4" style="padding:0px">
+                        <div class="card h-25 w-25" style="background-color:#25587E; padding:0px">
+                            <div class="card-body" style="padding:0px">
+                                <span style="font-size:15pt; color:white; font-weight:bold; font-family:'Times New Roman'">Phase 1/4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (!String.IsNullOrEmpty(@ViewBag.ErrorMessage))
+                {
+                    <span style="font-size:15pt; color:red">@ViewBag.ErrorMessage</span><br />
+                }
             </div>
+            <br />
             <div class="row" style="padding-left:7%">
                 <div class="col-md-11">
                     <form method="post">
-                        <br />
                         <div class="form-group">
                             <input asp-for="FirstName" placeholder="Inserer le prénom" class="form-control" />
                             <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -76,15 +78,4 @@
         </div>
     </div>
 }
-
-@*@section rightPanelHeader{
-        <h6 style="color:white; text-align:center">Informations Importantes</h6>
-    }
-
-    @section rightPanelBody
-    {
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-    }*@
 

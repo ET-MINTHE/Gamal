@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 
 namespace Gamal.Models
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
-        IFacultyRepository Faculties { get; }
-        IDepartmentRepository Departments { get; }
-        ICourseRepository Courses { get; }
-        IBookletRepository Booklets { get; }
-        ISecretaryRepository Secretaries { get; }
-        ITeacherRepository Teachers { get; }
-        IExamSessionRepository ExamSessions { get; }
+        public IFacultyRepository Faculties { get; }
+        public IDepartmentRepository Departments { get; }
+        public ICourseRepository Courses { get; }
+        public IBookletRepository Booklets { get; }
+        public ISecretaryRepository Secretaries { get; }
+        public ITeacherRepository Teachers { get; }
+        public IExamSessionRepository ExamSessions { get; }
         public IExamRepository Exams { get; set; }
         public ICourseExamSessionRepository CourseExamSessions { get; set; }
 
-        public IExamEnrollmentRepository ExamEnrollments { get; set; }  
-        int Complete();
+        public IExamEnrollmentRepository ExamEnrollments { get; set; }
+        public IProfileRepository Profiles { get; set; }
+        public IUniversityFeesRepository UniversityFees { get; set; }
+        public IStudentFeeRepository StudentFees { get; set; }
+        public IDollyVideoRepository DollyVideos { get; set; }
+        int Complete(); 
     }
 }

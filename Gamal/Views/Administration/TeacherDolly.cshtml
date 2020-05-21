@@ -4,15 +4,6 @@
     Layout = "~/Views/Shared/_Teacher.cshtml";
 }
 
-
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
-}
-
 @section container{
 
 }
@@ -27,8 +18,6 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:20pt;">Zone réservée de l'enseignant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
 }
 
 @section middlePanelBody
@@ -41,33 +30,32 @@
     {
         <span style="color:green; font-weight:bold">@ViewBag.Message</span>
     }
-    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
-    <br />
-    <br />
-    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
-    <br />
-    <br />
-    <span style="font-size:20pt">DIDACTIQUE EN LIGNE ANNÉE ACADÉMIQUE 2019/2020</span>
+    <span style="font-size:15pt">DIDACTIQUE EN LIGNE ANNÉE ACADÉMIQUE 2019/2020</span>
     <br />
     <br />
     <p>
-        <span style="font-size:18pt">
+        <span style="font-size:15pt">
             Vous trouverez ci-dessous la liste des matières que vous dispensez. Choisissez une matière et chargez du matériel didactique sur les servers
         </span>
     </p>
-
-    @foreach (var course in @Model)
-    {
-        <span style="font-size:18pt; color:indianred">
-            <a class="aa" asp-route-courseCode=@course.CourseCode asp-route-departmentCode=@course.DepartmentCode asp-controller="Administration"
-                asp-action="AddToDolly">
-                @course.CourseName.ToLower()
-            </a>
-            <br />
-        </span>
-     }
-
-
+    <br />
+    <br />
+     @foreach (var course in @Model)
+     {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <a class="aa" asp-route-courseCode=@course.CourseCode asp-route-departmentCode=@course.DepartmentCode asp-controller="Administration"
+                           asp-action="AddToDolly">
+                            @{ var courseName =  char.ToUpper(course.CourseName[0]) + course.CourseName.Substring(1).ToLower();}
+                            @courseName
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    }
 }
 
 

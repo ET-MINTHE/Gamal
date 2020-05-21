@@ -15,13 +15,25 @@ namespace Gamal.Models.Repositories
         {
         }
 
-        public IEnumerable<Booklet> GetBookletByStudent(string studentSerialNumber)
+        public IEnumerable<Booklet> GetBookletByStudent(string studentSerialNumber, string searchTerm)
         {
-            return AppContext.Booklets
+            if (String.IsNullOrEmpty(searchTerm))
+            {
+                return AppContext.Booklets
                    .Include(b => b.UserStudent)
                    .Include(b => b.Course)
                    .ThenInclude(b => b.Department)
                    .Where(b => b.UserStudent.SerialNumber == studentSerialNumber).ToList();
+            }
+            else
+            {
+                return AppContext.Booklets
+                   .Include(b => b.UserStudent)
+                   .Include(b => b.Course)
+                   .ThenInclude(b => b.Department)
+                   .Where(b => b.UserStudent.SerialNumber == studentSerialNumber && b.Course.CourseName.Contains(searchTerm)).ToList();
+            }
+            
         }
 
         public async Task<bool> IsExamPassedByStudent(string serialNumber, string courseCode)
@@ -39,6 +51,13 @@ namespace Gamal.Models.Repositories
                    .Include(b => b.Course)
                    .Where(b => b.UserStudent.SerialNumber == serialNumber && b.CourseCode == courseCode).FirstOrDefaultAsync();
         }
+
+        public bool ExistStudentMarkForCourse(string studentSerialNumber, string teacherSerialNumber, string courseCode)
+        {
+            return AppContext.Booklets
+                  .Where(b => b.StudentSerialNumber == studentSerialNumber && b.TeacherSerialNumber == teacherSerialNumber && b.CourseCode == courseCode).ToList().Count() != 0 ? true : false;
+        }
+        
         public AppDbContext AppContext
         {
             get { return Context as AppDbContext; }

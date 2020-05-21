@@ -1,15 +1,11 @@
-﻿@model List<Gamal.ViewModel.BookletViewModel>
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core.Common;
+
+@model Gamal.ViewModel.BookletListViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Student.cshtml";
-}
-
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
 }
 
 @section container{
@@ -26,50 +22,53 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:22pt; text-align:justify">Zone réservée de l'étudiant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
 }
 
 @section middlePanelBody
 {
-    <div style="text-align:justify">
-        <span style="font-size:12pt;">
-            Vous trouverez ci-dessous des informations générales sur la situation universitaire et le livret.
-            Cette page affiche des informations relatives aux activités pédagogiques du cahier de l'élève. Pour les activités pédagogiques non encore réussies et suivies, le lien est actif sur l'icône de la rubrique «Appels» qui permet d'accéder à la liste des appels définie par le secrétariat pédagogique.
-
-            Pour remplir le questionnaire d'évaluation de l'enseignement, suivez le lien Services universitaires dans le menu latéral. La compilation n'est possible que pour les étudiants inscrits aux formations diplômantes participant à l'expérimentation, pour les autres veuillez remplir le questionnaire papier fourni par l'enseignant à la fin du cours.
-        </span>
-    </div>
-    
+    <span style="font-size:10pt; font-weight:bold">Livret de:</span> <span style="font-size:10pt; font-weight:bold; color:red">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") - [MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]</span>
     <br />
-    <span style="font-size:12pt; font-weight:bold">Livret de:</span> <span style="font-size:12pt; font-weight:bold; color:red"> @ViewBag.FirstName @ViewBag.LastName - [MAT. @ViewBag.SerialNumber]</span>
+    <span style="font-size:10pt; font-weight:bold">Moyenne Arithmétique: </span><span style="font-size:10pt; font-weight:bold; color:red"> @ViewBag.EverageMark/20</span>
     <br />
-    <span style="font-size:12pt; font-weight:bold">Moyenne Arithmétique: </span><span style="font-size:12pt; font-weight:bold; color:red"> @ViewBag.EverageMark/20</span>
+    <span style="font-size:10pt; font-weight:bold">Moyenne Pondérée: </span><span style="font-size:10pt; font-weight:bold; color:red"> @ViewBag.WeightedEverageMark/20 </span>
     <br />
-    <span style="font-size:12pt; font-weight:bold">Moyenne Pondérée: </span><span style="font-size:12pt; font-weight:bold; color:red"> @ViewBag.WeightedEverageMark/20 </span>
+    <br />
+    <form method="get" asp-controller="Booklet" asp-action="Index">
+        <div class="input-group">
+            <input id="search" class="form-control" placeholder="Chercher une matière" asp-for="SearchTerm" />
+            <select asp-for="Filter" class="input-group-append">
+                <option value="all">Toutes les matières</option>
+                <option value="passed">Matières passées</option>
+                <option value="notpassed">Matières non passeés</option>
+            </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn1 btn-primary">Chercher</button>
+            </div>
+        </div>
+    </form>
     <br />
     <div class="border border-#6D7B8D">
         <table class="table">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col"><span style="font-size:9pt">Activité Didactique</span></th>
-                    <th scope="col"><span style="font-size:9pt">Année</span></th>
-                    <th scope="col"><span style="font-size:9pt">Coefficient</span></th>
-                    <th scope="col"><span style="font-size:9pt">Etat</span></th>
-                    <th scope="col"><span style="font-size: 9pt">AA Freq.</span></th>
-                    <th scope="col"><span style="font-size:9pt">Note-Date Examen</span></th>
+                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Activité Didactique</span></th>
+                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Année</span></th>
+                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Coefficient</span></th>
+                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Etat</span></th>
+                    <th scope="col"><span class="a-booklet" style="font-size:13pt">AA Freq.</span></th>
+                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Note-Date Examen</span></th>
                 </tr>
             </thead>
             <tbody>
-
-                @foreach (var item in Model)
+                @foreach (var item in Model.BookletViewModels)
                 {
                     <tr style="line-height: 0.6;">
                         <th scope="row">
-                            <span style="font-size:11pt; color:indianred">
+                            <span style="font-size:13pt; color:indianred">
                                 <a class="a-booklet" asp-route-courseId=@item.CourseCode asp-route-departmentCode=@item.DepartmentCode asp-controller="CourseDescription"
                                    asp-action="Index">
-                                    @item.Course.ToLower()
+                                    @{ var course = char.ToUpper(item.Course[0]) + item.Course.Substring(1).ToLower();}
+                                    @course
                                 </a>
                             </span>
                         </th>
@@ -82,7 +81,7 @@
                             }
                             else
                             {
-                                <figure class="circle-attended"></figure>
+                                <figure class="circle-not-passed"></figure>
                             }
                         </td>
                         <td>
@@ -98,7 +97,7 @@
                         <td>
                             @if (item.Status == true)
                             {
-                                <span style="font-size:9pt">@item.Mark</span>
+                                <span style="font-size:9pt">@item.Mark-@item.ExamDate?.ToString("dd/MM/yyyy")</span>
                             }
                             else
                             {
@@ -110,35 +109,44 @@
             </tbody>
         </table>
     </div>
-
-    <span style="font-size:12pt">Légende</span>
+    <br />
+    @Html.PagedListPager(Model.BookletViewModels, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions
+    {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })
+    <span style="font-size:10pt">Légende</span>
     <hr />
     <table>
-        <tr>
-            <td>
-                <figure class="circle-scheduled"></figure>
-            </td>
-            <td>
-                <span style="font-size:11pt"> Matrière Programmée</span>
-            </td>
-        </tr>
         <tr>
             <td>
                 <figure class="circle-passed"></figure>
             </td>
             <td>
-                <span style="font-size:11pt"> Matière Fréquentée</span>
+                <span style="font-size:10pt"> Matrière Passée</span>
             </td>
         </tr>
         <tr>
             <td>
-                <figure class="circle-attended"></figure>
+                <figure class="circle-not-passed"></figure>
             </td>
             <td>
-                <span style="font-size:11pt">  Matière Passée</span>
+                <span style="font-size:10pt">  Matière Non Passée</span>
             </td>
         </tr>
     </table>
 }
 
+@section Scripts{
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery/jquery-ui.js"></script>
+    <link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search').autocomplete({
+                source: '/Administration/AutocompleteCourse'
+            });
+        });
+    </script>
+}
 

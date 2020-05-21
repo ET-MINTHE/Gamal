@@ -10,3 +10,24 @@ function confirmAddMark(isAddChecked) {
     }
 }
 
+function confirmDelete(isChecked) {
+
+    if (isChecked) {
+        $('#' + 'deleteSpan').hide();
+        $('#' + 'confirmDeleteSpan').show();
+    } else {
+        $('#' + 'deleteSpan').show();
+        $('#' + 'confirmDeleteSpan').hide();
+    }
+}
+
+function confirmEnrollment(isChecked) {
+
+    if (isChecked) {
+        $('#' + 'deleteSpan').hide();
+        $('#' + 'confirmDeleteSpan').show();
+    } else {
+        $('#' + 'deleteSpan').show();
+        $('#' + 'confirmDeleteSpan').hide();
+    }
+}

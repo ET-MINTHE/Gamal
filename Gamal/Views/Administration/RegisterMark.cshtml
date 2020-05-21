@@ -4,14 +4,6 @@
     Layout = "~/Views/Shared/_Teacher.cshtml";
 }
 
-@section UserFirstName{
-    @ViewBag.FirstName
-}
-
-@section UserLastName{
-    @ViewBag.LastName
-}
-
 @section container{
 
 }
@@ -26,20 +18,11 @@
 }
 
 @section middlePanelHeader{
-    <span style="font-size:20pt;">Zone réservée de l'enseignant </span><span style="font-size:20pt;">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
-    <br />
 }
 
 @section middlePanelBody
 {
-
-    <span style="font-size:20pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
-    <br />
-    <br />
-    <span style="color:black; font-size:20pt; border-bottom:5px solid red">ESSE4</span>
-    <br />
-    <br />
-    <span style="font-size:20pt">ENREGISTREMENT DES NOTES ANNÉE ACADÉMIQUE 2019/2020</span>
+    <span style="font-size:15pt">ENREGISTREMENT DES NOTES ANNÉE ACADÉMIQUE 2019/2020</span>
     <br />
     <br />
 
@@ -52,10 +35,18 @@
         <span style="color:green; font-weight:bold">@ViewBag.Message</span>
     }
     <br />
+    @*<form method="get" asp-controller="Booklet" asp-action="Index">
+        <div class="input-group">
+            <input id="search" class="form-control" placeholder="Chercher une matière" asp-for="SearchTerm" />
+            <div class="input-group-append">
+                <button type="submit" class="btn1 btn-primary">Chercher</button>
+            </div>
+        </div>
+    </form>*@
     <form asp-controller="Administration" asp-action="RegisterMark" method="post">
         <div class="form-group">
-            <input asp-for="StudentSerialNumber" class="form-control fr-date-datepicker" placeholder="Inserer le numero de matricule de l'étudiant">
-            <span asp-validation-for="StudentSerialNumber" class="text-danger"></span>
+            <input id="search" asp-for="Student" class="form-control fr-date-datepicker" placeholder="Inserer le nom de l'étudiant">
+            <span asp-validation-for="Student" class="text-danger"></span>
         </div>
         <div class="form-group">
             @Html.DropDownListFor(model => model.CourseName, Model.AllCourses as SelectList, "Selectioner la matière", new { @class = "form-control" })
@@ -70,7 +61,7 @@
             <button type="submit" class="btn btn-danger">
                 OUI
             </button>
-            <a href="#" onclick="confirmAddMark(false)" class="btn btn-primary">NON</a>
+            <a href="#" onclick="confirmAddMark(false)" class="confirm-btn btn btn-primary">NON</a>
         </span>
         <span id="addMarkSpan">
             <a href="#" onclick="confirmAddMark(true)" class="btn1 btn btn-primary">Enregister</a>
@@ -80,5 +71,15 @@
 
 @section Scripts{
     <script src="~/js/custom.js"></script>
-}
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery/jquery-ui.js"></script>
+    <link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search').autocomplete({
+                source: '/Administration/AutocompleteStudent'
+            });
+        });
+    </script>
+ }
 
