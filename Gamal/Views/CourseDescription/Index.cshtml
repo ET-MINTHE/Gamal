@@ -23,79 +23,100 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:12pt; font-weight:bold">Détail de carrière de:</span> <span style="font-size:12pt; font-weight:bold; color:red">@{@ViewBag.FirstName} @{@ViewBag.LastName}-[MAT. @ViewBag.SerialNumber]</span>
+	  <div style="width:100%; text-align:justify">
+		   <span style="font-size: 12pt; color: #054e77; text-align: justify">
+			   La section contient les informations de l'activité didactique incluses dans le livret de l'étudiant ainsi que les informations associées aux secteurs disciplinaires scientifiques avec les fréquences relatives effectuées.
+		   </span>
+	  </div>
     <br />
-
-    <span style="font-size:12pt; color:#150517; text-align:justify">
-        La section contient les informations de l'activité didactique incluses dans le livret de l'étudiant ainsi que les informations associées aux secteurs disciplinaires scientifiques avec les fréquences relatives effectuées.
-    </span>
-    <br />
-    <br />
-    <span style="font-size:12pt; font-weight:bold">Activité Didactique:</span> <span style="font-size:12pt; font-weight:bold; color:red">@Model.Course</span>
-    <br />
-    <span style="font-size:12pt; font-weight:bold"> Cours offert au département:</span> <span style="font-weight:bold; font-size:12pt; color:red">@Model.DepartmentName</span>
+	 <table width="100%" border="0">
+	 	   <tr>
+				<td style="font-size:12pt; color:#054e77; text-align: right">
+					Détail de carrière de:
+				</td>
+				<td style="color:#ff5733; text-align: left">
+					@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") - [MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]
+				</td>
+	    </tr>
+	    <tr>
+			 <td style="font-size:12pt; color:#054e77; text-align: right">
+			 	Activité Didactique:
+			 </td>
+			 <td style="color:#ff5733; text-align: left">
+			 	@Model.Course
+			 </td>
+	    </tr>
+	    <tr>
+			 <td style="font-size:12pt; color:#054e77; text-align: right">
+			 	Cours offert au département de:
+			 </td>
+			 <td style="color:#ff5733; text-align: left">
+			 	@Model.DepartmentName
+			 </td>
+	    </tr>
+	 </table>
     <br />
     <fieldset class="border p-3" style="border:3px solid red">
-        <legend class="w-auto" style="font-size:14pt; font-weight:bold; border-bottom: 5px solid red">Activité Didactique</legend>
+        <legend class="w-auto" style="font-size:12pt; font-weight:bold; float:left; color:#054e77; border-bottom: 5px solid #ff5733">Activité Didactique</legend>
         <table class="table">
             <tbody>
                 <tr class="td1">
-                    <td scope="col"><span style="font-weight:bold; color:#150517">Année</span></td>
-                    <td scope="col">@Model.Year</td>
+                    <td scope="col"><span style="float: left; color: #054e77;">Année</span></td>
+                    <td scope="col"><span style="float:left">@Model.Year</span></td>
                 </tr>
                 <tr class="td1">
-                    <td><span style="font-weight:bold; color:#150517">Etat</span></td>
+                    <td><span style="float:left; color:#054e77">Etat</span></td>
                     <td>
                         @if (Model.Status == true)
                         {
-                            <span style="font-weight:bold; color:#150517">Examen passé avec succès</span>
+                            <span style="float:left; color:#054e77">Examen passé avec succès</span>
                         }
                         else
                         {
-                            <span style="font-weight:bold; color:#150517">Examen à passer</span>
+                            <span style="float:left; color:#054e77">Examen à passer</span>
                         }
                     </td>
                 </tr>
                 <tr class="td1">
-                    <td><span style="font-weight:bold; color:#150517">Date de l'Examen</span></td>
+                    <td><span style="float:left; color:#054e77">Date de l'Examen</span></td>
                     <td>
                         @if (@Model.ExamDate == null)
                         {
-                            <span>AAAA</span>
+                            <span style="float:left; color:#054e77">AAAA</span>
                         }
                         else
                         {
-                            <span>@Model.ExamDate</span>
+                            <span style="float:left; color:#054e77">@Model.ExamDate</span>
                         }
                     </td>
                 </tr>
                 <tr class="td1">
-                    <td><span style="font-weight:bold; color:#150517">Note</span></td>
+                    <td><span style="float:left; color:#054e77">Note</span></td>
                     <td>
                         @if (@Model.ExamDate == null)
                         {
-                            <span>Examen à passer</span>
+                            <span style="float:left; color:#054e77" >Examen à passer</span>
                         }
                         else
                         {
-                            <span>@Model.Mark</span>
+                            <span style="float:left; color:#054e77">@Model.Mark</span>
                         }
                     </td>
                 </tr>
                 <tr class="td1">
-                    <td><span style="font-weight:bold; color:#250517">Description</span></td>
-                    <td> @Model.Description</td>
+                    <td><span style="float:left; color:#054e77">Description</span></td>
+                    <td> <span style="float:left; color:#054e77"> @Model.Description</span></td>
                 </tr>
             </tbody>
         </table>
     </fieldset>
     <br />
-    <span> Unité Didactique</span>
+    <span style="float:left;"> Unité Didactique</span>
     <br />
     <br />
     <table class="table table-bordered">
-        <thead class="thead-light">
-            <tr class="td1">
+        <thead>
+            <tr style="background-color:#e9ecef; color:#054e77">
                 <th scope="col">Unité Didactique</th>
                 <th>Type d'Activité</th>
                 <th>Secteur</th>
@@ -104,7 +125,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="td1">
+            <tr style="color:#054e77">
                 <td>@Model.Course</td>
                 <td>A definir</td>
                 <td>@Model.Sector</td>

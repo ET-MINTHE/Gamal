@@ -29,53 +29,54 @@
         </h6>
     }
 
-    <span style="font-size:18pt; border-bottom: 3px solid red; text-align:center"> Liste des Taxes</span>
-    <br />
-    <br />
-    <span style="font-size:15pt">
+    <span style="font-size:14pt; color:#054e77">
         Cette page affiche la liste des taxes et le montant correspondant.
         Pour consulter les informations complètes concernant les nouveaux modes de paiement des frais universitaires, cliquez ici.
     </span> 
     <br />
     <br />
     <fieldset class="border p-3" style="border:3px solid red">
-        <legend class="w-auto" style="font-size:10pt; font-weight:bold;">Liste des taxes</legend>
-        <table class="table">
+        <legend class="w-auto" style="font-size:14pt; color:#054e77">Liste des taxes</legend>
+        <table class="table" style="border:1px solid #E9ECEF">
             <thead class="thead-light">
-                <tr class="td1">
-                    <th scope="col"><span style="color:#150517">Année Académique</span></th>
-                    <th><span style="color:#150517">Date début de payement</span></th>
-                    <th><span style="color:#250517">Date de payement</span></th>
-                    <th><span style="color:#150517">Date d'expiration</span></th>
-                    <th><span style="color:#150517">Somme</span></th>
-                    <th><span style="color:#150517">Etat du payement</span></th>
+                <tr>
+                    <th><span style="float:left; color:#054e77">Année Académique</span></th>
+                    <th><span style="float:left; color:#054e77">Date début de payement</span></th>
+                    <th><span style="float:left; color:#054e77">Date de payement</span></th>
+                    <th><span style="float:left; color:#054e77">Date d'expiration</span></th>
+                    <th><span style="float:left; color:#054e77">Somme</span></th>
+                    <th><span style="float:left; color:#054e77">Etat du payement</span></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr class="td1">
-                    <td scope="col">
-                        <span style="font-size:11pt; color:indianred">
-                            <a class="a-link" asp-controller="Administration"
+                <tr>
+                    <td>
+                        <span>
+                            <a style="float:left; color:#054e77" asp-controller="Administration"
                                asp-action="Fees">
                                 @{
-                                    var date = item.AccademicYear.AddYears(1);
+                                    var date = item.AccademicYear;
                                 }
                                 @item.AccademicYear.ToString("yyyy")/@date.ToString("yyyy")
                             </a>
                         </span>
                     </td>
-                    <td>@item.StartDate.ToString("dd/mm/yyyy")</td>
-                    <td>@item.PayementDate.ToString("dd/mm/yyyy")</td>
+                    <td><span style="float:left; color:#054e77">@item.StartDate.ToString("dd/mm/yyyy")</span></td>
+                    <td><span style="float:left; color:#054e77">@item.PayementDate.ToString("dd/mm/yyyy")</span></td>
                     <td>@item.ExpirationDate.ToString("dd/mm/yyyy")</td>
+						  <td>
+						  	   <span style="float:left; color:#054e77">
+						  		   @item.Ammount FG
+                        </span>
+						  </td>
                     <td>
-                        @item.Ammount FG
-                    </td>
-                    <td>
-                        <img src="~/images/active-icon.png" width="25px" height="25px" />
-                        Payement confirmé
-                    </td>
+							  <span style="float:left; color:#054e77">
+							  	<img src="~/images/active-icon.png" style="width:25px; height:25px" />
+							  	Payement confirmé
+                          </span>
+                       </td>
                 </tr>
                 }
             </tbody>

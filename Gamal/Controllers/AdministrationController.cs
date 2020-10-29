@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
+﻿using ceTe.DynamicPDF;
+using ceTe.DynamicPDF.PageElements;
 using Gamal.Models;
 using Gamal.Models.Domain;
 using Gamal.ViewModel;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +11,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Localization;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using X.PagedList;
+
 
 namespace Gamal.Controllers
 {
@@ -182,6 +183,14 @@ namespace Gamal.Controllers
             {
                 var examSession = unitOfWork.ExamSessions.Find(es => es.Name == model.Session).FirstOrDefault();
                 var courseExamSession = unitOfWork.CourseExamSessions.Find(d => d.ExamSessionId == examSession.ExamSessionId).FirstOrDefault();
+                var course = unitOfWork.Courses.GetCourseByName(model.Course);
+				    if (courseExamSession == null)
+				    {
+                    courseExamSession = new CourseExamSession { Course = course, CourseCode = course.CourseCode, ExamSession = examSession, ExamSessionId = examSession.ExamSessionId };
+                    unitOfWork.CourseExamSessions.Add(courseExamSession);
+                    unitOfWork.Complete();
+                    courseExamSession = unitOfWork.CourseExamSessions.Find(d => d.ExamSessionId == examSession.ExamSessionId).FirstOrDefault();
+                }
                 var exam = new Exam();
                 exam.Name = model.Course;
                 exam.Description = model.Description;
@@ -190,7 +199,6 @@ namespace Gamal.Controllers
                 exam.Hour = model.Hour;
                 exam.TeacherSerialNumber = user.SerialNumber;
                 exam.Classroom = model.Classroom;
-
                 unitOfWork.Exams.Add(exam);
                 unitOfWork.Complete();
                 TempData["Message"] = "L'appel d'examen a été enregistrer avec succès";
@@ -215,59 +223,68 @@ namespace Gamal.Controllers
 
             return View(model);
         }
+      [HttpPost]
+      public async Task<IActionResult> RemoveExam(int examId)
+      {
+         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+         var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+         var course = unitOfWork.Exams.Find(x => x.ExamId == examId).FirstOrDefault();
+         unitOfWork.Exams.Remove(course);
+         unitOfWork.Complete();
+         return RedirectToAction("CallForExam");
+      }
+      [HttpGet]
+      public async Task<IActionResult> ExamListForStudent()
+      {
+         var email = HttpContext.Session.GetString("Email");
+         var user = await userManager.FindByEmailAsync(email);
+         var examList = new List<ELSVIEViewModel>();
 
-        [HttpGet]
-        public async Task<IActionResult> ExamListForStudent()
-        {
-            var email = HttpContext.Session.GetString("Email");
-            var user = await userManager.FindByEmailAsync(email);
-            var examList = new List<ELSVIEViewModel>();
+         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+         var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+         var department = unitOfWork.Departments.Find(d => d.DepartmentName == user.Department).FirstOrDefault();
+         var exams = unitOfWork.Exams.GetExamByDepartment(department.DepartmentCode);
+         foreach (var exam in exams)
+         {
+               var ex = new ELSVIEViewModel();
+               ex.Date = exam.Date;
+               ex.Description = exam.Description;
+               ex.Classroom = exam.Classroom;
+               ex.ExamId = exam.ExamId;
+               ex.Name = exam.Name;
+               ex.Hour = exam.Hour;
+               ex.IsResered = unitOfWork.ExamEnrollments.IsExamEnrollmentReserved(user.SerialNumber, exam.ExamId) == true ? "Reservé" : "Non Reservé";
+               examList.Add(ex);
+         }
+         return View(examList);
+      }
+      [HttpGet]
+      public async Task<IActionResult> ExamEnrollment(string examId, string isReserved)
+      {
+         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+         var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
 
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
-            var department = unitOfWork.Departments.Find(d => d.DepartmentName == user.Department).FirstOrDefault();
-            var exams = unitOfWork.Exams.GetExamByDepartment(department.DepartmentCode);
-            foreach (var exam in exams)
-            {
-                var ex = new ELSVIEViewModel();
-                ex.Date = exam.Date;
-                ex.Description = exam.Description;
-                ex.Classroom = exam.Classroom;
-                ex.ExamId = exam.ExamId;
-                ex.Name = exam.Name;
-                ex.Hour = exam.Hour;
-                ex.IsResered = unitOfWork.ExamEnrollments.IsExamEnrollmentReserved(user.SerialNumber, exam.ExamId) == true ? "Reservé" : "Non Reservé";
-                examList.Add(ex);
-            }
-            return View(examList);
-        }
-        [HttpGet]
-        public async Task<IActionResult> ExamEnrollment(string examId, string isReserved)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+         var email = HttpContext.Session.GetString("Email");
+         var user = await userManager.FindByEmailAsync(email);
 
-            var email = HttpContext.Session.GetString("Email");
-            var user = await userManager.FindByEmailAsync(email);
+         if (isReserved == "Non Reservé")
+         {
+               var enrollment = new ExamEnrollment();
+               enrollment.ExamId = Int32.Parse(examId);
+               enrollment.SerialNumber = user.SerialNumber;
 
-            if (isReserved == "Non Reservé")
-            {
-                var enrollment = new ExamEnrollment();
-                enrollment.ExamId = Int32.Parse(examId);
-                enrollment.SerialNumber = user.SerialNumber;
+               unitOfWork.ExamEnrollments.Add(enrollment);
+               unitOfWork.Complete();
+         }
+         else
+         {
+               var enrollment = unitOfWork.ExamEnrollments.GetEnrollmentByExam(Int32.Parse(examId));
+               unitOfWork.ExamEnrollments.Remove(enrollment);
+               unitOfWork.Complete();
+         }
 
-                unitOfWork.ExamEnrollments.Add(enrollment);
-                unitOfWork.Complete();
-            }
-            else
-            {
-                var enrollment = unitOfWork.ExamEnrollments.GetEnrollmentByExam(Int32.Parse(examId));
-                unitOfWork.ExamEnrollments.Remove(enrollment);
-                unitOfWork.Complete();
-            }
-
-            return RedirectToAction("ExamListForStudent");
-        }
+         return RedirectToAction("ExamListForStudent");
+      }
         [HttpGet]
         public async Task<IActionResult> StudentDepartment()
         {
@@ -285,7 +302,7 @@ namespace Gamal.Controllers
             model.FacultyCode = departement.Faculty.FacultyCode;
             model.CourseType = departement.CourseType;
             model.Credit = "Pas defini";
-            model.EnrollmentYeart = user.YearOfEnrolement.ToString("yyyy");
+            model.EnrollmentYear = user.YearOfEnrolement.ToString("yyyy");
 
             return View(model);
         }
@@ -344,7 +361,7 @@ namespace Gamal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddToDolly(string courseCode, string departmentCode)
+        public async Task<IActionResult> AddToDolly(string courseCode, string departmentCode, string errorMessage)
         {   
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
@@ -360,46 +377,69 @@ namespace Gamal.Controllers
             model.DepartmentCode = departmentCode;
             model.CourseName = course.CourseName;
             model.TeacherSerialNumber = user.SerialNumber;
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddToDolly(UploadToDollyViewModel model, string serialNumber, string courseCode, string departmentCode)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
-    
-            var email = HttpContext.Session.GetString("Email");
-            model.Dollies = unitOfWork.Dollies.GetDollyByTeacher(serialNumber).ToList();
-            if (ModelState.IsValid)
+            if (!String.IsNullOrEmpty(errorMessage))
             {
-                string uniqueFileName = null;
-                if (model.FileToUpload != null)
-                {
-                    string uploadsFolder     = Path.Combine(hostingEnvironment.WebRootPath, "dolly");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.FileToUpload.FileName).Replace(" ", "");
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    model.FileToUpload.CopyTo(new FileStream(filePath, FileMode.Create));
-                    Dolly dolly = new Dolly
-                    {
-                        FilePath = uniqueFileName,
-                        CourseCode = courseCode,
-                        TeacherSerialNumber = serialNumber,
-                        FileName = model.FileName
-                    };
-                    unitOfWork.Dollies.Add(dolly);
-                    unitOfWork.Complete();
-                }
-                return RedirectToAction("AddToDolly", new { courseCode = courseCode, departmentCode = departmentCode } );
+                ViewBag.Error = errorMessage;
             }
-            model.DepartmentCode = departmentCode;
-            model.CourseCode = courseCode;
-            model.TeacherSerialNumber = serialNumber;
+            else
+            {
+                ViewBag.Error = "";
+            }
+            
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> RemoveFromDolly(string id, string courseCode, string departmentCode)
+
+      [RequestSizeLimit(52428800)]
+      public IActionResult AddToDolly(UploadToDollyViewModel model, string courseCode, string departmentCode)
+		{
+			var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+			var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+         var error = "";
+        
+         model.Dollies = unitOfWork.Dollies.GetDollyByTeacher(HttpContext.Session.GetString("SerialNumber")).ToList();
+			if (model.PDFFileToUpload != null)
+			{
+            if (model.PDFFileToUpload.ContentType != "application/pdf")
+            {
+               error = "Only .PDF format is supported for file!";
+               return RedirectToAction("AddToDolly", new { courseCode = courseCode, departmentCode = departmentCode, errorMessage = error });
+            }
+            string uniqueFileName = null;
+
+				string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "dolly");
+				uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.PDFFileToUpload.FileName).Replace(" ", "");
+				string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
+
+				using (var stream = new FileStream(filePath, FileMode.Create))
+				{
+					model.PDFFileToUpload.CopyTo(stream);
+					Dolly dolly = new Dolly
+					{
+						FilePath = uniqueFileName,
+						CourseCode = courseCode,
+						TeacherSerialNumber = HttpContext.Session.GetString("SerialNumber"),
+						FileName = model.PDFFileName
+					};
+
+					unitOfWork.Dollies.Add(dolly);
+					unitOfWork.Complete();
+				}
+
+				return RedirectToAction("AddToDolly", new { courseCode = courseCode, departmentCode = departmentCode });
+			}
+
+			ViewBag.Error = "Le nom du fichier PDF et le fichier PDF sont obligatoire!";
+			model.DepartmentCode = departmentCode;
+			model.CourseCode = courseCode;
+			model.TeacherSerialNumber = HttpContext.Session.GetString("SerialNumber");
+			model.DollyVideos = unitOfWork.DollyVideos.GetDollyVideoByTeacher(HttpContext.Session.GetString("SerialNumber")).ToList();
+			model.Dollies = unitOfWork.Dollies.GetDollyByTeacher(HttpContext.Session.GetString("SerialNumber")).ToList();
+			return View(model);
+		}
+
+		[HttpPost]
+        public async Task<IActionResult> RemoveFromDolly(string id, string courseCode, string departmentCode, string fileType)
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
@@ -408,12 +448,24 @@ namespace Gamal.Controllers
             var user = await userManager.FindByEmailAsync(email);
 
             var model = new UploadToDollyViewModel();
-            var dolly = unitOfWork.Dollies.Get(Int32.Parse(id));
-            string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "dolly");
-            System.IO.File.Delete(Path.Combine(uploadsFolder, dolly.FilePath));
-            unitOfWork.Dollies.Remove(dolly);
-            unitOfWork.Complete();
 
+            if (fileType == "pdf")
+            {
+                var dolly = unitOfWork.Dollies.Get(Int32.Parse(id));
+                string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "dolly");
+                System.IO.File.Delete(System.IO.Path.Combine(uploadsFolder, dolly.FilePath));
+                unitOfWork.Dollies.Remove(dolly);
+                unitOfWork.Complete();
+            }
+            else if (fileType == "video")
+            {
+                var videoDolly = unitOfWork.DollyVideos.Get(Int32.Parse(id));
+                string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "dolly_videos");
+                System.IO.File.Delete(System.IO.Path.Combine(uploadsFolder, videoDolly.FilePath));
+                unitOfWork.DollyVideos.Remove(videoDolly);
+                unitOfWork.Complete();
+            }
+           
             return RedirectToAction("AddToDolly", new { departmentCode = departmentCode, courseCode = courseCode });
         }
 
@@ -428,12 +480,14 @@ namespace Gamal.Controllers
 
             var model = new UploadToDollyViewModel();
             var dolly = unitOfWork.Dollies.Get(Int32.Parse(id));
-            model.FileName = dolly.FileName;
+            model.PDFFileName = dolly.FileName;
             ViewBag.Id = id;
             ViewBag.CourseCode = courseCode;
             ViewBag.DepartmentCode = departmentCode;
             ViewBag.OldPath = dolly.FilePath;
             return View(model);
+
+
         }
 
         [HttpGet]
@@ -448,7 +502,7 @@ namespace Gamal.Controllers
 
             var model = new UploadToDollyViewModel();
             var dolly = unitOfWork.DollyVideos.Get(Int32.Parse(id));
-            model.FileName = dolly.FileName;
+            model.VideoFileName = dolly.FileName;
             ViewBag.Id = id;
             ViewBag.CourseCode = courseCode;
             ViewBag.DepartmentCode = departmentCode;
@@ -465,7 +519,7 @@ namespace Gamal.Controllers
             var email = HttpContext.Session.GetString("Email"); 
             var user = await userManager.FindByEmailAsync(email);
 
-            string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "dolly_videos");
+            string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "dolly_videos");
 
 
             var dolly = unitOfWork.DollyVideos.Get(Int32.Parse(id));
@@ -474,18 +528,18 @@ namespace Gamal.Controllers
 
             string oldFileName = dolly.FileName;
 
-            if (model.FileToUpload != null)
+            if (model.VideoFileToUpload != null)
             {
-                System.IO.File.Delete(Path.Combine(uploadsFolder, oldpath));
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.FileToUpload.FileName).Replace(" ", "");
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                model.FileToUpload.CopyTo(new FileStream(filePath, FileMode.Create));
+                System.IO.File.Delete(System.IO.Path.Combine(uploadsFolder, oldpath));
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.VideoFileToUpload.FileName).Replace(" ", "");
+                string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
+                model.VideoFileToUpload.CopyTo(new FileStream(filePath, FileMode.Create));
                 newDolly = new DollyVideo
                 {
                     FilePath = uniqueFileName,
                     CourseCode = courseCode,
                     TeacherSerialNumber = user.SerialNumber,
-                    FileName = model.FileName ?? oldFileName
+                    FileName = model.VideoFileName ?? oldFileName
                 };
             }
             else
@@ -494,7 +548,7 @@ namespace Gamal.Controllers
                 {
                     CourseCode = dolly.CourseCode,
                     FilePath = dolly.FilePath,
-                    FileName = model.FileName ?? dolly.FileName,
+                    FileName = model.VideoFileName ?? dolly.FileName,
                     TeacherSerialNumber = dolly.TeacherSerialNumber
                 };
             }
@@ -515,7 +569,7 @@ namespace Gamal.Controllers
             var email = HttpContext.Session.GetString("Email");
             var user = await userManager.FindByEmailAsync(email);
 
-            string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "dolly");
+            string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "dolly");
             
 
             var dolly = unitOfWork.Dollies.Get(Int32.Parse(id));
@@ -524,18 +578,18 @@ namespace Gamal.Controllers
 
             string oldFileName = dolly.FileName;
             
-            if (model.FileToUpload != null)
+            if (model.PDFFileToUpload != null)
             {
-                System.IO.File.Delete(Path.Combine(uploadsFolder, oldpath));
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.FileToUpload.FileName).Replace(" ", "");
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                model.FileToUpload.CopyTo(new FileStream(filePath, FileMode.Create));
+                System.IO.File.Delete(System.IO.Path.Combine(uploadsFolder, oldpath));
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.PDFFileToUpload.FileName).Replace(" ", "");
+                string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
+                model.PDFFileToUpload.CopyTo(new FileStream(filePath, FileMode.Create));
                 newDolly = new Dolly
                 {
                     FilePath = uniqueFileName,
                     CourseCode = courseCode,
                     TeacherSerialNumber = user.SerialNumber,
-                    FileName = model.FileName ?? oldFileName
+                    FileName = model.PDFFileName ?? oldFileName
                 };
             }
             else
@@ -544,7 +598,7 @@ namespace Gamal.Controllers
                 {
                     CourseCode = dolly.CourseCode,
                     FilePath = dolly.FilePath,
-                    FileName = model.FileName ?? dolly.FileName,
+                    FileName = model.PDFFileName ?? dolly.FileName,
                     TeacherSerialNumber = dolly.TeacherSerialNumber
                 };
             }
@@ -605,7 +659,6 @@ namespace Gamal.Controllers
                 ViewBag.Message = TempData["message"]?.ToString();
                 TempData["message"] = "";
             }
-
             return View(model);
         }
 
@@ -620,7 +673,7 @@ namespace Gamal.Controllers
             var marks = new List<int>();
             for (int index = 10; index <= 20; index++)
             {
-                marks.Add(index);
+               marks.Add(index);
             }
             model.AllMarks = new SelectList(marks);
 
@@ -628,49 +681,57 @@ namespace Gamal.Controllers
             var allCourses = new List<string>();
             foreach (var course in courses)
             {
-                allCourses.Add(course.CourseName);
+               allCourses.Add(course.CourseName);
             }
             model.AllCourses = new SelectList(allCourses);
-
-            var studentSerialNumber = model.Student.Split(":")[1];
-            var student = unitOfWork.UserStudents.Get(studentSerialNumber);
-            if (student == null)
-            {
-                ViewBag.Error = $"Aucun étudiant trouvé avec le matricule {studentSerialNumber}";
-                return View(model);
-            }
-
             if (ModelState.IsValid)
             {
-                var userStudent = unitOfWork.UserStudents.GetStudentBySerialNumber(studentSerialNumber).First();
-                var usertTeacher = unitOfWork.Teachers.GetTeacherBySerialNumber(user.SerialNumber).First();
+               var studentSerialNumber = "";
+               try
+               {
+                   studentSerialNumber = model.Student.Split(":")[1];
+               }
+               catch (Exception e)
+               {
+                  ViewBag.Error = $"Aucun étudiant trouvé avec le matricule {studentSerialNumber}";
+                  return View(model);
+               }
 
-                if (userStudent.DepartmentCode.Equals(usertTeacher.DepartmentCode))
-                {
-                    var exist = unitOfWork.Booklets.ExistStudentMarkForCourse(studentSerialNumber, user.SerialNumber, unitOfWork.Courses.GetCourseByName(model.CourseName).CourseName);
-                    if (unitOfWork.Booklets.ExistStudentMarkForCourse(studentSerialNumber, user.SerialNumber, unitOfWork.Courses.GetCourseByName(model.CourseName).CourseCode) == true)
-                    {
-                        ViewBag.Error = $"une note de l'étudiant dont le matricule est {studentSerialNumber} pour la matrière {model.CourseName} exist déjà!";
-                        return View(model);
-                    }
-                    var booklet = new Booklet
-                    {
-                        StudentSerialNumber = studentSerialNumber,
-                        TeacherSerialNumber = user.SerialNumber,
-                        Mark = model.Mark.Value,
-                        Date = DateTime.Now,
-                        CourseCode = unitOfWork.Courses.Find(c => c.CourseName == model.CourseName).FirstOrDefault().CourseCode
-                    };
+               var student = unitOfWork.UserStudents.Get(studentSerialNumber);
+               if (student == null)
+               {
+                   ViewBag.Error = $"Aucun étudiant trouvé avec le matricule {studentSerialNumber}";
+                   return View(model);
+               }
+            
+               var userStudent = unitOfWork.UserStudents.GetStudentBySerialNumber(studentSerialNumber).First();
+               var usertTeacher = unitOfWork.Teachers.GetTeacherBySerialNumber(user.SerialNumber).First();
 
-                    unitOfWork.Booklets.Add(booklet);
-                    unitOfWork.Complete();
-                    ViewBag.Message = $"Le note de l'étudiant a été enregistre avec succes!";
-                }
-                else
-                {
-                    ViewBag.Error = $"Le note de l'étudiant n'a pas pu etre enregistrer!";
-                }
-               
+               if (userStudent.DepartmentCode.Equals(usertTeacher.DepartmentCode))
+               {
+                  var exist = unitOfWork.Booklets.ExistStudentMarkForCourse(studentSerialNumber, user.SerialNumber, unitOfWork.Courses.GetCourseByName(model.CourseName).CourseName);
+                  if (unitOfWork.Booklets.ExistStudentMarkForCourse(studentSerialNumber, user.SerialNumber, unitOfWork.Courses.GetCourseByName(model.CourseName).CourseCode) == true)
+                  {
+                     ViewBag.Error = $"une note de l'étudiant dont le matricule est {studentSerialNumber} pour la matrière {model.CourseName} exist déjà!";
+                     return View(model);
+                  }
+                  var booklet = new Booklet
+                  {
+                     StudentSerialNumber = studentSerialNumber,
+                     TeacherSerialNumber = user.SerialNumber,
+                     Mark = model.Mark.Value,
+                     Date = DateTime.Now,
+                     CourseCode = unitOfWork.Courses.Find(c => c.CourseName == model.CourseName).FirstOrDefault().CourseCode
+                  };
+
+                  unitOfWork.Booklets.Add(booklet);
+                  unitOfWork.Complete();
+                  ViewBag.Message = $"Le note de l'étudiant a été enregistre avec succes!";
+               }
+               else
+               {
+                  ViewBag.Error = $"Le note de l'étudiant n'a pas pu etre enregistrer!";
+               }
             }
             return View(model);
         }
@@ -742,6 +803,9 @@ namespace Gamal.Controllers
         {
             var email = HttpContext.Session.GetString("Email");
             var user = await userManager.FindByEmailAsync(email);
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+            ViewBag.ProfilePath = unitOfWork.Profiles.Find(p => p.SerialNumber == user.SerialNumber).FirstOrDefault().FilePath;
             return View();
         }
 
@@ -761,16 +825,16 @@ namespace Gamal.Controllers
                     string extension = System.IO.Path.GetExtension(model.FileToUpload.FileName);
                     if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" ||extension.ToLower() == ".png")
                     {
-                        string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "profiles");
+                        string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "profiles");
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + model.FileToUpload.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
                         model.FileToUpload.CopyTo(new FileStream(filePath, FileMode.Create));
 
                         if (oldprofile != null)
                         {
-                            if (System.IO.File.Exists(Path.Combine(uploadsFolder, oldprofile.FilePath)))
+                            if (System.IO.File.Exists(System.IO.Path.Combine(uploadsFolder, oldprofile.FilePath)))
                             {
-                                System.IO.File.Delete(Path.Combine(uploadsFolder, oldprofile.FilePath));
+                                System.IO.File.Delete(System.IO.Path.Combine(uploadsFolder, oldprofile.FilePath));
                                 unitOfWork.Profiles.Remove(oldprofile);
                                 unitOfWork.Complete();
                             }
@@ -797,6 +861,11 @@ namespace Gamal.Controllers
                         {
                             return RedirectToAction("Teacher", "Teacher");
                         }
+					     }
+					     else
+					     {
+                        ViewBag.Error = "Seules les images au format .JPG sont supportées";
+                        return View(model);
                     }
                 }
             }
@@ -925,7 +994,15 @@ namespace Gamal.Controllers
             string search = null;
             if (searchTerm != null)
             {
-                search = searchTerm.Split(":")[1];
+				   try
+				   {
+                  search = searchTerm.Split(":")[1];
+               }
+				   catch (Exception)
+				   {
+                  ViewBag.Error = $"Aucun étudiant trouvé avec ce nom!";
+                  return View(model);
+				   }
             }
             UserStudent student = null;
             if (search != null)
@@ -1016,10 +1093,20 @@ namespace Gamal.Controllers
             var studentFeeList = unitOfWork.StudentFees.GetAll().ToList();
             var model = new ListStudentPayedFeesViewModel();
             var feeList = new List<StudentPayedFeesViewModel>();
-
+            ViewBag.Error = "";
             if (!String.IsNullOrEmpty(searchTerm))
             {
-                var serialNumber = searchTerm.Split(":")[1];
+                string serialNumber = null;
+                try
+				    {
+                    serialNumber = searchTerm.Split(":")[1];
+                }
+				    catch (Exception)
+				    {
+                   ViewBag.Error = "Une erreur est survenue";
+                   return View(model);
+				    }
+                
                 var studentFee = unitOfWork.StudentFees.FindFeeByStudent(serialNumber).ToList();
                 if (studentFee.Count != 0)
                 {
@@ -1072,40 +1159,45 @@ namespace Gamal.Controllers
         }
 
         [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
-        public IActionResult UploadVideo(UploadToDollyViewModel model, string serialNumber, string courseCode, string departmentCode)
+      [RequestSizeLimit(52428800)]
+      [RequestFormLimits(MultipartBodyLengthLimit = 52428800)]
+      public IActionResult UploadVideo(UploadToDollyViewModel model, string serialNumber, string courseCode, string departmentCode)
         {
             var email = HttpContext.Session.GetString("Email");
-
+            var error = "";
+			   if (model.VideoFileToUpload.ContentType != "video/mp4")
+			   {
+                error = "Only .mp4 format is supported for video!";
+               return RedirectToAction("AddToDolly", new { courseCode = courseCode, departmentCode = departmentCode, errorMessage = error });
+            }
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
             model.Dollies = unitOfWork.Dollies.GetDollyByTeacher(serialNumber).ToList();
 
-            if (ModelState.IsValid)
+            if (model.VideoFileToUpload != null)
             {
                 string uniqueFileName = null;
-                if (model.FileToUpload != null)
+                string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "dolly_videos");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.VideoFileToUpload.FileName).Replace(" ", "");
+                string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "dolly_videos");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.FileToUpload.FileName).Replace(" ", "");
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    model.FileToUpload.CopyTo(new FileStream(filePath, FileMode.Create));
+                    model.VideoFileToUpload.CopyTo(stream);
                     DollyVideo dollyVideo = new DollyVideo
                     {
                         FilePath = uniqueFileName,
                         CourseCode = courseCode,
-                        TeacherSerialNumber = serialNumber,
-                        FileName = model.FileName
+                        TeacherSerialNumber = HttpContext.Session.GetString("SerialNumber"),
+                        FileName = model.VideoFileName
                     };
                     unitOfWork.DollyVideos.Add(dollyVideo);
                     unitOfWork.Complete();
                 }
+               
                 return RedirectToAction("AddToDolly", new { courseCode = courseCode, departmentCode = departmentCode });
             }
-            model.DepartmentCode = departmentCode;
-            model.CourseCode = courseCode;
-            model.TeacherSerialNumber = serialNumber;
-            return View(model);
+            error = "Le nom de la Vidéo et la Video sont obligatoire!";
+            return RedirectToAction("AddToDolly", new { courseCode = courseCode, departmentCode = departmentCode, errorMessage = error });
         }
 
         [HttpGet]
@@ -1114,5 +1206,170 @@ namespace Gamal.Controllers
             ViewBag.Path = path;
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EnrollmentCertificate()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+
+            var email = HttpContext.Session.GetString("Email");
+            var user = await userManager.FindByEmailAsync(email);
+
+            var model = new RegisterMarkViewModel();
+            var marks = new List<int>();
+            for (int index = 10; index <= 20; index++)
+            {
+                marks.Add(index);
+            }
+            model.AllMarks = new SelectList(marks);
+
+            var courses = unitOfWork.Courses.GetCoursesByTeacher(user.SerialNumber);
+            var allCourses = new List<string>();
+            foreach (var course in courses)
+            {
+                allCourses.Add(course.CourseName);
+            }
+            model.AllCourses = new SelectList(allCourses);
+            ViewBag.message = "";
+            ViewBag.error = "";
+            if (!String.IsNullOrEmpty(TempData["message"]?.ToString()))
+            {
+                ViewBag.message = TempData["message"]?.ToString();
+                TempData["message"] = "";
+            }
+            if (!String.IsNullOrEmpty(TempData["error"]?.ToString()))
+            {
+               ViewBag.error = TempData["error"]?.ToString();
+               TempData["error"] = "";
+            }
+           return View();
+        }
+
+        [HttpGet]
+        public IActionResult EnrollmentCertificateView(StudentCertificateViewModel model)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+
+            var email = HttpContext.Session.GetString("Email");
+			   if(!ModelState.IsValid)
+			   {
+                TempData["error"] = "Le nom ou le matricule de l'étudiant est obligatoire";
+                return RedirectToAction("EnrollmentCertificate");
+            }
+            string studentSerialNumber = "";
+
+            try
+			   {
+                studentSerialNumber = model.Student.Split(":")[1];
+            }
+			   catch (Exception)
+			   {
+               TempData["error"] = "Numero de matricule ou nom invalide";
+               return RedirectToAction("EnrollmentCertificate");
+			   }
+            
+            var student = unitOfWork.UserStudents.Get(studentSerialNumber);
+            if (student == null)
+            {
+                ViewBag.Error = $"Aucun étudiant trouvé avec le matricule {studentSerialNumber}";
+                return RedirectToAction("EnrollmentCertificate");
+            }
+
+            var studentInfo = unitOfWork.UserStudents.GetStudentBySerialNumber(studentSerialNumber).First();
+            var studentUserInfo = userManager.FindByEmailAsync(studentInfo.Email).GetAwaiter().GetResult();
+
+            Document document = new Document();
+
+            Page page = new Page(PageSize.Letter, PageOrientation.Portrait, 54.0f);
+            document.Pages.Add(page);
+
+            Label univLabel = new Label("UNIVERSITE GAMAL ADBED NASSER DE CONAKRY", 0, 0, 504, 100, Font.Helvetica, 15, TextAlign.Center);
+            page.Elements.Add(univLabel);   
+          
+            Label facLabel = new Label(studentUserInfo.Faculty, 0, 60, 504, 100, Font.Helvetica, 13, TextAlign.Center);
+            page.Elements.Add(facLabel);
+
+            var newYear = studentUserInfo.YearOfEnrolement.AddYears(1);
+            string certificate = "CERTIFICAT D'INSCRIPTION ANNEE ACADEMIQUE " + studentUserInfo.YearOfEnrolement.ToString("yyyy")+ "/"+newYear.ToString("yyyy");
+            Label certificateLabel = new Label(certificate, 0, 120, 504, 100, Font.Helvetica, 12, TextAlign.Center);
+            page.Elements.Add(certificateLabel);
+
+            string certificateHeader = $"Le directeur de l' {studentUserInfo.Faculty.ToLower()} de l'Université Gamal Abdel Nasser de Conakry, soussigné, atteste que:";
+            Label certificateHeaderLabel = new Label(certificateHeader, 0, 180, 504, 500, Font.HelveticaBold, 12, TextAlign.Left);
+            page.Elements.Add(certificateHeaderLabel);
+
+            string studentName = $"L'Etudiant:  {studentUserInfo.FirstName} {studentUserInfo.LastName}";
+            Label studentNameLabel = new Label(studentName, 0, 225, 504, 500, Font.Helvetica, 12, TextAlign.Left);
+            page.Elements.Add(studentNameLabel);
+
+            string serialNumber = $"N° Matricule:  {studentUserInfo.SerialNumber}";
+            Label serialNumberLabel = new Label(serialNumber, 0, 255, 504, 500, Font.Helvetica, 12, TextAlign.Left);
+            page.Elements.Add(serialNumberLabel);
+
+            string department = $"est régulièrement inscrit en {studentUserInfo.CurrentYear}° année au département de {char.ToUpper(studentUserInfo.Department[0]) + studentUserInfo.Department.Substring(1).ToLower()}";
+            Label departmentLabel = new Label(department, 0, 285, 504, 500, Font.Helvetica, 12, TextAlign.Left);
+            page.Elements.Add(departmentLabel);
+
+            string certification = $"En foi de quoi, la présente ATTESTATION lui est délivrée pour servir et valoir ce que de droit";
+            Label certificationLabel = new Label(certification, 0, 330, 504, 500, Font.Helvetica, 12, TextAlign.Left);
+            page.Elements.Add(certificationLabel);
+
+            string dateAndPlace = $"Conakry,  le {DateTime.Now.ToString("dd/MM/yyyy")}";
+            Label dateAndPlaceLabel = new Label(dateAndPlace, 0, 370, 504, 500, Font.Helvetica, 12, TextAlign.Right);
+            page.Elements.Add(dateAndPlaceLabel);
+
+            string headOfDepartment = $"Le Chef de Département";
+            Label headOfDepartmentLabel = new Label(headOfDepartment, 0, 450, 504, 500, Font.Helvetica, 10, TextAlign.Left);
+            page.Elements.Add(headOfDepartmentLabel);
+
+            string headOfFacultyStudy = $"Le Directeur Géneral Adjoint Chargé des Etudes";
+            Label headOfFacultyStudyLabel = new Label(headOfFacultyStudy, 0, 450, 504, 500, Font.Helvetica, 10, TextAlign.Center);
+            page.Elements.Add(headOfFacultyStudyLabel);
+
+            string headOfFaculty = $"Le Directeur Géneral";
+            Label headOfFacultyLabel = new Label(headOfFaculty, 0, 450, 504, 500, Font.Helvetica, 10, TextAlign.Right);
+            page.Elements.Add(headOfFacultyLabel);
+
+            HeaderFooterTemplate header = new HeaderFooterTemplate("", "NB: Ce document ne doit comporter ni ratures ni surcharges.");
+            document.Template = header;
+            document.Draw("output.pdf");
+            var stream = new FileStream(@"output.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TeacherBookingBoard(string? subject)
+        {
+         //tableau de reservation
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+            
+            HttpContext.Session.Get("SerialNumber");
+            var serialNumber = HttpContext.Session.GetString("SerialNumber");
+            var result1 = unitOfWork.Teachers.GetExamByTeacher(serialNumber);
+            List<string> subjects = new List<string>();
+            foreach (var item in result1)
+            {
+               subjects.Add(item.Name);
+            }
+            ViewBag.subjects = subjects;
+			   
+			   if(subject != null)
+			   {
+                var result = unitOfWork.ExamEnrollments.GetStudentEnrollmentBySubject(subject).ToList();
+                List<string> res = new List<string>();
+				   foreach (var item in result)
+				   {
+                  res.AddRange(item.ExamEnrollments.Select(x => x.SerialNumber).ToList());
+				   }
+                 
+               var user = userManager.Users.Where(x => res.Contains(x.SerialNumber)).ToList();
+               
+               ViewBag.studentList = user;
+            }
+         return View();
+      }  
     }   
 }

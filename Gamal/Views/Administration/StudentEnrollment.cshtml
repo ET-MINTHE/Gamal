@@ -29,55 +29,58 @@
         </h6>
     }
 
-    <span style="font-size:12pt; text-align:center">Situation des Inscriptions</span>
+    <span style="font-size:14pt; color:#054e77; text-align:center;">Vous trouverez ci-dessous des informations générales sur la situation universitaire et sur les inscriptions effectuées au fil des ans.</span>
     <br />
-    <span style="font-size:12pt; text-align:center; font-weight:bold">Vous trouverez ci-dessous des informations générales sur la situation universitaire et sur les inscriptions effectuées au fil des ans.</span>
     <br />
     <fieldset class="border p-3">
-        <legend class="w-auto" style="font-size:12pt; font-weight:bold; border-bottom: 3px solid red">Détail d'inscription @Model.AccademicYear</legend>
+        <legend class="w-auto" style="font-size:12pt; color:#054e77; float:left; font-weight:bold; border-bottom: 3px solid #ff5733">Détail d'inscription @Model.AccademicYear</legend>
         <table class="table">
             <tbody>
                 <tr class="td1">
-                    <th scope="col"><span style="color:#150517">Année Académique</span></th>
-                    <td scope="col">@Model.AccademicYear</td>
+                    <td><span style="color:#054e77; float:left;">Année Académique</span></td>
+                    <td ><span style="float:left; color:#054e77">@Model.AccademicYear</span></td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#150517">Date d'inscription</span></th>
-                    <td>@Model.EnrollmentYear</td>
+                    <td><span style="color:#054e77; float:left;">Date d'inscription</span></td>
+                    <td><span style="float:left; color:#054e77">@Model.EnrollmentYear</span> </td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#150517">Département</span></th>
-                    <td>@Model.Department</td>
+                    <td><span style="color:#054e77; float:left;">Département</span></td>
+                    <td><span style="float:left; color:#054e77">@Model.Department</span></td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#150517">Année en cours</span></th>
-                    <td>@Model.Year</td>
+                    <td><span style="color:#054e77; float:left;">Année en cours</span></td>
+                    <td><span style="float:left; color:#054e77">@Model.Year</span></td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#250517">Type d'inscription</span></th>
+                    <td><span style="color:#054e77; float:left;">Type d'inscription</span></td>
                     <td>
-                        @if (Model.PartTime)
-                        {
-                            <span>SI</span>
-                        }
-                        else
-                        {
-                            <span>NO</span>
-                        }
+                        <span style="float:left; color:#054e77">
+                            @if (Model.PartTime)
+                            {
+                                <span>SI</span>
+                            }
+                            else
+                            {
+                                <span>NO</span>
+                            }
+                        </span>
                     </td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#250517">Etat</span></th>
+                    <td><span style="color:#054e77; float:left;">Etat</span></td>
                     <td>
-                        @if (Model.State)
-                        {
-                            <img src="~/images/active-icon.png" width="25px" height="25px" />
-                            <span>ACTIF</span>
-                        }
-                        else
-                        {
-                            <span>NON ACTIF</span>
-                        }
+                        <span style="float:left; color:#054e77">
+                            @if (Model.State)
+                            {
+                                <img src="~/images/active-icon.png" width="25" height="25" />
+                                <span>ACTIF</span>
+                            }
+                            else
+                            {
+                                <span>NON ACTIF</span>
+                            }
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -86,32 +89,32 @@
     <br />
     <br />
     <fieldset class="border p-3" style="border:3px solid red">
-        <legend class="w-auto" style="font-size:10pt; font-weight:bold;">Liste des inscriptions</legend>
-        <table class="table">
+        <legend class="w-auto" style="font-size:12pt; float:left; color:#054e77; font-weight:bold;">Liste des inscriptions</legend>
+        <table class="table" style="border:1px solid #E9ECEF">
             <thead class="thead-light">
-                <tr class="td1">
-                    <th scope="col"><span style="color:#150517">Année Académique</span></th>
-                    <th><span style="color:#150517">Date d'inscription</span></th>
-                    <th><span style="color:#150517">Département</span></th>
-                    <th><span style="color:#250517">Type d'inscription</span></th>
-                    <th><span style="color:#150517">Année en cours</span></th>
-                    <th><span style="color:#250517">Etat</span></th>
+                <tr>
+                    <th><span style="color:#054e77">Année Académique</span></th>
+                    <th><span style="color:#054e77">Date d'inscription</span></th>
+                    <th><span style="color:#054e77">Département</span></th>
+                    <th><span style="color:#054e77">Type d'inscription</span></th>
+                    <th><span style="color:#054e77">Année en cours</span></th>
+                    <th><span style="color:#054e77">Etat</span></th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="td1">
                     <td scope="col">
-                        <span style="font-size:11pt; color:indianred">
-                            <a class="a-link"  asp-controller="Administration"
+                        <span style="font-size:12pt; color:#ff5733">
+                            <a style="color: #054e77" asp-controller="Administration"
                                asp-action="StudentEnrollment">
                                 @Model.AccademicYear
                             </a>
                         </span>
                     </td>
-                    <td>@Model.EnrollmentYear</td>
-                    <td>@Model.Department</td>
-                    <td>@Model.Year</td>
-                    <td>
+                    <td><span style="color:#054e77">@Model.EnrollmentYear</span></td>
+                    <td><span style="color:#054e77">@Model.Department</span></td>
+                    <td><span style="color:#054e77">@Model.Year</span></td>
+                    <td><span style="color:#054e77">
                         @if (Model.PartTime)
                         {
                             <span>SI</span>
@@ -120,19 +123,22 @@
                         {
                             <span>NO</span>
                         }
+                       </span>
                     </td>
                     <td>
-                        @if (Model.State)
-                        {
-                            <img src="~/images/active-icon.png" width="25px" height="25px" />
-                            <span>ACTIF</span>
-                        }
-                        else
-                        {
-                            <span>
-                                NON ACTIF
-                            </span>
-                        }
+                       <span style="color:#054e77">
+                           @if (Model.State)
+                           {
+                               <img src="~/images/active-icon.png" style="width:25px; height:25px" />
+                               <span>ACTIF</span>
+                           }
+                           else
+                           {
+                               <span>
+                                   NON ACTIF
+                               </span>
+                           }
+                        </span>
                     </td>
                 </tr>
             </tbody>

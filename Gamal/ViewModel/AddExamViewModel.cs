@@ -15,15 +15,14 @@ namespace Gamal.ViewModel
         [DataType(DataType.Date)]
         [Display(Name ="Date de l'examen")]
         public DateTime Date { get; set; }
-        [Required]
+        [Required(ErrorMessage = "L'heure de l'examen est obligatoire")]
         public string Hour { get; set; }
-        [Required]
+        [Required(ErrorMessage ="La description de l'examen est obligatoire")]
         public string Description { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = "La salle de l'examen est obligatoire")]
         public string Classroom { get; set; } 
         public IEnumerable<SelectListItem> AllCourses { get; set; }
-
+        [Required(ErrorMessage = "La salle session de l'examen est obligatoire")]
         public string Session { get; set; }
         public IEnumerable<SelectListItem> AllSessions { get; set; }    
     }

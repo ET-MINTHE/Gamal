@@ -19,7 +19,12 @@ namespace Gamal.Models.Repositories
                   .Where(s => s.SerialNumber == searchTerm).ToList();
         }
 
-        public AppDbContext AppContext
+        public IEnumerable<Exam> GetExamByTeacher(string serialNumber)
+		  {
+            return AppContext.Exams.Where(x => x.TeacherSerialNumber == serialNumber).ToList();
+		  }
+
+      public AppDbContext AppContext
         {
             get { return Context as AppDbContext; }
         }

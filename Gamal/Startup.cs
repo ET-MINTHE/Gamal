@@ -1,26 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Threading.Tasks;
 using Gamal.Models;
 using Gamal.Models.IRepositories;
 using Gamal.Models.Repositories;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Nancy;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
 namespace Gamal
 {
@@ -29,71 +30,95 @@ namespace Gamal
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
+        private IServiceCollection ConfigureLogging(IServiceCollection factory)
+        {
+            factory.AddLogging(opt =>
+            {
+                opt.AddConsole();
+            });
+            return factory;
+        }
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public ILoggerFactory LoggingFactory { get; set; }
+      // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContextPool<AppDbContext>(
-            //    options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+         //services.AddDbContextPool<AppDbContext>(
+         //    options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
+         
+         services.AddLocalization(option => option.ResourcesPath = "Resources");
+         
+         services.Configure<RequestLocalizationOptions>(
+         opts =>
+         {
+               var supportedCultures = new List<CultureInfo>
+               {
+                  new CultureInfo("en-GB"),
+                  new CultureInfo("en-US"),
+                  new CultureInfo("en"),
+                  new CultureInfo("fr-FR"),
+                  new CultureInfo("fr"),
+               };
 
-            services.AddLocalization(option => option.ResourcesPath = "Resources");
+               opts.DefaultRequestCulture = new RequestCulture("fr-FR");
+               // Formatting numbers, dates, etc.
+               opts.SupportedCultures = supportedCultures;
+               // UI strings that we have localized.
+               opts.SupportedUICultures = supportedCultures;
+               opts.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(async context =>
+               {
+                  return new ProviderCultureResult("fr-FR");
+               }));
+         });
+         
+         services.AddDbContext<AppDbContext>((serviceProvider, optionsBuilder) =>
+         {
+               optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Connection"));
+               optionsBuilder.UseInternalServiceProvider(serviceProvider);
+         });
+         
+         services.AddIdentity<ApplicationUser, IdentityRole>()
+               .AddEntityFrameworkStores<AppDbContext>()
+               .AddDefaultTokenProviders();
 
-            services.Configure<RequestLocalizationOptions>(
-            opts =>
-            {
-                var supportedCultures = new List<CultureInfo>
-                {
-                    new CultureInfo("en-GB"),
-                    new CultureInfo("en-US"),
-                    new CultureInfo("en"),
-                    new CultureInfo("fr-FR"),
-                    new CultureInfo("fr"),
-                };
+         services.AddSession(options => {
+               options.IdleTimeout = TimeSpan.FromMinutes(300);//You can set Time   
+         });
 
-                opts.DefaultRequestCulture = new RequestCulture("fr-FR");
-                // Formatting numbers, dates, etc.
-                opts.SupportedCultures = supportedCultures;
-                // UI strings that we have localized.
-                opts.SupportedUICultures = supportedCultures;
-                opts.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(async context =>
-                {
-                    return new ProviderCultureResult("fr-FR");
-                }));
-            });
+         services.AddEntityFrameworkSqlServer();
+         services.AddControllersWithViews();
 
-            services.AddDbContext<AppDbContext>((serviceProvider, optionsBuilder) =>
-            {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Connection"));
-                optionsBuilder.UseInternalServiceProvider(serviceProvider);
-            });
+         services.AddEntityFrameworkSqlServer();
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+         services.AddTransient<IFacultyRepository, FacultyRepository>();
+         services.AddTransient<ICourseRepository, CourseRepository>();
+         services.AddTransient<IDepartmentRepository, DepartmentRepository>();
 
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(300);//You can set Time   
-            });
-
-            services.AddEntityFrameworkSqlServer();
-
-            services.AddTransient<IFacultyRepository, FacultyRepository>();
-            services.AddTransient<ICourseRepository, CourseRepository>();
-            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
-
-            services.AddControllersWithViews();
-            //services.AddMvc(options => {
-            //    var policy = new AuthorizationPolicyBuilder()
-            //                   .RequireAuthenticatedUser()
-            //                   .Build();
-            //    options.Filters.Add(new AuthorizeFilter(policy));
-            //}).AddXmlSerializerFormatters();
-            services.AddAuthentication();
-            services.AddAuthorization();
-            services.AddMvc();
+         services.AddControllersWithViews();
+         
+         services.AddAuthentication(auth =>
+         {
+            auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+         })
+          .AddJwtBearer(token =>
+          {
+             token.RequireHttpsMetadata = false;
+             token.SaveToken = true;
+             token.TokenValidationParameters = new TokenValidationParameters
+             {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["AppSetting:Key"])),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+             };
+          });
+         
+         services.AddAuthorization();
+         services.AddMvc();
         } 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,20 +137,31 @@ namespace Gamal
 
             //app.UseRequestLocalization(requestLocalizationOptions);
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+        
             app.UseRequestLocalization(options.Value);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
             app.UseSession();
+         
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors(
+               builder =>
+               {
+                  builder.AllowAnyOrigin() // TODO: revisit and check if this can be more strict and still allow preflight OPTION requests
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
+               }
+             );
+         
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+               {
+                  endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+               });
         }
     }
 }

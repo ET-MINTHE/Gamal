@@ -30,32 +30,25 @@
     {
         <span style="color:green; font-weight:bold">@ViewBag.Message</span>
     }
-    <span style="font-size:15pt">DIDACTIQUE EN LIGNE ANNÉE ACADÉMIQUE 2019/2020</span>
-    <br />
+    <span style="font-size: 14pt;color: #054e77">Didactique en ligne année académique 2019/2020</span>
     <br />
     <p>
-        <span style="font-size:15pt">
+        <span style="font-size:12pt; color:#054e77">
             Vous trouverez ci-dessous la liste des matières que vous dispensez. Choisissez une matière et chargez du matériel didactique sur les servers
         </span>
     </p>
     <br />
-    <br />
-     @foreach (var course in @Model)
-     {
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">
-                        <a class="aa" asp-route-courseCode=@course.CourseCode asp-route-departmentCode=@course.DepartmentCode asp-controller="Administration"
-                           asp-action="AddToDolly">
-                            @{ var courseName =  char.ToUpper(course.CourseName[0]) + course.CourseName.Substring(1).ToLower();}
-                            @courseName
-                        </a>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-    }
+	 <div style="border-left: 5px solid #054e77; border-right:1px solid #e9ecef; border-bottom:1px solid #e9ecef; border-top:1px solid #e9ecef; ">
+	 	@foreach (var course in @Model)
+		{
+	 	<a class="aa" asp-route-courseCode=@course.CourseCode asp-route-departmentCode=@course.DepartmentCode asp-controller="Administration"
+			asp-action="AddToDolly">
+	 		@{ var courseName = char.ToUpper(course.CourseName[0]) + course.CourseName.Substring(1).ToLower();}
+	 	@courseName
+	 </a>
+ }
+	 </div>
+    
 }
 
 

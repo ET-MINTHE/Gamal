@@ -1,7 +1,7 @@
 ﻿@model Gamal.ViewModel.ListStudentPayedFeesViewModel
 @{
-    ViewData["Title"] = "StudentFeesList";
-    Layout = "~/Views/Shared/_Secretary.cshtml";
+	ViewData["Title"] = "StudentFeesList";
+	Layout = "~/Views/Shared/_Secretary.cshtml";
 }
 
 
@@ -23,80 +23,79 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:15pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
-    <br />
-    <span style="color:black; font-size:15pt; border-bottom:5px solid red">ESSE4</span>
-    <br />
-    <br />
-    <span style="font-size:15pt">LISTE DES ETUDIANTS QUI ONT PAYE LES TAXES ANNÉE ACADÉMIQUE 2019/2020</span>
-    <br />
-    <br />
-    <form method="get" asp-controller="Administration" asp-action="StudentFeesList">
-        <div class="input-group">
-            <input id="searchStudent" class="form-control" placeholder="Chercher une matière" asp-for="SearchTerm" />
-            <div class="input-group-append">
-                <button type="submit" class="btn1 btn-primary">Chercher</button>
-            </div>
-        </div>
-    </form>
-    <br />
-    @if (Model.Model != null)
-    {
-        <div class="border border-#6D7B8D">
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col"><span style="font-size:9pt">Nom</span></th>
-                        <th scope="col"><span style="font-size:9pt">Année Académique</span></th>
-                        <th scope="col"><span style="font-size:9pt">Montant</span></th>
-                        <th scope="col"><span style="font-size:9pt">Date de payement</span></th>
-                        <th scope="col"><span style="font-size:9pt">Etat</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Model)
-                    {
-                        <tr style="line-height: 0.6;">
-                            <td>
-                                <span style="font-size:11pt; color:red">
-                                    <a class="a-booklet" href"#">
-                                        @item.Name
-                                    </a>
-                                </span>
-                            </td>
-                            <td>
-                                blablaba
-                            </td>
-                            <td>@item.Ammount</td>
-                            <td>
-                                @item.DateOfPayment
-                            </td>
-                            <td>
-                                Payé
-                                <img src="~/images/active-icon.png" width="35px" height="35px" />
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    }
-    else
-    {
-        <span style="color:red">L'étudiant que vous cherchez n'a pas encore payé les taxes univisersitaires</span>
-    }
+	<span style="		font-size: 14pt; color:#054e77">Liste des étudiants qui ont payé les taxes pour l'année académique 2019/2020</span>
+	<br />
+	<br />
+	@if (!String.IsNullOrEmpty(@ViewBag.Error))
+	{
+		<span style="color:red; font-weight:bold">@ViewBag.Error</span>
+	}
+	<form method="get" asp-controller="Administration" asp-action="StudentFeesList">
+		<div class="input-group">
+			<input id="searchStudent" class="form-control" placeholder="Chercher une matière" asp-for="SearchTerm" />
+			<div class="input-group-append">
+				<button type="submit" class="btn1 btn-primary">Chercher</button>
+			</div>
+		</div>
+	</form>
+	<br />
+	@if (Model.Model != null)
+	{
+		<div class="border border-#6D7B8D">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th scope="col" style="color:#054e77">Nom</th>
+						<th scope="col" style="color:#054e77">Année Académique</th>
+						<th scope="col" style="color:#054e77">Montant</th>
+						<th scope="col" style="color:#054e77">Date de payement</th>
+						<th scope="col" style="color:#054e77">Etat</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.Model)
+					{
+						<tr style="line-height: 0.6;">
+							<td style="color:#054e77">
+								<span style="font-size:11pt; color:#054e77">
+									<a class="a-booklet" href"#">
+										@item.Name
+									</a>
+								</span>
+							</td>
+							<td style="color:#054e77">
+								blablaba
+							</td>
+							<td style="color:#054e77">@item.Ammount FG</td>
+							<td>
+								@item.DateOfPayment
+							</td>
+							<td style="color:#054e77">
+								Payé
+								<img src="~/images/active-icon.png" width="25px" height="25px" />
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	}
+	else if(String.IsNullOrEmpty(@ViewBag.Error))
+	{
+		<span style="color:red">L'étudiant que vous cherchez n'a pas encore payé les taxes univisersitaires</span>
+	}
 }
 
 @section Scripts{
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/jquery/jquery-ui.js"></script>
-    <link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#searchStudent').val("");
-            $('#searchStudent').autocomplete({
-                source: '/Administration/AutocompleteStudent'
-            });
-        });
-    </script>
+	<script src="~/lib/jquery/jquery.js"></script>
+	<script src="~/lib/jquery/jquery-ui.js"></script>
+	<link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#searchStudent').val("");
+			$('#searchStudent').autocomplete({
+				source: '/Administration/AutocompleteStudent'
+			});
+		});
+	</script>
 }

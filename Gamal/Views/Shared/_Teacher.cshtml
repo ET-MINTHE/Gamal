@@ -26,147 +26,142 @@
             font-weight: bold;
             color: white;
         }
-
         .confirm-btn {
             background-color: #25587E;
             width: 65px;
             color: white;
             border: 1px solid #25587E;
         }
-
         .confirm-btn:hover {
             background-color: #25587E;
             width: 65px;
             color: white;
             border: 1px solid #25587E;
         }
-
-        .btn1 {
-            background-color: #25587E;
-            width: 150px;
-            color: white;
-            border: 1px solid #25587E;
-        }
-
+	 	.btn1 {
+	 		background-color: #25587E;
+	 		width: 150px;
+	 		color: white;
+	 		border: 1px solid #25587E;
+	 		border-radius: 0px;
+	 	}
         .btn1:disabled {
             background-color: #25587E;
             color: white;
             border: 1px solid #25587E;
         }
-
         .btn1:hover {
             background-color: #25587E;
             color: white;
             border: 1px solid #25587E;
         }
-
         td {
             border-left-style: solid;
             border-left-color: #25587E;
             border-left-width: 12px;
         }
-
         .aexam {
             font-size: 12pt;
             color: red;
         }
-
         .aexam:hover {
             font-size: 12pt;
             color: red;
             text-decoration: none;
         }
-
         .aheader {
             font-size: 12pt;
             color: black;
         }
-
         .aheader:hover {
             text-decoration: underline;
             color: #25383C;
         }
-
         .aheder:link {
             text-decoration-line: none;
             text-decoration: none;
         }
-
         .a {
             font-size: 12pt;
             color: black;
         }
-
         .aa {
-            font-size: 12pt;
+            font-size: 14pt;
             color: #25587E;
         }
-
         .aa:hover {
             color: #25587E;
             text-decoration: underline;
         }
-
         .aheader {
             font-size: 12pt;
             color: black;
         }
-
         .aheder:hover {
             text-decoration-line: none;
             text-decoration: none;
         }
-
         .aheder:link {
             text-decoration-line: none;
             text-decoration: none;
         }
-
         .a:hover {
             text-decoration-line: none;
             text-decoration: none;
             color: black;
         }
-
         .tr:hover {
             background-color: #25587E;
             color: white;
         }
-
         .tr:hover td > a {
             background-color: #25587E;
             color: white;
             font-size: 12pt;
         }
-
         td {
             line-height: 0.6;
         }
-
         .a-secretary {
             text-decoration: none;
-            color: red;
+            color: #ff5733;
         }
-
         .a-secretary:hover {
             text-decoration-color: red;
-            color: red;
+            color: #ff5733;
         }
-
-        .btn2 {
-            background-color: #25587E;
-            width: 350px;
-            color: white;
-            border: 1px solid #25587E;
-        }
-
+	 	.btn2 {
+	 		background-color: #25587E;
+	 		width: 350px;
+	 		color: white;
+	 		border: 1px solid #25587E;
+	 		border-radius: 0px;
+	 	}
         .btn2:disabled {
             background-color: #25587E;
             color: white;
             border: 1px solid #25587E;
         }
+	 	   .btn2:hover {
+	 		   background-color: #0769AA;
+	 		   color: white;
+	 		   border: 1px solid #0769AA;
+	 	   }
 
-        .btn2:hover {
+        .btn3 {
+            background-color: #25587E;
+            width: 70px;
+            color: white;
+            border: 1px solid #25587E;
+        }
+
+        .btn3:disabled {
+            background-color: #25587E;
+            color: white;
+            border: 1px solid #25587E;
+        }
+
+        .btn3:hover {
             background-color: #25587E;
             color: white;
             border: 1px solid #25587E;
@@ -174,84 +169,75 @@
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div style="        background-image: url('images/uganc-logo.png');
-        width: 100%;
-        height: 100px">
-            <img src="~/images/uganc-logo.png" />
-        </div>
-        <div class="container-fluid">
-            <main role="main" class="pb-3">
-                @RenderBody()
-                <div class="container-fluid">
-                    <div class="row">
-                        @RenderSection("container", required: true)
-                        <div class="col-xl-3" style="height:auto">
-                            <div class="card h-100">
-                                <div class="card-header" style="background-color:#25587E; color:white; height:55px">
-                                    <div>
-                                        @{
-                                            var path = "/profiles/" + @HttpContextAccessor.HttpContext.Session.GetString("ProfilePath");
-                                        }
-                                        <a asp-action="UpdateProfile" asp-controller="Administration">
-                                            <img src="@path" width="100" height="100" style="border-radius:50%; margin-left:38%; border:1px solid #BEBEBE" />
-                                        </a>
-                                        <h6 style="text-align:center; color:#150517">@HttpContextAccessor.HttpContext.Session.GetString("UserLastName")</h6>
-                                        <h6 style="text-align:center; color:#150517">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName")</h6>
-                                    </div>
-                                    @RenderSection("leftPanelHeader", required: true)
+    <div class="container-fluid" style="min-height:700px">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            @RenderSection("container", required: true)
+            <div class="my-div">
+                <div style="width: 100%; padding:0px; margin:0px;">
+                    <img src="~/images/uganc-logo.png" style="width:100%" />
+                </div>
+                <div class="row" style="margin:0px; padding:0px; ">
+                    <div class="col-lg-3 col-md-3 col-sm-12" style="padding:0px">
+                        <div class="card" style="padding: 0px; ">
+                            <div class="card-header" style="background-color:#054e77;height: 50px;margin: 0px;padding: 0px">
+                            </div>
+                            <div class="card-body" style="min-height:700px;">
+                                @{
+                                    var path1 = "/profiles/" + @HttpContextAccessor.HttpContext.Session.GetString("ProfilePath");
+                                }
+                                <a asp-action="UpdateProfile" asp-controller="Administration">
+                                    <img src="@path1" width="100" height="100" style="border-radius:50%; margin-left:38%; margin-top:-40px; border:1px solid white" />
+                                </a>
+                                <h6 style="text-align:center; font-family:'Times New Roman'; color:#150517">@HttpContextAccessor.HttpContext.Session.GetString("UserLastName")</h6>
+                                <h6 style="text-align:center; font-family:'Times New Roman'; color:#150517">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName")</h6>
+
+                                @RenderSection("leftPanelHeader", required: true)
+                                <div style="margin-left:50px">
+                                    <a class="aheader" asp-controller="Account" asp-action="Logout">Deconnexion</a><br />
+                                    <a class="aheader" asp-controller="Teacher" asp-action="Teacher">Zone Reservée</a><br />
+                                    <a class="aheader" asp-controller="Account" asp-action="ChangePassword">Changer mot de passe</a><br />
+                                    <a class="aheader" href="#">@HttpContextAccessor.HttpContext.Session.GetString("Email")</a>
                                 </div>
-                                <div class="card-body" style="margin-top:80px">
-                                    <div>
-                                        <a class="aheader" asp-controller="Account" asp-action="Logout">Deconnexion</a><br />
-                                        <a class="aheader" asp-controller="Teacher" asp-action="Teacher">Zone Reservée</a><br />
-                                        <a class="aheader" asp-controller="Account" asp-action="ChangePassword">Changer mot de passe</a><br />
-                                        <a class="aheader" href="#">@HttpContextAccessor.HttpContext.Session.GetString("Email")</a>
-                                    </div>
-                                    <br />
-                                    @RenderSection("leftPanelBody", required: true)
-                                    <table class="table" style="font-size: 10pt; margin-top: 10px; color:#250517">
-                                        <tbody>
-                                            <tr class="tr">
-                                                <td scope="row"> <a class="a" asp-controller="Teacher" asp-action="Teacher">Home</a></td>
-                                            </tr>
-                                            <tr class="tr">
-                                                <td scope="row"> <a class="a" asp-controller="Administration" asp-action="CallForExam">Appels d'Examens</a></td>
-                                            </tr>
-                                            <tr class="tr">
-                                                <td scope="row"> <a class="a" asp-controller="Administration" asp-action="TeacherDolly">Didactique en Ligne</a></td>
-                                            </tr>
-                                            <tr class="tr">
-                                                <td scope="row"><a class="a" asp-controller="Administration" asp-action="RegisterMark">Enregistrer des notes</a></td>
-                                            </tr>
-                                            <tr class="tr">
-                                                <td scope="row"><a class="a" asp-controller="Speaker" asp-action="Evaluations">Tableau de Reservation</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                @RenderSection("leftPanelBody", required: true)
+                                <table class="table" style="font-size: 10pt; margin-top: 10px; color:#250517">
+                                    <tbody>
+                                        <tr class="tr">
+                                            <td scope="row"> <a class="a" asp-controller="Teacher" asp-action="Teacher">Home</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"> <a class="a" asp-controller="Administration" asp-action="CallForExam">Appels d'Examens</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"> <a class="a" asp-controller="Administration" asp-action="TeacherDolly">Didactique en Ligne</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"><a class="a" asp-controller="Administration" asp-action="RegisterMark">Enregistrer des notes</a></td>
+                                        </tr>
+                                        <tr class="tr">
+                                            <td scope="row"><a class="a" asp-controller="Administration" asp-action="TeacherBookingBoard">Tableau de Reservation</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="col-xl-9" style="height:auto; min-height:700px;">
-                            <div class="card h-100">
-                                <div class="card-header" style="background-color:#25587E; color:white; height:55px">
-                                    <span style="font-size:15pt;">Zone réservée de l'enseignant </span><span style="font-size:15pt;">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") @{@ViewBag.LastName}-[MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]</span>
-                                    @RenderSection("middlePanelHeader", required: true)
-                                </div>
-                                <div class="card-body">
-                                    <span style="font-size:15pt; font-weight:bold; color:red; font-family:'Times New Roman'">Direction du service pour les étudiants - Services Didactiques</span>
-                                    <br />
-                                    <span style="color:black; font-size:15pt; font-family:'Times New Roman'; border-bottom:5px solid red">ESSE4</span>
-                                    <br />
-                                    <br />
-                                    @RenderSection("middlePanelBody", required: true)
-                                </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-12" style="border:0px solid red; padding:0px">
+                        <div class="card" style="padding:0px; ">
+                            <div class="card-header text-center" style="background-color: #054e77; height: 50px;">
+                                <span style="font-size:15pt; color:white; font-family:'Times New Roman'">Zone réservée de l'enseignant @HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") @{@ViewBag.LastName}-[MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]</span>
+                                @RenderSection("middlePanelHeader", required: true)
+                            </div>
+                            <div class="card-body text-center" style="min-height:700px;">
+                                <span style="font-size:18pt; font-weight:100; color:#054e77; font-family:'Arial'">Direction du service pour les étudiants - Services Didactiques</span>
+                                <br />
+                                @RenderSection("middlePanelBody", required: true)
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
     <footer class="border-top footer text-muted">
         <div class="container">

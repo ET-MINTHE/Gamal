@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Gamal.Models;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace Gamal.Controllers
 {
@@ -22,6 +23,15 @@ namespace Gamal.Controllers
         //[AllowAnonymous]
         public IActionResult Index()
         {
+            //string jsonData = @"[{  
+            //                    'FirstName': 'Jignesh', 'LastName': 'Trivedi'}, {'FirstName': 'Elhadj Tahirou', 'LastName': 'Minthe'}]";
+
+            //var myDetails = JsonConvert.DeserializeObject<List<MyDetail>>(jsonData);
+            //_logger.LogInformation(string.Concat("Hi ", myDetails[1].FirstName, " " + myDetails[1].LastName));
+
+            //_logger.LogInformation("Ciao Mondo!");
+            //Console.WriteLine("Ciao Mondo!");
+            //Console.WriteLine("");
             return View();
         }
 

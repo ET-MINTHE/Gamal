@@ -25,10 +25,11 @@
 {
     <div style="">
         <div class="card">
+           <br />
             <div align="center">
-                <span style="font-size:20pt; color:#463E41">Processus d'Inscription des Enseignants</span>
+                <span style="		font-size: 14pt;color: #054e77">Inscription des Enseignants</span>
                 <br />
-                <span style="font-size:15pt; color:#463E41">Inserer les informations de l'enseignant</span><br />
+               <br />
             </div>
             @if (!String.IsNullOrEmpty(@ViewBag.Error))
             {
@@ -69,12 +70,14 @@
                             @Html.DropDownListFor(model => model.Department, Model.Departments as SelectList, "Selectioner le département", new { @class = "form-control" })
                             <span asp-validation-for="Department" class="text-danger"></span>
                         </div>
-                        <button type="reset" name="button" value="first" class="btn1 btn btn-primary">Effacer</button>
+                        <button type="reset" name="button" value="first" class="btn1 btn btn-primary" style="float:left">Effacer</button>
                         <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Enregister</button>
                     </form>
                     <br />
+                    <br />
                 </div>
             </div>
+           <br />
         </div>
     </div>
 }

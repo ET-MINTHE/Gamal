@@ -25,9 +25,9 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:12pt;">Le matériel didactique et pédagogique : soutien à l’appropriation ou déterminant de l’intervention éducative </span>
+    <span style="font-size: 14pt; color: #054e77">Le matériel didactique et pédagogique : soutien à l’appropriation ou déterminant de l’intervention éducative </span>
     <br />
-    <span style="font-size:12pt;">Vous trouverez ci-dessous le matériel didactiques relatifs aux différentes matières du département </span><span style="font-weight:bold">@ViewBag.Department</span>
+    <span style="font-size: 14pt; color: #054e77">Vous trouverez ci-dessous le matériel didactiques relatifs aux différentes matières du département </span><span style="color:#ff5733;font-weight:bold">@ViewBag.Department</span>
     <br />
     <br />
     <form method="get" asp-controller="Administration" asp-action="StudentDolly">
@@ -43,7 +43,9 @@
         <thead>
             <tr>
                 <th style="width:50%">
-                   @Html.ActionLink("Matière", "StudentDolly", new { sortBy = ViewBag.SortNameParameter}, new { @class = "a-booklet" })
+                    <span style="float:left">
+                        @Html.ActionLink("Matière", "StudentDolly", new { sortBy = ViewBag.SortNameParameter }, new { @class = "a-booklet" })
+                    </span>
                 </th>
                 <th>
                     @Html.ActionLink("Année", "StudentDolly", new { sortBy = ViewBag.SortYearParameter}, new { @class = "a-booklet" })
@@ -55,7 +57,7 @@
             {
                 <tr class="td1">
                     <th scope="col" style="color:red">
-                        <span style="font-size:13pt; color:indianred">
+                        <span style="font-size:13pt; float:left; color:indianred">
                             <a class="a-booklet" asp-route-courseId=@course.CourseCode asp-route-departmentId=@course.DepartmentCode asp-controller="Administration"
                                asp-action="StudentCourseDolly">
                                 @{ var courseName = char.ToUpper(course.CourseName[0]) + course.CourseName.Substring(1).ToLower();}

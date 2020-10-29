@@ -10,14 +10,16 @@ function confirmAddMark(isAddChecked) {
     }
 }
 
-function confirmDelete(isChecked) {
+function confirmDelete(uniqueId, isChecked) {
 
+    var deleteSpan = 'deleteSpan_' + uniqueId;
+    var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
     if (isChecked) {
-        $('#' + 'deleteSpan').hide();
-        $('#' + 'confirmDeleteSpan').show();
+        $('#' + deleteSpan).hide();
+        $('#' + confirmDeleteSpan).show();
     } else {
-        $('#' + 'deleteSpan').show();
-        $('#' + 'confirmDeleteSpan').hide();
+        $('#' + deleteSpan).show();
+        $('#' + confirmDeleteSpan).hide();
     }
 }
 

@@ -1,5 +1,7 @@
 ﻿using Gamal.Models.Domain;
 using Gamal.Models.IRepositories;
+using Gamal.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +25,17 @@ namespace Gamal.Models.Repositories
         {
             return AppContext.ExamEnrollments.Where(ee => ee.ExamId == examId).FirstOrDefault();
         }
-        public AppDbContext AppContext
-        {
-            get { return Context as AppDbContext; }
-        }
+
+         public IEnumerable<Exam> GetStudentEnrollmentBySubject(string subject)
+		   {
+            return AppContext.Exams
+                           .Include(e => e.ExamEnrollments).Where(x => x.Name == subject) .ToList();
+         }
+
+         
+         public AppDbContext AppContext
+         {
+               get { return Context as AppDbContext; }
+         }
     }
 }

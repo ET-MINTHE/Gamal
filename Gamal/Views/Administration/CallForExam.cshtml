@@ -1,7 +1,7 @@
 ﻿@model List<Gamal.Models.Domain.Exam>
 @{
-    ViewData["Title"] = "TeacherCallForExam";
-    Layout = "~/Views/Shared/_Teacher.cshtml";
+	ViewData["Title"] = "TeacherCallForExam";
+	Layout = "~/Views/Shared/_Teacher.cshtml";
 }
 
 @section container{
@@ -22,79 +22,71 @@
 
 @section middlePanelBody
 {
-    @if (!String.IsNullOrEmpty(@ViewBag.Error))
-    {
-        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
-    }
-    @if (!String.IsNullOrEmpty(@ViewBag.Message))
-    {
-        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
-    }
-    <span style="font-size:15pt">GESTION DES APPELS D'EXAMENS</span>
-    <br />
-    <p>
-        <span style="font-size:15pt">Ci-dessous vous pouvez ajouter ou supprimer des APPELS d'examen </span>
-    </p>
-    <br />
-    <p>
+	@if (!String.IsNullOrEmpty(@ViewBag.Error))
+	{
+		<span style="color:red; font-weight:bold">@ViewBag.Error</span>
+	}
+	@if (!String.IsNullOrEmpty(@ViewBag.Message))
+	{
+		<span style="color:green; font-weight:bold">@ViewBag.Message</span>
+	}
+	<span style="font-size: 14pt; color: #054e77">Gestion des sessions d'examens</span>
+	<br />
+	<p>
+		<span style="font-size:12pt; color:#054e77 ">Ci-dessous vous pouvez ajouter ou supprimer des APPELS d'examen </span>
+	</p>
+	<p>
+		<div style="border-left:5px solid #054e77; border-bottom: 1px solid #e9ecef; border-right: 1px solid #e9ecef; border-top: 1px solid #e9ecef; padding: 10px;">
+			<a asp-controller="Administration" asp-action="AddExam" class="btn2 btn btn-primary">
+				Ajouter un appel d'Examen
+			</a>
+		</div>
+			<br />
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">
-                        <a asp-controller="Administration"
-                           asp-action="AddExam" class="btn2 btn btn-primary">Ajouter un appel d'Examen</a>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <br />
-
-        <span>Liste des appels d'exam</span>
-        <br />
-        @if (Model.Count() == 0)
-        {
-            <span style="color:red"> Aucun appel d'examens n'est disponible</span>
-        }
-        else
-        {
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Matière</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Salle</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Heure</th>
-                        <th scope="col">Suppression</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var exam in @Model)
-                    {
-                        <tr>
-                            <th scope="row">
-                                <span style="font-size:11pt; color:indianred">
-                                    <a style="background-color:#25383C" asp-route-examId=@exam.ExamId asp-controller="Administration"
-                                       asp-action="ExamEnrollment">
-                                        @exam.Name.ToLower()
-                                    </a>
-
-                                </span>
-                            </th>
-                            <td>@exam.Description</td>
-                            <td>@exam.Classroom</td>
-                            <td>@exam.Date</td>
-                            <td>@exam.Hour</td>
-                            <td>
-                                <a asp-controller="ExamSession"
-                                   asp-action="Index" class="btn btn-primary" style="background-color:#BEBEBE; color:black; border:1px solid #BEBEBE;">Supprimer l'appel d'Examen</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+			@if (Model.Count() == 0)
+			{
+				<span style="color: #ff5733"> Aucun appel d'examens n'est disponible</span>
+			}
+			else
+			{
+				<span style="color: #054e77">Liste des appels d'exams</span>
+				<br />
+				<table class="table table-bordered">
+					<thead>
+						<tr style="background-color:#e9ecef; color:#054e77">
+							<th scope="col">Matière</th>
+							<th scope="col">Description</th>
+							<th scope="col">Salle</th>
+							<th scope="col">Date</th>
+							<th scope="col">Heure</th>
+							<th scope="col">Suppression</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var exam in @Model)
+						{
+							<tr>
+								<td scope="row">
+									<a style="color:#054e77" asp-route-examId=@exam.ExamId asp-controller="Administration"
+										asp-action="ExamEnrollment">
+										@exam.Name.ToLower()
+									</a>
+								</td>
+								<td style="color:#054e77">@exam.Description</td>
+								<td style="color:#054e77">@exam.Classroom</td>
+								<td style="color:#054e77">@exam.Date</td>
+								<td style="color:#054e77">@exam.Hour</td>
+								<td style="color:#054e77">
+									<form asp-controller="Administration" asp-action="RemoveExam" asp-route-examId="@exam.ExamId" method="post">
+										<button class="btn btn-primary" style="background-color:#054e77; color:white;">Supprimer l'appel d'Examen</button>
+									</form>
+									
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			}
 }
 
 

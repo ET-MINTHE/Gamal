@@ -1,7 +1,7 @@
 ﻿@model Gamal.ViewModel.UploadToDollyViewModel
 @{
-    ViewData["Title"] = "AddToDolly";
-    Layout = "~/Views/Shared/_Teacher.cshtml";
+	ViewData["Title"] = "AddToDolly";
+	Layout = "~/Views/Shared/_Teacher.cshtml";
 }
 
 @section container{
@@ -22,169 +22,176 @@
 
 @section middlePanelBody
 {
-    @if (!String.IsNullOrEmpty(@ViewBag.Error))
-    {
-        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
-    }
-    @if (!String.IsNullOrEmpty(@ViewBag.Message))
-    {
-        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
-    }
-    <span style="font-size:15pt">DIDACTIQUE EN LIGNE ANNÉE ACADÉMIQUE 2019/2020</span>
-    <br />
-    <div>
-        <fieldset class="border p-3" style="width:49%; float:left;border:3px solid red">
-            <legend class="w-auto" style="font-size:15pt; font-weight:bold;">Charger un fichier PDF</legend>
-            <form enctype="multipart/form-data" asp-route-courseCode="@Model.CourseCode" method="post">
-                <div class="form-group">
-                    <input asp-for="FileName" class="form-control fr-date-datepicker" placeholder="Inserer le nom du fichier">
-                    <span asp-validation-for="FileName" class="text-danger"></span>
-                </div>
-                <input type="hidden" id="serialNumber" name="serialNumber" value="@ViewBag.SerialNumber">
-                <input type="hidden" id="courseCode" name="courseCode" value="@Model.CourseCode">
-                <input type="hidden" id="departmentCode" name="departmentCode" value="@Model.DepartmentCode">
-                <div class="custom-file">
-                    <input asp-for="FileToUpload" class="form-control custom-file-input">
-                    <label class="custom-file-label">Choisr le Fichier....</label>
-                </div>
-                <br />
-                <br />
-                <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Charger</button>
-            </form>
-        </fieldset>
 
-        <fieldset class="border p-3" style="width:49%; float:right;border:3px solid red">
-            <legend class="w-auto" style="font-size:15pt; font-weight:bold">Charger une video au format .MP4  </legend>
-            <form enctype="multipart/form-data" asp-action="UploadVideo" asp-controller="Administration" asp-route-courseCode="@Model.CourseCode" method="post">
-                <div class="form-group">
-                    <input asp-for="FileName" class="form-control fr-date-datepicker" placeholder="Inserer le nom du fichier">
-                    <span asp-validation-for="FileName" class="text-danger"></span>
-                </div>
-                <input type="hidden" id="serialNumber" name="serialNumber" value="@ViewBag.SerialNumber">
-                <input type="hidden" id="courseCode" name="courseCode" value="@Model.CourseCode">
-                <input type="hidden" id="departmentCode" name="departmentCode" value="@Model.DepartmentCode">
-                <div class="custom-file">
-                    <input asp-for="FileToUpload" class="form-control custom-file-input">
-                    <label class="custom-file-label">Choisr le Fichier....</label>
-                </div>
-                <br />
-                <br />
-                <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Charger</button>
-            </form>
-        </fieldset>
-    </div>
-
-    <br />
-    <br />
-    <fieldset class="border p-3" style="width:98%;border:3px solid red">
-        <legend class="w-auto" style="font-size:15pt;">liste des fichiers PDF</legend>
-        <table class="table table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th style="text-align:center" align="center" width="33%" scope="col">Liste Materiels</th>
-                    <th style="text-align:center" align="center" width="33%" scope="col">Modification</th>
-                    <th style="text-align:center" align="center" width="33%" scope="col">Suppression</th>
-                </tr>
-
-            </thead>
-            <tbody>
-                @foreach (var material in Model.Dollies)
-                {
-                    var path = "/dolly/" + @material.FilePath;
-                    <tr>
-                        <th align="center" scope="col" style="color:red; text-align:center">
-                            <span style="color:indianred">
-                                <a class="aa" href=@path>@material.FileName</a>
-                            </span>
-                        </th>
-                        <td align="center">
-                            <a asp-controller="Administration"
-                               asp-action="UpdateFromDolly" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" class="btn1 btn btn-primary">Modifier</a>
-                        </td>
-                        <td align="center">
-                            <form asp-controller="Administration"
-                                  asp-action="RemoveFromDolly" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" method="post">
-
-                                <span id="confirmDeleteSpan" style="display:none">
-                                    <span>Vous etes sur de vouloir effacer le fichiher</span>
-                                    <button type="submit" class="btn btn-danger">
-                                        OUI
-                                    </button>
-                                    <a href="#" onclick="confirmDelete(false)" class="btn btn-primary">NON</a>
-                                </span>
-                                <span id="deleteSpan">
-                                    <a onclick="confirmDelete(true)"
-                                       class="btn1 btn btn-primary" style="color:white">Supprimer</a>
-                                </span>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </fieldset>
-    <br />
-    <br />
-
-    <fieldset class="border p-3" style="width:98%;border:3px solid red">
-        <legend class="w-auto" style="font-size:15pt;">liste des videos MP4</legend>
-        <table class="table table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th style="text-align:center" align="center" width="33%" scope="col">Liste Materiels</th>
-                    <th style="text-align:center" align="center" width="33%" scope="col">Modification</th>
-                    <th style="text-align:center" align="center" width="33%" scope="col">Suppression</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var material in Model.DollyVideos)
-                {
-                    var path = "/dolly_videos/" + @material.FilePath;
-                    <tr>
-                        <th align="center" scope="col" style="color:red; text-align:center">
-                            <span style="color:indianred">
-                                <a class="aa" href=@path>@material.FileName</a>
-                            </span>
-                        </th>
-                        <td align="center">
-                            <a asp-controller="Administration"
-                               asp-action="UpdateFromDollyVideo" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" class="btn1 btn btn-primary">Modifier</a>
-                        </td>
-                        <td align="center">
-                            <form asp-controller="Administration"
-                                  asp-action="RemoveFromDolly" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" method="post">
-
-                                <span id="confirmDeleteSpan" style="display:none">
-                                    <span>Vous etes sur de vouloir effacer le fichiher</span>
-                                    <button type="submit" class="btn btn-danger">
-                                        OUI
-                                    </button>
-                                    <a href="#" onclick="confirmDelete(false)" class="btn btn-primary">NON</a>
-                                </span>
-                                <span id="deleteSpan">
-                                    <a onclick="confirmDelete(true)"
-                                       class="btn1 btn btn-primary" style="color:white">Supprimer</a>
-                                </span>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </fieldset>
+	<span style="font-size: 14pt;color: #054e77">Didactique en ligne Année Académique 2019/2020</span>
+	<br />
+	@if (!String.IsNullOrEmpty(@ViewBag.Error))
+	{
+		<span style="color:red; font-weight:bold">@ViewBag.Error</span>
+	}
+	@if (!String.IsNullOrEmpty(@ViewBag.Message))
+	{
+		<span style="color:green; font-weight:bold">@ViewBag.Message</span>
+	}
+	<br />
+	<div style="width:100%;">
+		<div style="width:48%; float:left; border-left:5px solid #054e77; border-bottom:1px solid #e9ecef; border-right:1px solid #e9ecef; border-top:1px solid #e9ecef;padding:10px; margin-bottom:10px;">
+			<span style="color:#054e77">Inserer un fichier au format PDF</span>
+			<br />
+			<form enctype="multipart/form-data" asp-route-courseCode="@Model.CourseCode" method="post">
+				<div class="form-group">
+					<input asp-for="PDFFileName" class="form-control fr-date-datepicker" placeholder="Inserer le nom du fichier">
+					<span asp-validation-for="PDFFileName" style="float:left" class="text-danger"></span>
+				</div>
+				<input type="hidden" id="serialNumber" name="serialNumber" value="@ViewBag.SerialNumber">
+				<input type="hidden" id="courseCode" name="courseCode" value="@Model.CourseCode">
+				<input type="hidden" id="departmentCode" name="departmentCode" value="@Model.DepartmentCode">
+				<div class="custom-file">
+					<input asp-for="PDFFileToUpload" class="form-control custom-file-input">
+					<label class="custom-file-label">Choisr le Fichier....</label>
+				</div>
+				<br />
+				<br />
+				<button type="submit" name="button" value="first" class="btn1 btn btn-primary" style="float:right">Charger</button>
+			</form>
+		</div>
+		<div style="width:48%; float:right; border-left:5px solid #054e77; border-bottom:1px solid #e9ecef; border-right:1px solid #e9ecef; border-top:1px solid #e9ecef;padding:10px; margin-bottom:10px;">
+			<span style="color:#054e77">Inserer un fichier au format MP4</span>
+			<br />
+			<form enctype="multipart/form-data" asp-action="UploadVideo" asp-controller="Administration" asp-route-courseCode="@Model.CourseCode" method="post">
+				<div class="form-group">
+					<input asp-for="VideoFileName" class="form-control fr-date-datepicker" placeholder="Inserer le nom du fichier">
+					<span asp-validation-for="VideoFileName" style="float:left" class="text-danger"></span>
+				</div>
+				<input type="hidden" id="serialNumber" name="serialNumber" value="@ViewBag.SerialNumber">
+				<input type="hidden" id="courseCode" name="courseCode" value="@Model.CourseCode">
+				<input type="hidden" id="departmentCode" name="departmentCode" value="@Model.DepartmentCode">
+				<div class="custom-file">
+					<input asp-for="VideoFileToUpload" class="form-control custom-file-input">
+					<label class="custom-file-label">Choisr le Fichier....</label>
+				</div>
+				<br />
+				<br />
+				<button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Charger</button>
+			</form>
+		</div>
+	</div>
+	<br />
+   <br />
+	<div style="width:100%;">
+		<table class="table table-bordered">
+			<thead style="background-color:#E9ECEF; color:#054e77; font-weight:bold; height:40px;">
+				<tr>
+					<td style="text-align:center" align="center" width="33%" scope="col">Liste Materiels Format PDF</td>
+					<td style="text-align:center" align="center" width="33%" scope="col">Modification</td>
+					<td style="text-align:center" align="center" width="33%" scope="col">Suppression</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var material in Model.Dollies)
+				{
+					var path = "/dolly/" + @material.FilePath;
+					<tr>
+						<td align="center" scope="col" style="color:red; text-align:center">
+							<span style="color:indianred">
+								<a class="aa" href=@path>@material.FileName</a>
+							</span>
+						</td>
+						<td align="center">
+							<a asp-controller="Administration"
+								asp-action="UpdateFromDolly" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" class="btn1 btn btn-primary">Modifier</a>
+						</td>
+						<td align="center">
+							<form asp-controller="Administration"
+									asp-action="RemoveFromDolly" asp-route-fileType="pdf" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" method="post">
+								<span id="confirmDeleteSpan_@material.Id" style="display:none">
+									<span>Vous etes sur de vouloir effacer le fichiher</span>
+									<button type="submit" class="btn btn-danger">
+										OUI
+									</button>
+									<a href="#" onclick="confirmDelete(@material.Id, false)" class="btn3 btn btn-primary">NON</a>
+								</span>
+								<span id="deleteSpan_@material.Id">
+									<a onclick="confirmDelete(@material.Id, true)"
+										class="btn1 btn btn-primary" style="color:white">Supprimer</a>
+								</span>
+							</form>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<br />
+		<table class="table table-bordered">
+			<thead style="background-color:#E9ECEF; color:#054e77; font-weight:bold; height:40px;">
+				<tr style="height:30px; background-color:#E9ECEF">
+					<td style="text-align:center" align="center" width="33%" scope="col">Liste Materiels format Vidéo</td>
+					<td style="text-align:center" align="center" width="33%" scope="col">Modification</td>
+					<td style="text-align:center" align="center" width="33%" scope="col">Suppression</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var material in Model.DollyVideos)
+				{
+					var path = "/dolly_videos/" + @material.FilePath;
+					<tr>
+						<td align="center" scope="col" style="color:red; text-align:center">
+							<span style="color:indianred">
+								<a class="aa" href=@path>@material.FileName</a>
+							</span>
+						</td>
+						<td align="center">
+							<a asp-controller="Administration"
+								asp-action="UpdateFromDollyVideo" asp-route-id="@material.Id"
+								asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode"
+								class="btn1 btn btn-primary">Modifier</a>
+						</td>
+						<td align="center">
+							<form asp-controller="Administration"
+									asp-action="RemoveFromDolly" asp-route-fileType="video" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" method="post">
+								<span id="confirmDeleteSpan_@material.Id" style="display:none">
+									<span>Vous etes sur de vouloir effacer le fichiher</span>
+									<button type="submit" class="btn btn-danger">
+										OUI
+									</button>
+									<a href="#" onclick="confirmDelete(@material.Id, false)" class="btn3 btn btn-primary">NON</a>
+								</span>
+								<span id="deleteSpan_@material.Id">
+									<a onclick="confirmDelete(@material.Id, true)"
+										class="btn1 btn btn-primary" style="color:white">Supprimer</a>
+								</span>
+							</form>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 }
 
-
 @section Scripts{
-    <script src="~/js/custom.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.custom-file-input').on("change", function () {
-                var fileName = $(this).val().split("\\").pop();
-                $(this).next('.custom-file-label').html(fileName);
-            });
-        });
-    </script>
+
+	<script>
+		function confirmDelete(uniqueId, isChecked) {
+
+			var deleteSpan = 'deleteSpan_' + uniqueId;
+			var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+			if (isChecked) {
+				$('#' + deleteSpan).hide();
+				$('#' + confirmDeleteSpan).show();
+			} else {
+				$('#' + deleteSpan).show();
+				$('#' + confirmDeleteSpan).hide();
+			}
+		}
+
+		$(document).ready(function () {
+			$('.custom-file-input').on("change", function () {
+				var fileName = $(this).val().split("\\").pop();
+				$(this).next('.custom-file-label').html(fileName);
+			});
+		});
+	</script>
 
 }
 

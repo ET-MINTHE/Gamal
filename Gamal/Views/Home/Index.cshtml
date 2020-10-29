@@ -1,10 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<head>
 
+
+</head>
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 <script src="~/lib/jquery/jquery.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/lib/jquery/jquery-ui.js"></script>
+
 <style>
     .my-card {
         background-color: transparent !important;
@@ -38,35 +43,35 @@
         text-decoration: none !important;
     }
 
-    .my-btn-link:hover {
-        text-decoration: none;
-        color: white;
-    }
+        .my-btn-link:hover {
+            text-decoration: none;
+            color: white;
+        }
 
-    .my-btn-link:after {
-        content: '\2212';
-        width: 35px;
-        font-size: 25px;
-        text-align: center;
-        border-radius: 0px;
-        left: 10px;
-        top: 3px;
-        position: absolute;
-        background-color:#25587E;
-        padding: 0px;
-        color: white;
-        border-right: 1px solid white;
-        text-decoration: none;
-    }
+        .my-btn-link:after {
+            content: '\2212';
+            width: 35px;
+            font-size: 25px;
+            text-align: center;
+            border-radius: 0px;
+            left: 10px;
+            top: 3px;
+            position: absolute;
+            background-color: #25587E;
+            padding: 0px;
+            color: white;
+            border-right: 1px solid white;
+            text-decoration: none;
+        }
 
-    .my-btn-link:after:hover {
-        text-decoration: none;
-    }
+            .my-btn-link:after:hover {
+                text-decoration: none;
+            }
 
-    .my-btn-link.collapsed {
-        text-decoration: none;
-        color: white;
-    }
+        .my-btn-link.collapsed {
+            text-decoration: none;
+            color: white;
+        }
 
     .my-gray-btn-link.collapsed {
         text-decoration: none;
@@ -92,11 +97,11 @@
         font-weight: 100;
     }
 
-    .my-font-family:hover {
-        font-family: 'arimo','sans-serif';
-        color: rgb(36, 28, 28);
-        font-weight: 100;
-    }
+        .my-font-family:hover {
+            font-family: 'arimo','sans-serif';
+            color: rgb(36, 28, 28);
+            font-weight: 100;
+        }
 
     .my-gray-btn-link {
         width: 100%;
@@ -107,65 +112,65 @@
         text-decoration: none !important;
     }
 
-    .my-gray-btn-link:hover {
-        text-decoration: none;
-        color: black;
-    }
+        .my-gray-btn-link:hover {
+            text-decoration: none;
+            color: black;
+        }
 
-    .my-gray-btn-link:after {
-        content: '\2212';
-        width: 35px;
-        font-size: 25px;
-        text-align: center;
-        border-radius: 0px;
-        left: 10px;
-        top: 3px;
-        position: absolute;
-        background-color: #D3D3D3;
-        padding: 0px;
-        color: black;
-        border-right: 1px solid black;
-        text-decoration: none;
-    }
+        .my-gray-btn-link:after {
+            content: '\2212';
+            width: 35px;
+            font-size: 25px;
+            text-align: center;
+            border-radius: 0px;
+            left: 10px;
+            top: 3px;
+            position: absolute;
+            background-color: #D3D3D3;
+            padding: 0px;
+            color: black;
+            border-right: 1px solid black;
+            text-decoration: none;
+        }
 
-    .my-gray-btn-link.collapsed:after {
-        content: '\002B';
-        text-decoration: none;
-    }
+        .my-gray-btn-link.collapsed:after {
+            content: '\002B';
+            text-decoration: none;
+        }
 
-    .my-gray-btn-link:before {
-        text-decoration: none;
-        border: 0px;
-        color: white;
-    }
+        .my-gray-btn-link:before {
+            text-decoration: none;
+            border: 0px;
+            color: white;
+        }
 
     .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-        background: #25587E;
+        background: #054e77;
         color: white;
         font-family: 'arimo','sans-serif';
     }
+
     .nav-item {
         background: #1a3e78 !important;
         font-family: 'arimo','sans-serif' !important;
     }
 
-    .nav-item > a {
-        background: #1a3e78;
-        font-family: 'arimo','sans-serif';
-        color: white;
-    }
+        .nav-item > a {
+            background: #25587E;
+            font-family: 'arimo','sans-serif';
+            color: white;
+        }
 
-    .nav-item > a:hover {
-        background: #1a3e78;
-        font-family: 'arimo','sans-serif';
-        color: white;
-    }
+            .nav-item > a:hover {
+                background: #25587E;
+                font-family: 'arimo','sans-serif';
+                color: white;
+            }
 </style>
 
 <br />
-<ul class="nav nav-tabs my-nav-item" id="myTab" style="        width: 68%;
-        margin-left: 15%;" role="tablist">
-    <li class="nav-item my-nav-item">
+<ul class="nav nav-tabs my-nav-item" id="myTab" style=" width:68%; margin-left: 15%;" role="tablist">
+    <li class="nav-item nav-item">
         <a class=" nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
     </li>
     <li class="nav-item">
@@ -176,12 +181,12 @@
     </li>
 </ul>
 <div class="tab-content border" id="myTabContent" style="width:69%; margin-left:15%; padding:15px;">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab" >
-       Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, 
-       non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua 
-       put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore 
-       wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, 
-       raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+        non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua
+        put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+        wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+        raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
     </div>
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="min-height:100px;">
         <span style="font-size:15pt; font-family:'Trebuchet MS'; border-bottom:5px solid red">Direction</span> <span style="font-size:15pt;"> Services aux étudiants - Services ditactiques</span>
@@ -197,109 +202,97 @@
     </div>
 </div>
 
-<div class="card border-0" style=" margin-bottom:20px; margin-left:270px; color:black; width:35%; height:500px; float:left">
-    <div class="card-body" style="min-height:500px">
-        <div class="card" style="color:black; margin-bottom: 20px; width: 100%;float: right">
-            <div class="card-body">
-                <div class="container" style="width: 98%;">
-                    <div class="row" style="min-height:460px">
-                        <div class="col-12">
-                            <div id="accordion">
-                                <div class="card my-card" style="margin-top:0px;">
-                                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#25587E; margin-top:0px; height:45px;" id="headingOne">
-                                        <button style="padding-left:25px" class="btn my-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                            LYCÉENS/ÉTUDIANTS
-                                        </button>
-                                    </div>
-                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card my-card">
-                                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#25587E; margin-top:0px; height:45px;" id="headingTwo">
-                                        <h5 class="mb-0">
-                                            <button style="padding-left:25px;" class="btn my-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                ÉTUDIANTS À L’UGANC
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card my-card">
-                                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#25587E; margin-top:0px; height:45px;" id="headingThree">
-                                        <h5 class="mb-0">
-                                            <button style="padding-left:25px;" class="btn my-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                EN REPRISE D’ÉTUDE/FORMATION CONTINUE
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card my-card">
-                                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#25587E; margin-top:0px; height:45px;" id="headingFour">
-                                        <h5 class="mb-0">
-                                            <button style="padding-left:25px;" class="btn my-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                À LA RECHERCHE D’UN EMPLOI
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card my-card">
-                                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#D3D3D3; margin-top:0px; height:45px;" id="headingFive">
-                                        <h5 class="mb-0">
-                                            <button style="padding-left:25px;" class="my-font-family btn my-gray-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                                PARTENAIRES/ENTREPRISES
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card my-card">
-                                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#D3D3D3;  margin-top:0px; height:45px;" id="headingSix">
-                                        <h5 class="mb-0">
-                                            <button style="padding-left:25px;" class="my-font-family btn my-gray-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                                JOURNALISTES
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
-                                        <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<div class="container" style="margin-top:10px;">
+    <div class="row" style="min-height:300px">
+        <div class="col-6">
+            <div id="accordion">
+                <div class="card my-card" style="margin-top:0px;">
+                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#25587E; margin-top:0px; height:45px;" id="headingOne">
+                        <button style="padding-left:25px" class="btn my-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            LYCÉENS/ÉTUDIANTS
+                        </button>
+                    </div>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-card">
+                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#25587E; margin-top:0px; height:45px;" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button style="padding-left:25px;" class="btn my-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                ÉTUDIANTS À L’UGANC
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-card">
+                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#25587E; margin-top:0px; height:45px;" id="headingThree">
+                        <h5 class="mb-0">
+                            <button style="padding-left:25px;" class="btn my-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                EN REPRISE D’ÉTUDE/FORMATION CONTINUE
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-card">
+                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#25587E; margin-top:0px; height:45px;" id="headingFour">
+                        <h5 class="mb-0">
+                            <button style="padding-left:25px;" class="btn my-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                À LA RECHERCHE D’UN EMPLOI
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-card">
+                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#D3D3D3; margin-top:0px; height:45px;" id="headingFive">
+                        <h5 class="mb-0">
+                            <button style="padding-left:25px;" class="my-font-family btn my-gray-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                PARTENAIRES/ENTREPRISES
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card my-card">
+                    <div class="card-header my-card-header d-flex align-items-center" style="background-color:#D3D3D3;  margin-top:0px; height:45px;" id="headingSix">
+                        <h5 class="mb-0">
+                            <button style="padding-left:25px;" class="my-font-family btn my-gray-btn-link btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                JOURNALISTES
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="card border-0" style=" margin-bottom:20px; margin-right:280px; color:black; width:35%; height:500px; float:right">
-    <div class="card-body">
-        <div class="card" style="color:black; margin-bottom: 20px; width: 100%;float: right">
-            <div class="card-body">
-                <div class="bd-example">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
                     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -358,7 +351,8 @@
     </div>
 </div>
 
-<br />
+
+
 
 
 

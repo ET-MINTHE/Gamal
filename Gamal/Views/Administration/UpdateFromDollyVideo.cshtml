@@ -39,14 +39,14 @@
 
     <form enctype="multipart/form-data" asp-route-courseCode="@Model.CourseCode" method="post">
         <div class="form-group">
-            <input asp-for="FileName" class="form-control fr-date-datepicker" placeholder="Inserer le nom du fichier">
-            <span asp-validation-for="FileName" class="text-danger"></span>
+            <input asp-for="PDFFileName" class="form-control fr-date-datepicker" placeholder="Inserer le nom de la Vidéo">
+            <span asp-validation-for="PDFFileName" class="text-danger"></span>
         </div>
         <input type="hidden" id="courseCode" name="courseCode" value="@ViewBag.CourseCode">
         <input type="hidden" id="departmentCode" name="departmentCode" value="@ViewBag.DepartmentCode">
         <input type="hidden" id="oldpath" name="oldpath" value="@ViewBag.Oldpath">
         <div class="custom-file">
-            <input asp-for="FileToUpload" class="form-control custom-file-input">
+            <input asp-for="VideoFileToUpload" class="form-control custom-file-input">
             <label class="custom-file-label">Choisr le Fichier....</label>
         </div>
         <br />

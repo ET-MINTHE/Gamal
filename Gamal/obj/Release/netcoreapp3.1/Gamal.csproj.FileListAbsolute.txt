@@ -1,4 +1,3 @@
-C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\appsettings.Development.json
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\appsettings.json
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\libman.json
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Properties\launchSettings.json
@@ -140,7 +139,6 @@ C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\runtimes\wi
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Gamal.csprojAssemblyReference.cache
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Gamal.Resources.Controllers.AdministrationController.fr-FR.resources
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Gamal.Resources.Controllers.AdministrationController.it-IT.resources
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Gamal.csproj.GenerateResource.cache
@@ -227,3 +225,23 @@ C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\staticwebas
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Gamal.dll
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Gamal.pdb
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Gamal.genruntimeconfig.cache
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\DPDFNative_x64.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\DPDFNative_x86.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\BaseLib.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\DynamicPDF.NETStandard20.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\itextsharp.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\SVG.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Syncfusion.Licensing.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\runtimes\linux-x64\native\libDPDFNative_x64.so
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\runtimes\win10-arm\native\DPDFNative_ARM.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\runtimes\win10-x64\native\DPDFNative_x64.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\runtimes\win10-x86\native\DPDFNative_x86.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\Account\ChangePassword.cshtml.g.cs
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\Administration\EnrollmentCertificate.cshtml.g.cs
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\Administration\UpdateFromDollyVideo.cshtml.g.cs
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\Administration\WatchVideo.cshtml.g.cs
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Gamal.csprojAssemblyReference.cache
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll

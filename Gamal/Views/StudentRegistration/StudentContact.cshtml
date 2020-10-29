@@ -20,11 +20,11 @@
 }
 
 @section middlePanelBody{
+    <br />
     <div>
         <div class="card">
             <div align="center">
-                <br />
-                <span style="font-size:18pt; color:#1C2833; font-weight:100; font-family:'Times New Roman'">Processus d'Inscription des Etudiants</span>
+                <span style="font-size: 15pt;color: #054e77;">Inscription des Etudiants</span>
                 <div class="row align-items-center align-self-center justify-content-center" style="padding:0px">
                     <div class=" col-sm-4 col-lg-4" style="padding:0px">
                         <div class="card h-25 w-25" style="background-color:#25587E; padding:0px">
@@ -34,42 +34,31 @@
                         </div>
                     </div>
                 </div>
-                </div>
-                <br />
-                <div class="row" style="padding-left:7%">
-                    <div class="col-md-11">
-                        <form method="post">
-                            <div class="form-group">
-                                <input asp-for="Address" placeholder="Inserer l'adresse" class="form-control" />
-                                <span asp-validation-for="Address" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input asp-for="PhoneNumber" placeholder="Inserer le numero de téléphone" class="form-control" />
-                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <input asp-for="CityOfResidence" placeholder="Inserer la ville de residence" class="form-control" />
-                                <span asp-validation-for="CityOfResidence" class="text-danger"></span>
-                            </div>
-                            <button type="submit" name="button" value="first" class="btn1 btn btn-primary">Precedent</button>
-                            <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Suivant</button>
-                        </form>
-                        <br />
-                    </div>
+            </div>
+            <br />
+            <div class="row" style="padding-left:7%">
+                <div class="col-md-11">
+                    <form method="post">
+                        <div class="form-group">
+                            <input asp-for="Address" placeholder="Inserer l'adresse" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger" style="float:left"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PhoneNumber" placeholder="Inserer le numero de téléphone" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger" style="float:left"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="CityOfResidence" placeholder="Inserer la ville de residence" class="form-control" />
+                            <span asp-validation-for="CityOfResidence" class="text-danger" style="float:left"></span>
+                        </div>
+                        <button type="submit" name="button" value="first" class="btn1 btn btn-primary" style="float:left">Precedent</button>
+                        <button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Suivant</button>
+                    </form>
+                    <br />
+                    <br />
                 </div>
             </div>
         </div>
+    </div>
 }
-
-@*@section rightPanelHeader{
-        <h6 style="color:white; text-align:center">Informations Importantes</h6>
-    }
-
-    @section rightPanelBody
-    {
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-    }*@
-
 

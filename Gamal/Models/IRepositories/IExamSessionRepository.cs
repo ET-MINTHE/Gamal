@@ -8,6 +8,6 @@ namespace Gamal.Models.IRepositories
 {
     public interface IExamSessionRepository : IRepository<ExamSession>
     {
-
-    }
+       public IEnumerable<ExamSession> GetDollyVideoByCourse();
+   }
 }

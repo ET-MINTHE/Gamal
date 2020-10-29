@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewData["Title"] = "ExamSession";
-    Layout = "~/Views/Shared/_Secretary.cshtml";
+	ViewData["Title"] = "ExamSession";
+	Layout = "~/Views/Shared/_Secretary.cshtml";
 }
 
 @section container{
@@ -22,37 +22,24 @@
 
 @section middlePanelBody
 {
-    @if (!String.IsNullOrEmpty(@ViewBag.Error))
-    {
-        <span style="color:red; font-weight:bold">@ViewBag.Error</span>
-    }
-    @if (!String.IsNullOrEmpty(@ViewBag.Message))
-    {
-        <span style="color:green; font-weight:bold">@ViewBag.Message</span>
-    }
-    <span style="font-size:15pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
-    <br />
-    <span style="color:black; font-size:15pt; border-bottom:5px solid red">ESSE4</span>
-    <br />
-    <br />
-    <span style="font-size:15pt">GESTION DES SESSIONS D'EXAMENS</span>
-    <br />
-    <br />
-    <p>
-        <span style="font-size:15pt">Ci-dessous vous pouvez ajouter ou supprimer des sessions d'examen </span>
-    </p>
-    <br />
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th scope="col">
-                    <a asp-controller="ExamSession"
-                       asp-action="AddExamSession" class="btn2 btn btn-primary">Ajouter une session d'Examen</a>
-
-                    <a asp-controller="ExamSession"
-                       asp-action="Index" class="btn2 btn btn-primary" style="">Supprimer une session d'Examen</a>
-                </th>
-            </tr>
-        </thead>
-    </table>
+	<span style="font-size: 15pt;color: #054e77">GESTION DES SESSIONS D'EXAMENS</span>
+	<br />
+	<p>
+		<span style="font-size: 12pt;color: #054e77">Ci-dessous vous pouvez ajouter ou supprimer des sessions d'examen </span>
+	</p>
+	<br />
+	<div style="border-left:5px solid #054e77; border-bottom: 1px solid #e9ecef; border-right: 1px solid #e9ecef; border-top: 1px solid #e9ecef; padding: 10px;">
+		<table class="table table-borderless">
+			<thead>
+				<tr>
+					<th scope="col">
+						<a asp-controller="ExamSession"
+							asp-action="AddExamSession" class="btn2 btn btn-primary">Ajouter une session d'Examen</a>
+						<a asp-controller="ExamSession"
+							asp-action="RemoveExamSession" class="btn2 btn btn-primary" style="">Supprimer une session d'Examen</a>
+					</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
 }

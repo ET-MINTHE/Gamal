@@ -1,0 +1,48 @@
+﻿
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+@section leftPanelBody
+{
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+
+	<div style="text-align:justify;">
+		<span style="color: #054e77">
+			Pour y accéder, sélectionnez le menu (ouverture-fermeture) en haut à droite. Il s'agit de mettre à jour le navigateur.
+			INSCRIPTIONS ET INSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020 La procédure en ligne est ouverte pour les frais d'évaluation pour
+			les masters de deuxième niveau. Pour connaître les procédures et les délais, consultez les appels
+			Cliquez sur le button ci-dessous pour proceder à l'inscription. Toutes les informations
+			sont obligatoires
+		</span>
+	</div>
+	<br />
+	<br />
+	<span style="color:green">@ViewBag.Message</span>
+	<br />
+	<div class="card" style="width:100%; border-left: 5px solid #054e77; border-radius: 0px;">
+		<div class="card-body">
+			<a asp-action="Register" asp-controller="SecretaryRegistration" class="btn2 btn btn-primary">Enregistrement des secrétaires</a>
+		</div>
+	</div>
+	<br />
+}
+
+
+
+
+

@@ -12,6 +12,16 @@ namespace Gamal.Models.Repositories
         public ExamSessionRepository(AppDbContext context)
            : base(context)
         {
-        }   
-    }
+        }
+       public IEnumerable<ExamSession> GetDollyVideoByCourse()
+		 {
+          return AppContext.ExamSessions.ToList();
+		 }
+
+
+      public AppDbContext AppContext
+      {
+         get { return Context as AppDbContext; }
+      }
+   }
 }

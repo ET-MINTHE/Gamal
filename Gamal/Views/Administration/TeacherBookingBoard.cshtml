@@ -1,0 +1,67 @@
+﻿
+@{
+	ViewData["Title"] = "TeacherBookingBoard";
+	Layout = "~/Views/Shared/_Teacher.cshtml";
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+	<span style="font-size:15pt; color:#054e77">ENREGISTREMENT DES NOTES ANNÉE ACADÉMIQUE 2019/2020</span>
+	<br />
+	<br />
+	<div style="padding-bottom:15px; padding-top:15px; border-left: 5px solid #054e77; border-right: 1px solid #e9ecef; border-top: 1px solid #e9ecef; border-bottom: 1px solid #e9ecef;">
+		<span style="color:#054e77"> Cliquez sur une matière pour voir la liste des étudiants inscrits à l'examen de la matière</span>
+		<br />
+		@foreach (var item in @ViewBag.subjects)
+		{
+			<a style="color: #054e77" asp-controller="Administration"
+				asp-action="TeacherBookingBoard" asp-route-subject=@item>
+				@item
+			</a>
+		}
+	</div>
+   <br />
+	@if (@ViewBag.studentList != null)
+	{
+			<div style="padding-bottom:15px; padding-top:15px; border-left: 5px solid #054e77; border-right: 1px solid #e9ecef; border-top: 1px solid #e9ecef; border-bottom: 1px solid #e9ecef;">
+				<span style="color:#054e77"> Liste des étudiants inscrits</span>
+				<br />
+				@foreach (var ele in @ViewBag.studentList)
+				{
+					<span>@ele.FirstName @ele.LastName </span>
+				}
+			</div>
+	 }
+}
+
+@section Scripts{
+	<script src="~/js/custom.js"></script>
+	<script src="~/lib/jquery/jquery.js"></script>
+	<script src="~/lib/jquery/jquery-ui.js"></script>
+	<link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#search').autocomplete({
+				source: '/Administration/AutocompleteStudent'
+			});
+		});
+	</script>
+}
+
+

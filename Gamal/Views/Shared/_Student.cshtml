@@ -38,7 +38,7 @@
 
         .circle-not-passed {
             display: block;
-            background: #7E3117;
+            background: #ff5733;
             border-radius: 50%;
             height: 15px;
             width: 15px;
@@ -171,44 +171,50 @@
             background-color: #25587E !important;
             border: 1px solid #25587E !important;
         }
+
+	 	.a-table:hover, a:link {
+	 		 text-decoration: none;
+	 	}
+	 	.mytr:hover td > a {
+	 		background-color: white;
+	 		color: #054e77;
+	 		font-size: 12pt;
+         text-decoration:underline;
+	 	}
     </style>
 </head>
 <body>
-    <div style="background-image: url('images/uganc-logo.png');
-        width: 100%;
-        height: 100px">
-        <img src="~/images/uganc-logo.png" />
-    </div>
-    <div class="container-fluid" style="height:95%">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
-            <div class="container-fluid" style="height:100%">
-                <div class="row" style="height:100%">
-                    @RenderSection("container", required: true)
-                    <div class="col-xl-3" style="height:auto">
-                        <div class="card h-100">
-                            <div class="card-header" style="background-color: #25587E;color: white; height:55px">
-                                <div>
-                                    @{
-                                        var path = "/profiles/" + @HttpContextAccessor.HttpContext.Session.GetString("ProfilePath");
-                                    }
-                                    <a asp-action="UpdateStudentProfile" asp-controller="Administration">
-                                        <img src="@path" width="100" height="100" style="border-radius: 50%; margin-left: 38%; border: 1px solid #BEBEBE" />
-                                    </a>
-                                    <h6 style="text-align: center; color: #150517 ">@HttpContextAccessor.HttpContext.Session.GetString("UserLastName")</h6>
-                                    <h6 style="text-align: center; color: #150517">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName")</h6>
-                                </div>
-                                @RenderSection("leftPanelHeader", required: true)
+            @RenderSection("container", required: true)
+            <div class="my-div">
+                <div style="width: 100%; padding:0px; margin:0px;">
+                    <img src="~/images/uganc-logo.png" style="width:100%" />
+                </div>
+                <div class="row" style="margin:0px; padding:0px; min-height:700px">
+                    <div class="col-lg-3 col-md-3 col-sm-12" style="padding:0px">
+                        <div class="card" style="padding: 0px; ">
+                            <div class="card-header" style="background-color:#054e77;height: 50px;margin: 0px;padding: 0px">
                             </div>
-                            <div class="card-body" style="margin-top:80px">
-                                <div>
+                            <div class="card-body" style="height:700px;">
+                                @{
+                                    var path1 = "/profiles/" + @HttpContextAccessor.HttpContext.Session.GetString("ProfilePath");
+                                }
+                                <a asp-action="UpdateProfile" asp-controller="Administration">
+                                    <img src="@path1" width="100" height="100" style="border-radius:50%; margin-left:38%; margin-top:-40px; border:1px solid white" />
+                                </a>
+                                <h6 style="text-align:center; font-family:'Times New Roman'; color:#150517">@HttpContextAccessor.HttpContext.Session.GetString("UserLastName")</h6>
+                                <h6 style="text-align:center; font-family:'Times New Roman'; color:#150517">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName")</h6>
+
+                                @RenderSection("leftPanelHeader", required: true)
+                                <div style="margin-left:50px">
                                     <a class="aheader" asp-controller="Account" asp-action="Logout">Deconnexion</a><br />
-                                    <a class="aheader" asp-controller="Student" asp-action="Home">Zone Reservée</a><br />
-                                    <a class="aheader" href="#">Autres Carrières</a><br />
+                                    <a class="aheader" asp-controller="Secretary" asp-action="Home">Zone Reservée</a><br />
                                     <a class="aheader" asp-controller="Account" asp-action="ChangePassword">Changer mot de passe</a><br />
                                     <a class="aheader" href="#">@HttpContextAccessor.HttpContext.Session.GetString("Email")</a>
                                 </div>
-                                <br />
+
                                 @RenderSection("leftPanelBody", required: true)
                                 <table class="table" style="font-size: 10pt; margin-top: 10px; color:#250517">
                                     <tbody>
@@ -242,22 +248,19 @@
                                         <tr class="tr">
                                             <td class="td" scope="row"> <a class="a" asp-controller="Administration" asp-action="Fees">Taxes</a></td>
                                         </tr>
-                                    </tbody>
+                                        </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-9" style="height:auto">
-                        <div class="card h-100">
-                            <div class="card-header my-auto" style="background-color:#25587E; color:white; height:55px;">
-                                <span style="font-size:15pt;">Zone réservée de l'étudiant </span><span style="font-size:15pt;">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") @{@ViewBag.LastName}-[MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]</span>
+                    <div class="col-lg-9 col-md-9 col-sm-12" style="border:0px solid red; padding:0px">
+                        <div class="card" style="padding:0px; ">
+                            <div class="card-header text-center" style="background-color: #054e77; height: 50px;">
+                                <span style="font-size:15pt; color:white; font-family:'Times New Roman'">Zone réservée de l'étudiant @HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") @{@ViewBag.LastName}-[MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]</span>
                                 @RenderSection("middlePanelHeader", required: true)
                             </div>
-                            <div class="card-body">
-                                <span style="font-size:18pt; font-weight:bold; color:red; font-family:'The lazy dog'">Direction du service pour les étudiants - Services Didactiques</span>
-                                <br />
-                                <span style="color:black; font-size:15pt; font-family:'The lazy dog'; border-bottom:5px solid red">ESSE4</span>
-                                <br />
+                            <div class="card-body text-center" style="height:700px;">
+                                <span style="font-size:18pt; font-weight:100; color:#054e77; font-family:'Arial'">Direction du service pour les étudiants - Services Didactiques</span>
                                 <br />
                                 @RenderSection("middlePanelBody", required: true)
                             </div>

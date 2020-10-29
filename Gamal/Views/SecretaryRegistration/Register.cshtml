@@ -1,0 +1,80 @@
+﻿
+@model Gamal.ViewModel.SecretaryRegistrationViewModel
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+
+}
+
+@section leftPanelBody
+{
+
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+	<div style="">
+		<div class="card">
+			<br />
+			<div align="center">
+				<span style="		font-size: 14pt;color: #054e77">Enregistrement des secrétaires</span>
+				<br />
+				<br />
+			</div>
+			@if (!String.IsNullOrEmpty(@ViewBag.Error))
+			{
+				<span style="color:red; font-weight:bold">@ViewBag.Error</span>
+			}
+			@if (!String.IsNullOrEmpty(@ViewBag.Message))
+			{
+				<span style="color:green; text-align:center; font-weight:bold">@ViewBag.Message</span>
+			}
+			<div class="row" style="padding-left:7%">
+				<div class="col-md-11">
+					<form method="post">
+						<div class="form-group">
+							<input asp-for="SerialNumber" class="form-control fr-date-datepicker" placeholder="Inserer le numero de matricule">
+							<span asp-validation-for="SerialNumber" class="text-danger" style="float:left"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="LastName" class="form-control fr-date-datepicker" placeholder="Inserer le prénom">
+							<span asp-validation-for="LastName" class="text-danger" style="float:left"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="FirstName" class="form-control fr-date-datepicker" placeholder="Inserer le nom">
+							<span asp-validation-for="FirstName" class="text-danger" style="float:left"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="Email" class="form-control fr-date-datepicker" placeholder="Inserer l'adresse électronique">
+							<span asp-validation-for="Email" class="text-danger" style="float:left"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="PhoneNumber" class="form-control fr-date-datepicker" placeholder="Inserer le numero de téléphone">
+							<span asp-validation-for="PhoneNumber" class="text-danger" style="float:left"></span>
+						</div>
+						<div class="form-group">
+							<input asp-for="Office" class="form-control fr-date-datepicker" placeholder="Inserer l'adresse du bureau">
+							<span asp-validation-for="Office" class="text-danger" style="float:left"></span>
+						</div>
+						<button type="reset" name="button" value="first" class="btn1 btn btn-primary" style="float:left">Effacer</button>
+						<button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:right">Enregister</button>
+					</form>
+					<br />
+					<br />
+				</div>
+			</div>
+			<br />
+		</div>
+	</div>
+}
+

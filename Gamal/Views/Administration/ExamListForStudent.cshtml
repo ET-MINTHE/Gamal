@@ -22,62 +22,64 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:15pt">SESSION D'EXAMENS ANNÉE ACADÉMIQUE 2019/2020</span>
+    <span style="font-size: 14pt; color: #054e77">SESSION D'EXAMENS ANNÉE ACADÉMIQUE 2019/2020</span>
     <br />
     <br />
-    <span style="font-size:15pt">Ci-dessous vous verez la liste des examens disponibles avec leurs dates respectives. </span>
+    <span style="font-size: 14pt; color: #054e77">Ci-dessous vous verez la liste des examens disponibles avec leurs dates respectives. </span>
 
-    <span style="font-size:15pt">Pour reserver l'examen d'une matière cliquer sur le nom de la matière</span>
+    <span style="font-size: 14pt; color: #054e77">Pour reserver l'examen d'une matière cliquer sur le nom de la matière</span>
     <br />
     <br />
-    <table class="table table-bordered">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Matière</th>
-                <th scope="col">Description</th>
-                <th scope="col">Salle</th>
-                <th scope="col">Date</th>
-                <th scope="col">Heure</th>
-                <th scope="col">Etat de la reservation</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var exam in @Model)
-            {
-                <tr>
-                    <th scope="row">
-                        <span style="font-size:11pt; color:indianred">
-                            <a class="a-booklet" asp-route-examId=@exam.ExamId asp-route-isReserved="@exam.IsResered" asp-controller="Administration"
-                               asp-action="ExamEnrollment">
-                                @exam.Name.ToLower()
-                            </a>
-                        </span>
-                    </th>
-                    <td>@exam.Description</td>
-                    <td>@exam.Classroom</td>
-                    <td>@exam.Date</td>
-                    <td>@exam.Hour</td>
-                    <td>
-                        @if (exam.IsResered == "Reservé")
-                        {
-                            <span style="color:green">
-                                @exam.IsResered
-                            </span>
-                        }
-                        else
-                        {
-                            <span style="color:red">
-                                @exam.IsResered
-                            </span>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	 <table class="table table-bordered">
+	 	@if (Model.Count() != 0)
+		{
+	 		<thead class="thead-light">
+	 			<tr>
+	 				<th scope="col" style="color:#054e77">Matière</th>
+	 				<th scope="col" style="color:#054e77">Description</th>
+	 				<th scope="col" style="color:#054e77">Salle</th>
+	 				<th scope="col" style="color:#054e77">Date</th>
+	 				<th scope="col" style="color:#054e77">Heure</th>
+	 				<th scope="col" style="color:#054e77">Etat de la reservation</th>
+	 			</tr>
+	 		</thead>
+	 }
+
+	 <tbody>
+	 	 @foreach (var exam in @Model)
+		 {
+	 			<tr style="color:#054e77">
+	 				<td>
+	 					<a asp-route-examId=@exam.ExamId asp-route-isReserved="@exam.IsResered" asp-controller="Administration"
+							asp-action="ExamEnrollment">
+	 						@exam.Name.ToLower()
+	 					</a>
+					</td>
+					<td>@exam.Description</td>
+					<td>@exam.Classroom</td>
+					<td>@exam.Date</td>
+					<td>@exam.Hour</td>
+					<td>
+	 				@if (exam.IsResered == "Reservé")
+					{
+	 					<span style="color:green">
+	 						@exam.IsResered
+					   </span>
+				 }
+				 else
+				 {
+					 <span style="color:red">
+	 					@exam.IsResered
+					 </span>
+				 }
+			 </td>
+			 </tr>
+		 }
+	 </tbody>
+	 </table>
     @if (Model.Count() == 0)
     {
-        <span style="color:red; font-size:12pt; font-weight:bold">Aucun appel d'examen n'est disponible</span>
+        <span style="color: #ff5733; font-size: 12pt; font-weight: bold">Aucun appel d'examen n'est disponible</span>
     }
 }
 

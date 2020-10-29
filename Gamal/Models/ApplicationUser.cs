@@ -24,6 +24,7 @@ namespace Gamal.Models
         public string CityOfResidence { get; set; }
         public string Faculty { get; set; }
         public string Department { get; set; }
-        public string Titre { get; set; }   
-    }
+        public string Titre { get; set; }
+        public string Token { get; set; }
+   }
 }

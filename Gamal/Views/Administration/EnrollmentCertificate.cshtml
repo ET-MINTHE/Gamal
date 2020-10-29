@@ -1,0 +1,61 @@
+﻿@model Gamal.ViewModel.StudentCertificateViewModel
+@{
+	ViewData["Title"] = "EnrollmentCertificate";
+	Layout = "~/Views/Shared/_Secretary.cshtml";
+}
+
+@section container{
+
+}
+
+@section leftPanelHeader{
+}
+
+@section leftPanelBody
+{
+}
+
+@section middlePanelHeader{
+}
+
+@section middlePanelBody
+{
+	<span style="font-size: 15pt;color: #054e77">INSCRIPTIONS ET REINSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020</span>
+	<br />
+	<br />
+	<div style=" padding: 10px; height:170px; border-left:5px solid #054e77; border-bottom: 1px solid #e9ecef; border-top: 1px solid #e9ecef; border-right: 1px solid #e9ecef">
+		<span style="font-size: 14pt;color: #054e77">Inserer le numero matricule ou le nom de l'étudiant et cliqueer sur Imprimer</span>
+		<br />
+		@if (!String.IsNullOrEmpty(@ViewBag.error))
+		{
+			<span style="font-size: 14pt;color: red">@ViewBag.error</span>
+		}
+		@if (!String.IsNullOrEmpty(@ViewBag.message))
+		{
+			<span style="font-size: 14pt;color: green">@ViewBag.message</span>
+		}
+		<form asp-controller="Administration" asp-action="EnrollmentCertificateView" method="get">
+			<div class="form-group">
+				<input id="search" asp-for="Student" class="form-control fr-date-datepicker" placeholder="Inserer le nom de l'étudiant">
+				<span asp-validation-for="Student" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<button class="btn1 btn btn-primary" style="float:right">Imprimer</button>
+			</div>
+		</form>
+	</div>
+}
+
+@section Scripts{
+	<script src="~/js/custom.js"></script>
+	<script src="~/lib/jquery/jquery.js"></script>
+	<script src="~/lib/jquery/jquery-ui.js"></script>
+	<link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#search').autocomplete({
+				source: '/Administration/AutocompleteStudent'
+			});
+		});
+	</script>
+}

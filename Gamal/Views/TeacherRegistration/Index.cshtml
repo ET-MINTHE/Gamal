@@ -20,40 +20,26 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:15pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
-    <br />
-    <span style="color:black; font-size:15pt; border-bottom:5px solid red">ESSE4</span>
-    <br />
-    <br />
-    <span style="font-weight:bold; font-size:15pt">INSCRIPTIONS ET REINSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020</span>
-    <br />
-    <span>
-        Pour y accéder, sélectionnez le menu (ouverture-fermeture) en haut à droite. Il s'agit de mettre à jour le navigateur.
-        INSCRIPTIONS ET INSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020 La procédure en ligne est ouverte pour les frais d'évaluation pour
-        les masters de deuxième niveau. Pour connaître les procédures et les délais, consultez les appels
-    </span>
-    <br />
-    <br />
-    Cliquez sur le button ci-dessous pour proceder à l'inscription. Toutes les informations
-    sont obligatoires
+
+	<div style="text-align:justify;">
+		<span style="color: #054e77">
+			Pour y accéder, sélectionnez le menu (ouverture-fermeture) en haut à droite. Il s'agit de mettre à jour le navigateur.
+			INSCRIPTIONS ET INSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020 La procédure en ligne est ouverte pour les frais d'évaluation pour
+			les masters de deuxième niveau. Pour connaître les procédures et les délais, consultez les appels
+			Cliquez sur le button ci-dessous pour proceder à l'inscription. Toutes les informations
+			sont obligatoires
+		</span>
+	</div>
     <br />
     <br />
     <span style="color:green">@ViewBag.Message</span>
     <br />
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th scope="col">
-                    <a asp-action="Register" asp-controller="TeacherRegistration" style="background-color:#25383C" class="btn btn-info">Aller à la page de l'inscriptions des enseignants</a>
-                </th>
-            </tr>
-        </thead>
-    </table>
+	 <div class="card" style="width:100%; border-left: 5px solid #054e77; border-radius: 0px;">
+		 <div class="card-body">
+		 	<a asp-action="Register" asp-controller="TeacherRegistration" class="btn2 btn btn-primary">Inscriptions des enseignants</a>
+		 </div>
+	 </div>
     <br />
-    L'eCampus University est l'une des principales universités en ligne en Italie avec plus de
-    100 000 étudiants inscrits. Vous pouvez choisir entre 49 cursus traditionnels et innovants,
-    tous facilement accessibles en toute sécurité et directement depuis chez vous, répartis en 5
-    facultés: économie, droit, ingénierie, lettres et psychologie.
 }
 
 

@@ -1,7 +1,7 @@
 ﻿@model Gamal.ViewModel.SearchStudentViewModel
 @{
-    ViewData["Title"] = "AddFee";
-    Layout = "~/Views/Shared/_Secretary.cshtml";
+	ViewData["Title"] = "AddFee";
+	Layout = "~/Views/Shared/_Secretary.cshtml";
 }
 
 @section container{
@@ -22,90 +22,80 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:15pt; color:red">Direction du service pour les étudiants - Services Didactiques</span>
-    <br />
-    <span style="color:black; font-size:15pt; border-bottom:5px solid red">ESSE4</span>
-    <br />
-    <br />
-    <span style="font-size:15pt; font-family:'Times New Roman'">GESTION DES TAXES UNIVERSITAIRES</span>
-    <br />
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            <form method="get" asp-controller="Administration" asp-action="AddFee">
-                <div class="input-group">
-                    <input id="search" class="form-control" placeholder="Chercher un étudiant" asp-for="SearchTerm" />
-                    <div class="input-group-append">
-                        <button type="submit" class="btn1 btn-primary">Chercher</button>
-                    </div>
-                </div>
-            </form>
-            <br />
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            <span style="color:red; font-weight:bold">@ViewBag.Error</span>
-            <span style="color:green; font-weight:bold">@ViewBag.Message</span>
-            <br />
-            @if (Model.Model != null)
-            {
-                <form method="post" asp-controller="Administration" asp-action="AddFee">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">Prénom et Nom de l'étudiant</th>
-                                <th scope="col">Matricule</th>
-                                <th scope="col">Montant de la taxe</th>
-                            </tr>
-                        </thead>
+	<span style="font-size: 15pt;color: #054e77">INSCRIPTIONS ET REINSCRIPTIONS ANNÉE ACADÉMIQUE 2019/2020</span>
+	<br />
+	<br />
+	<span style="color:red; font-weight:bold">@ViewBag.Error</span>
+	<span style="color:green; font-weight:bold">@ViewBag.Message</span>
+	<div style="border-left:5px solid #054e77; border-right: 1px solid #e9ecef; border-bottom: 1px solid #e9ecef; border-top: 1px solid #e9ecef; padding:10px;">
+		<span style="color:#054e77"> Inserez le nom d'un étudiant et cliquez sur chercher</span>
+		<br />
+		<br />
+		<form method="get" asp-controller="Administration" asp-action="AddFee">
+			<span asp-validation-for="SearchTerm" class="text-danger" style="float:left"></span>
+			<div class="input-group">
+				<input id="search" class="form-control" placeholder="Chercher un étudiant" asp-for="SearchTerm" />
+				<div class="input-group-append">
+					<button type="submit" class="btn1 btn-primary">Chercher</button>
+				</div>
+			</div>
+		</form>
+		<br />
+	</div>
+	<br />
+	<div class="row">
+		<div class="col-md-12">
 
-                        <tbody>
-                            <tr>
-                                <th scope="row">@Model.Model.Name</th>
-                                <th scope="row">@Model.Model.SerialNumber</th>
-                                <th>
-                                    <div class="form-inline">
-                                        <input disabled type="text" asp-for="Ammount" placeholder="Inserer le montant" class="form-control" />
-                                        <input type="hidden" name="serialNumber" value=@Model.Model.SerialNumber />
-                                        <input type="hidden" name="email" value=@Model.Model.Email />
-                                        <input type="hidden" name="ammount" value=@Model.Ammount />
-                                        <div class="input-group-append">
-                                            <span>FG</span>
-                                        </div>
-                                    </div>
-                                </th>
-                            </tr>
-                        </tbody>
-
-                    </table>
-                    <div class="input-group">
-                        <button style="float:right" type="submit" class="btn1 btn-primary">Enregistrer</button>
-                    </div>
-                </form>
-            }
-            else
-            {
-                if (String.IsNullOrEmpty(ViewBag.Error))
-                {
-                    <span> Inserez le nom d'un étudiant et cliquez sur chercher</span>
-                }
-            }
-            <br />
-        </div>
-    </div>
+			<br />
+			@if (Model.Model != null)
+			{
+				<form method="post" asp-controller="Administration" asp-action="AddFee">
+					<table class="table table-bordered">
+						<thead>
+							<tr style="background-color:#e9ecef; color:#054e77">
+								<th scope="col">Prénom et Nom de l'étudiant</th>
+								<th scope="col">Matricule</th>
+								<th scope="col">Montant de la taxe</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td scope="row" style="color:#054e77">@Model.Model.Name</td>
+								<td scope="row" style="color:#054e77">@Model.Model.SerialNumber</td>
+								<td>
+									<div class="form-inline">
+										@*<input disabled type="text" asp-for="Ammount" placeholder="Inserer le montant" class="form-control" />*@
+										<span style="color:#054e77; font-weight:bold;">@Model.Ammount </span>
+										<input type="hidden" name="serialNumber" value=@Model.Model.SerialNumber />
+										<input type="hidden" name="email" value=@Model.Model.Email />
+										<input type="hidden" name="ammount" value=@Model.Ammount />
+										<div class="input-group-append">
+											<span style="color:#054e77"> FG</span>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="input-group" style="float:right">
+						<button type="submit" name="button" value="second" class="btn1 btn btn-primary" style="float:left">Enregistrer</button>
+					</div>
+				</form>
+			}
+			<br />
+		</div>
+	</div>
 }
 
 @section Scripts{
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/jquery/jquery-ui.js"></script>
-    <link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#search').autocomplete({
-                source: '/Administration/AutocompleteStudent'
-            });
-        });
-    </script>
+	<script src="~/lib/jquery/jquery.js"></script>
+	<script src="~/lib/jquery/jquery-ui.js"></script>
+	<link href="~/lib/jquery/jquery-ui.css" rel="stylesheet" />
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#search').autocomplete({
+				source: '/Administration/AutocompleteStudent'
+			});
+		});
+	</script>
 }

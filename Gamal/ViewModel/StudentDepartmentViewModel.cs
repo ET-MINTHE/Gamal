@@ -13,6 +13,6 @@ namespace Gamal.ViewModel
         public string FacultyCode { get; set; }
         public string CourseType { get; set; }
         public string Credit { get; set; }
-        public string EnrollmentYeart { get; set; } 
+        public string EnrollmentYear { get; set; } 
     }
 }

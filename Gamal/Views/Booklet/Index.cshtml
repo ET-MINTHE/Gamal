@@ -26,11 +26,32 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:10pt; font-weight:bold">Livret de:</span> <span style="font-size:10pt; font-weight:bold; color:red">@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") - [MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]</span>
-    <br />
-    <span style="font-size:10pt; font-weight:bold">Moyenne Arithmétique: </span><span style="font-size:10pt; font-weight:bold; color:red"> @ViewBag.EverageMark/20</span>
-    <br />
-    <span style="font-size:10pt; font-weight:bold">Moyenne Pondérée: </span><span style="font-size:10pt; font-weight:bold; color:red"> @ViewBag.WeightedEverageMark/20 </span>
+	<table width="100%" border="0">
+		<tr>
+			<td style="font-size:12pt; color:#054e77; text-align: right">
+				Livret de:
+			</td>
+			<td style="color:#ff5733; text-align: left">
+				@HttpContextAccessor.HttpContext.Session.GetString("UserFirstName") @HttpContextAccessor.HttpContext.Session.GetString("UserLastName") - [MAT.@HttpContextAccessor.HttpContext.Session.GetString("SerialNumber")]
+			</td>
+		</tr>
+		<tr>
+			<td style="font-size:12pt; color:#054e77; text-align: right">
+				Moyenne Arithmétique:
+			</td>
+			<td style="color:#ff5733; text-align: left">
+				@ViewBag.EverageMark/20
+			</td>
+		</tr>
+		<tr>
+			<td style="font-size:12pt; color:#054e77; text-align: right">
+				Moyenne Pondérée:
+			</td>
+			<td style="color:#ff5733; text-align: left">
+				@ViewBag.WeightedEverageMark/20
+			</td>
+		</tr>
+	</table>
     <br />
     <br />
     <form method="get" asp-controller="Booklet" asp-action="Index">
@@ -47,31 +68,29 @@
         </div>
     </form>
     <br />
-    <div class="border border-#6D7B8D">
+    <div class="border">
         <table class="table">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Activité Didactique</span></th>
-                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Année</span></th>
-                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Coefficient</span></th>
-                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Etat</span></th>
-                    <th scope="col"><span class="a-booklet" style="font-size:13pt">AA Freq.</span></th>
-                    <th scope="col"><span class="a-booklet" style="font-size:13pt">Note-Date Examen</span></th>
+                    <th><span style="float:left; color:#054e77">Activité Didactique</span></th>
+                    <th scope="col"><span style="color:#054e77">Année</span></th>
+                    <th scope="col"><span style="color:#054e77">Coefficient</span></th>
+                    <th scope="col"><span style="color:#054e77">Etat</span></th>
+                    <th scope="col"><span style="color:#054e77">AA Freq.</span></th>
+                    <th scope="col"><span style="color:#054e77">Note-Date Examen</span></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.BookletViewModels)
                 {
-                    <tr style="line-height: 0.6;">
-                        <th scope="row">
-                            <span style="font-size:13pt; color:indianred">
-                                <a class="a-booklet" asp-route-courseId=@item.CourseCode asp-route-departmentCode=@item.DepartmentCode asp-controller="CourseDescription"
-                                   asp-action="Index">
-                                    @{ var course = char.ToUpper(item.Course[0]) + item.Course.Substring(1).ToLower();}
-                                    @course
-                                </a>
-                            </span>
-                        </th>
+                    <tr style="line-height: 0.6;" class="mytr">
+                        <td scope="row">
+                           <a style="float:left; color:#054e77" class="a-table" asp-route-courseId=@item.CourseCode asp-route-departmentCode=@item.DepartmentCode asp-controller="CourseDescription"
+                              asp-action="Index">
+                              @{ var course = char.ToUpper(item.Course[0]) + item.Course.Substring(1).ToLower();}
+                              @course
+                           </a>
+                        </td>
                         <td>1</td>
                         <td>@item.Weight</td>
                         <td>
@@ -115,7 +134,7 @@
         LiElementClasses = new string[] { "page-item" },
         PageClasses = new string[] { "page-link" }
     })
-    <span style="font-size:10pt">Légende</span>
+    <span style="font-size:10pt; float:left">Légende</span>
     <hr />
     <table>
         <tr>

@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace Esse3Gamal.Controllers
 {
+
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -36,6 +37,7 @@ namespace Esse3Gamal.Controllers
             this.roleManager = roleManager;
             this.facultyRepository = facultyRepository;
         }
+
         [HttpGet]
         //[Authorize(Roles = "Secretary")]
         public IActionResult Register()

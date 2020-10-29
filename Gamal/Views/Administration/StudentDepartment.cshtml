@@ -22,42 +22,44 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:12pt;">
+    <span style="font-size: 14pt; color: #054e77">
        Informations relatives à mon département
     </span>
     <br />
     <br />
-    <fieldset class="border p-3" style="border:3px solid red">
-        <legend class="w-auto" style="font-size:15pt; font-weight:bold; border-bottom: 5px solid red">@Model.Department</legend>
+    <fieldset class="border p-3">
+        <legend class="w-auto" style="font-size:14pt; float:left; color:#054e77; font-weight:bold; border-bottom: 5px solid #ff5733">@Model.Department</legend>
         <table class="table">
             <tbody>
                 <tr class="td1">
-                    <th scope="col"><span style="color:#150517">Départment</span></th>
-                    <td scope="col">@Model.Department</td>
+                    <td scope="col"><span style="color:#054e77; float:left">Départment</span></td>
+                    <td scope="col"><span style="float:left; color:#054e77"> @Model.Department</span></td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#150517">Code du Département</span></th>
-                    <td>@Model.DepartmentCode</td>
+                    <td><span style="color:#054e77; float:left">Code du Département</span></td>
+                    <td scope="col">
+                        <span style="float:left; color:#054e77"> @Model.DepartmentCode</span>
+                    </td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#150517">Faculté</span></th>
-                    <td>@Model.Faculty</td>
+                    <td><span style="float:left; color:#054e77">Faculté</span></td>
+                    <td><span style="float:left; color:#054e77"> @Model.Faculty</span></td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#150517">Code Faculté</span></th>
-                    <td>@Model.FacultyCode</td>
+                    <td><span style="float:left; color:#054e77">Code Faculté</span></td>
+                    <td><span style="float:left; color:#054e77">@Model.FacultyCode</span></td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#250517">Année d'Inscription</span></th>
-                    <td>@Model.EnrollmentYeart</td>
+                    <td><span style="float:left; color:#054e77">Année d'Inscription</span></td>
+                    <td><span style="float:left; color:#054e77">@Model.EnrollmentYear</span></td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#250517">Type de Cours</span></th>
-                    <td>@Model.CourseType</td>
+                    <td><span style="float:left; color:#054e77">Type de Cours</span></td>
+                    <td><span style="float:left; color:#054e77">@Model.CourseType</span> </td>
                 </tr>
                 <tr class="td1">
-                    <th><span style="color:#250517">Crédit</span></th>
-                    <td>@Model.Credit</td>
+                    <td><span style="float:left; color:#054e77">Crédit</span></td>
+                    <td><span style="float:left; color:#054e77">@Model.Credit</span> </td>
                 </tr>
             </tbody>
         </table>

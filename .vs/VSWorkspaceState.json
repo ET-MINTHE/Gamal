@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Gamal",
-    "\\Gamal\\Views",
-    "\\Gamal\\Views\\Administration"
+    "\\Gamal\\Controllers",
+    "\\Gamal\\Views"
   ],
-  "SelectedNode": "\\Gamal\\Views\\Administration\\AddExam.cshtml",
+  "SelectedNode": "\\Gamal.sln",
   "PreviewInSolutionExplorer": false
 }

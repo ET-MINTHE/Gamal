@@ -22,47 +22,45 @@
 
 @section middlePanelBody
 {
-    <span style="font-size:15pt;">Le matériel didactique et pédagogique : soutien à l’appropriation ou déterminant de l’intervention éducative </span>
+    <span style="font-size: 14pt; color: #054e77">Le matériel didactique et pédagogique : soutien à l’appropriation ou déterminant de l’intervention éducative </span>
     <br />
-    <span style="font-size:15pt;">Vous trouverez ci-dessous le matériel didactiques relatifs aux différentes matières</span> <span style="color:red; font-weight:bold">@ViewBag.Course</span>
+    <span style="font-size: 14pt; color: #054e77">Vous trouverez ci-dessous le matériel didactiques relatifs aux différentes matières</span> <span style="color:#ff5733; font-weight:bold">@ViewBag.Course</span>
     <br />
     <br />
     @if (Model.Dollies.Count == 0)
     {
-        <span style="font-size:15pt; color:red; font-weight:bold">Aucun matériel didactique n'est disponible pour le moment</span>
+        <span style="color: #ff5733; font-weight: bold">Aucun matériel didactique n'est disponible pour le moment</span>
     }
     else
     {
-        <div class="card" style="width:49%; float:left;">
-            <div class="card-header" style="background-color:#25587E">
-                <span style="color:white; font-size:15pt;">Liste des fichers PDF</span>
-            </div>
-            <div class="card-body">
-                @foreach (var dolly in Model.Dollies)
-                {
-                    var path = "/dolly/" + @dolly.FilePath;
-                    <span style="font-size:13pt; color:indianred; text-align:center">
-                        <a class="a-booklet" href=@path>@dolly.FileName</a>
-                    </span>
-                    <br />
-                }
-            </div>
+        <div class="card" style="width:49%; float:left; border-left:5px solid #054e77">
+				<div class="card-body">
+					<span style="color:#054e77; font-weight:bold">Liste des fichers PDF</span>
+               <br />
+					@foreach (var dolly in Model.Dollies)
+					{
+						var path = "/dolly/" + @dolly.FilePath;
+						<span style="font-size:13pt; color:indianred; text-align:center">
+							<a class="a-booklet" href=@path>@dolly.FileName</a>
+						</span>
+						<br />
+					}
+				</div>
         </div>
-        <div class="card" style="width:49%; float:right;">
-            <div class="card-header" style="background-color:#25587E">
-                <span style="color:white; font-size:15pt;">Liste des videos</span>
-            </div>
-            <div class="card-body">
-                @foreach (var dolly in Model.DollyVideos)
-                {
-                    var path = "/dolly_videos/" + @dolly.FilePath;
-                    <span style="font-size:13pt; color:indianred">
-                        <a asp-controller="Administration"
-                           asp-action="WatchVideo" asp-route-path="@dolly.FilePath" class="a-booklet">Modifier</a>
-                    </span>
-                    <br />
-                }
-            </div>
+        <div class="card" style="width:49%; float:right; border-left:5px solid #054e77">
+			  <div class="card-body">
+				<span style="color:#054e77; font-weight:bold">Liste des videos</span>
+			  	<br />
+			  	@foreach (var dolly in Model.DollyVideos)
+			   {
+					var path = "/dolly_videos/" + @dolly.FilePath;
+			  	   <span style="font-size:13pt; color:indianred">
+			  		<a asp-controller="Administration"
+				        asp-action="WatchVideo" asp-route-path="@dolly.FilePath" class="a-booklet">@dolly.FileName</a>
+			       </span>
+			       <br />
+		      }
+			  </div>
         </div>
     }
 }

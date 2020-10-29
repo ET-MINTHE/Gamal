@@ -91,6 +91,8 @@ namespace Gamal.Controllers
                 {
                     ViewBag.WeightedEverageMark = sumWeightedMark / sumWeight;
                     ViewBag.EverageMark = sum / countMark;
+                    HttpContext.Session.SetString("WeightedEverageMark", (sumWeightedMark/sumWeight).ToString());
+                    HttpContext.Session.SetString("EverageMark", (sum/countMark).ToString());
                 }
                 else
                 {
@@ -122,7 +124,8 @@ namespace Gamal.Controllers
                 }
                 
             }
-           
+            ViewBag.WeightedEverageMark = HttpContext.Session.GetString("WeightedEverageMark");
+            ViewBag.EverageMark = HttpContext.Session.GetString("EverageMark");
             bookletListViewModel.BookletViewModels = ViewModel.ToPagedList(page ?? 1, 4);
             return View(bookletListViewModel);
         }

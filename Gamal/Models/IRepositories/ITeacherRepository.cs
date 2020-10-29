@@ -9,6 +9,7 @@ namespace Gamal.Models.IRepositories
     public interface ITeacherRepository : IRepository<UserTeacher>
     {
         public IEnumerable<UserTeacher> GetTeacherBySerialNumber(string searchTerm);
+        public IEnumerable<Exam> GetExamByTeacher(string serialNumber);
     }
-}
+}  
     

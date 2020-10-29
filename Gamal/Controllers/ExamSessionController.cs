@@ -37,11 +37,11 @@ namespace Gamal.Controllers
                 var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
                 var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
 
-                if ((model.Start < DateTime.Now) || (model.End < DateTime.Now) || (model.Start > model.End))
-                {
-                    ViewBag.Error = $"La de début doit etre inférieur à la date de fin";
-                    return View(model);
-                }
+                //if (true/*(model.Start < DateTime.Now) || (model.End < DateTime.Now) || (model.Start > model.End)*/)
+                //{
+                //    ViewBag.Error = $"La de début doit etre inférieur à la date de fin";
+                //    return View(model);
+                //}
 
                 var examSession = new ExamSession();
                 examSession.Start = model.Start ?? default(DateTime);
@@ -59,5 +59,26 @@ namespace Gamal.Controllers
             }
             return View(model);
         }
-    }
+
+        [HttpGet]
+        public IActionResult RemoveExamSession()
+        {
+           return View();  
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ExamSessionList()  
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            var unitOfWork = new UnitOfWork(new AppDbContext(optionsBuilder.Options));
+            var model = new List<ExamSessionViewModel>();
+            var sessionList = unitOfWork.ExamSessions.GetAll().ToList();
+			   foreach (var item in sessionList)
+			   {
+            model.Add(new ExamSessionViewModel { Description = item.Description, End = item.End, Start = item.Start, Name = item.Name });
+			   }
+
+            return View(model);
+        }
+   }
 }
