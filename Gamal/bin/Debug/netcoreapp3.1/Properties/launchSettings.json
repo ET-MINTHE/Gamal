@@ -1,7 +1,7 @@
 ﻿{
   "iisSettings": {
-    "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:59293",
       "sslPort": 44392
@@ -18,10 +18,15 @@
     "Gamal": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "applicationUrl": "http://elhadjtahirouminthe.us-west-2.elasticbeanstalk.com/;",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       }
+    }
+  },
+  "configurations": {
+    "env": {
+      "ASPNETCORE_ENVIRONMENT": "Production"
     }
   }
 }

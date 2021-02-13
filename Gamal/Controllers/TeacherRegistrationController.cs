@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Gamal.Models;
 using Gamal.Models.Domain;
 using Gamal.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,20 +16,23 @@ using Microsoft.Extensions.Logging;
 
 namespace Gamal.Controllers
 {
+    [Authorize]
     public class TeacherRegistrationController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<TeacherRegistrationController> logger;
+		  private readonly RoleManager<IdentityRole> roleManager;
 
-        public TeacherRegistrationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser>
-            signInManager, ILogger<TeacherRegistrationController> logger, IConfiguration config,
-            RoleManager<IdentityRole> roleManager)
-        {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.logger = logger;
-        }
+		   public TeacherRegistrationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser>
+               signInManager, ILogger<TeacherRegistrationController> logger, IConfiguration config,
+               RoleManager<IdentityRole> roleManager)
+           {
+               this.userManager = userManager;
+               this.signInManager = signInManager;
+               this.logger = logger;
+			   this.roleManager = roleManager;
+		   }
 
         [HttpGet]
         public IActionResult Index(TeacherRegistrationViewModel model)
@@ -95,6 +99,17 @@ namespace Gamal.Controllers
 
                 if (result.Succeeded)
                 {
+                    if ((await roleManager.RoleExistsAsync("Teacher")) == false)
+				        {
+                        var role = new IdentityRole();
+                        role.Name = "Teacher";
+                        var result1 = await roleManager.CreateAsync(role);
+                        if (!result1.Succeeded)
+					         {
+                           ViewBag.Error = $"Une erreur est survenue durant la creation du role enseignant!";
+                           return View(model);
+                        }
+                    }
                     result = await userManager.AddToRoleAsync(user, "Teacher");
                     if (result.Succeeded)
                     {

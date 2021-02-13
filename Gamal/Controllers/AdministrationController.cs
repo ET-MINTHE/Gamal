@@ -1,4 +1,7 @@
-﻿using ceTe.DynamicPDF;
+﻿using Amazon;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using ceTe.DynamicPDF;
 using ceTe.DynamicPDF.PageElements;
 using Gamal.Models;
 using Gamal.Models.Domain;
@@ -407,7 +410,31 @@ namespace Gamal.Controllers
             }
             string uniqueFileName = null;
 
-				string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "dolly");
+            //var file;
+
+            //using (var client = new AmazonS3Client("yourAwsAccessKeyId", "yourAwsSecretAccessKey", Amazon.RegionEndpoint.EUWest2))
+            //{
+            //   using (var newMemoryStream = new MemoryStream())
+            //   {
+            //      file.CopyTo(newMemoryStream);
+
+            //      var uploadRequest = new TransferUtilityUploadRequest
+            //      {
+            //         InputStream = newMemoryStream,
+            //         Key = file.FileName,
+            //         BucketName = "yourBucketName",
+            //         CannedACL = S3CannedACL.PublicRead
+            //      };
+
+            //      var fileTransferUtility = new TransferUtility(client);
+            //      fileTransferUtility.UploadAsync(uploadRequest);
+            //   }
+            //}
+
+
+
+
+            string uploadsFolder = System.IO.Path.Combine(hostingEnvironment.WebRootPath, "dolly");
 				uniqueFileName = Guid.NewGuid().ToString() + "_" + (model.PDFFileToUpload.FileName).Replace(" ", "");
 				string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
 
@@ -1368,6 +1395,7 @@ namespace Gamal.Controllers
                var user = userManager.Users.Where(x => res.Contains(x.SerialNumber)).ToList();
                
                ViewBag.studentList = user;
+               
             }
          return View();
       }  

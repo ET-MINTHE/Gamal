@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Gamal.Models;
 using Gamal.Models.Domain;
 using Gamal.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Gamal.Controllers
 {
+   //[Authorize]
+   [AllowAnonymous]
 	public class SecretaryRegistrationController : Controller
 	{
       private readonly UserManager<ApplicationUser> userManager;

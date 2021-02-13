@@ -19,5 +19,9 @@
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\elhad\.nuget\packages\microsoft.codeanalysis.analyzers\2.9.4</PkgMicrosoft_CodeAnalysis_Analyzers>
     <PkgjQuery Condition=" '$(PkgjQuery)' == '' ">C:\Users\elhad\.nuget\packages\jquery\1.8.0</PkgjQuery>
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\elhad\.nuget\packages\microsoft.entityframeworkcore.tools\3.1.3</PkgMicrosoft_EntityFrameworkCore_Tools>
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">C:\Users\elhad\.nuget\packages\awssdk.core\3.5.1.34</PkgAWSSDK_Core>
+    <PkgAWSSDK_SimpleSystemsManagement Condition=" '$(PkgAWSSDK_SimpleSystemsManagement)' == '' ">C:\Users\elhad\.nuget\packages\awssdk.simplesystemsmanagement\3.5.1.7</PkgAWSSDK_SimpleSystemsManagement>
+    <PkgAWSSDK_SecretsManager Condition=" '$(PkgAWSSDK_SecretsManager)' == '' ">C:\Users\elhad\.nuget\packages\awssdk.secretsmanager\3.5.0.34</PkgAWSSDK_SecretsManager>
+    <PkgAWSSDK_S3 Condition=" '$(PkgAWSSDK_S3)' == '' ">C:\Users\elhad\.nuget\packages\awssdk.s3\3.5.4</PkgAWSSDK_S3>
   </PropertyGroup>
 </Project>

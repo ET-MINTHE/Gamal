@@ -1,0 +1,25 @@
+
+{
+    "comment" : "This file is used to help set default values when using the dotnet CLI extension Amazon.ElasticBeanstalk.Tools. For more information run \"dotnet eb --help\" from the project root.",
+    "profile" : "elhadj tahirou minthe",
+    "region"  : "us-west-2",
+    "application" : "GamalApp",
+    "environment" : "Gamalapp-env",
+    "cname"       : "gamal-dev",
+    "solution-stack" : "64bit Windows Server 2019 v2.5.10 running IIS 10.0",
+    "environment-type" : "SingleInstance",
+    "service-role"     : "aws-elasticbeanstalk-service-role",
+    "health-check-url" : "/",
+    "instance-type"    : "t2.micro",
+    "key-pair"         : "",
+    "iis-website"      : "Default Web Site",
+    "app-path"         : "/",
+    "enable-xray"      : false,
+    "configuration"    : "Debug",
+    "framework"        : "netcoreapp3.1",
+    "self-contained"   : false,
+    "enhanced-health-type" : "enhanced",
+    "additional-options"   : "",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "proxy-server"         : "none"
+}

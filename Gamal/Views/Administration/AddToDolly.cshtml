@@ -105,7 +105,7 @@
 							<form asp-controller="Administration"
 									asp-action="RemoveFromDolly" asp-route-fileType="pdf" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" method="post">
 								<span id="confirmDeleteSpan_@material.Id" style="display:none">
-									<span>Vous etes sur de vouloir effacer le fichiher</span>
+									<span>Confirmer la suppression</span>
 									<button type="submit" class="btn btn-danger">
 										OUI
 									</button>
@@ -150,7 +150,7 @@
 							<form asp-controller="Administration"
 									asp-action="RemoveFromDolly" asp-route-fileType="video" asp-route-id="@material.Id" asp-route-courseCode="@Model.CourseCode" asp-route-departmentCode="@Model.DepartmentCode" method="post">
 								<span id="confirmDeleteSpan_@material.Id" style="display:none">
-									<span>Vous etes sur de vouloir effacer le fichiher</span>
+									<span>Confirmer la suppression</span>
 									<button type="submit" class="btn btn-danger">
 										OUI
 									</button>

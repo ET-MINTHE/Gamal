@@ -49,11 +49,13 @@
 	 	 @foreach (var exam in @Model)
 		 {
 	 			<tr style="color:#054e77">
-	 				<td>
-	 					<a asp-route-examId=@exam.ExamId asp-route-isReserved="@exam.IsResered" asp-controller="Administration"
-							asp-action="ExamEnrollment">
-	 						@exam.Name.ToLower()
-	 					</a>
+					<td>
+						<span style="font-size:13pt; float:left; color:indianred">
+							<a class="a-booklet" asp-route-examId=@exam.ExamId asp-route-isReserved="@exam.IsResered" asp-controller="Administration"
+								asp-action="ExamEnrollment">
+								@exam.Name.ToLower()
+							</a>
+						</span>
 					</td>
 					<td>@exam.Description</td>
 					<td>@exam.Classroom</td>

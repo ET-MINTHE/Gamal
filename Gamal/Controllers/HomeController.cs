@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace Gamal.Controllers
 {
+     [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -29,7 +30,7 @@ namespace Gamal.Controllers
             //var myDetails = JsonConvert.DeserializeObject<List<MyDetail>>(jsonData);
             //_logger.LogInformation(string.Concat("Hi ", myDetails[1].FirstName, " " + myDetails[1].LastName));
 
-            //_logger.LogInformation("Ciao Mondo!");
+            _logger.LogInformation("Ciao Mondo!");
             //Console.WriteLine("Ciao Mondo!");
             //Console.WriteLine("");
             return View();

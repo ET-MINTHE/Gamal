@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>953f8eb5-5c42-4332-8d91-e8a5015675da</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Amazon.CDK" Version="1.71.0" />
+    <PackageReference Include="Amazon.CDK.AWS.SSM" Version="1.71.0" />
+    <PackageReference Include="Amazon.Extensions.Configuration.SystemsManager" Version="2.0.0" />
+    <PackageReference Include="AWSSDK.S3" Version="3.5.4" />
+    <PackageReference Include="AWSSDK.SecretsManager" Version="3.5.0.34" />
     <PackageReference Include="BaseLib" Version="1.6.4.315" />
     <PackageReference Include="ceTe.DynamicPDF.CoreSuite.NET" Version="10.29.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
@@ -31,6 +37,7 @@
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Nancy" Version="2.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
     <PackageReference Include="ServiceStack" Version="5.8.0" />
     <PackageReference Include="Syncfusion.Licensing" Version="18.1.0.54" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />

@@ -245,3 +245,12 @@ C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.I
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\web.config
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\Administration\TeacherBookingBoard.cshtml.g.cs
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\ExamSession\ExamSessionList.cshtml.g.cs
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\ExamSession\RemoveExamSession.cshtml.g.cs
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\SecretaryRegistration\Index.cshtml.g.cs
+C:\Users\elhad\Desktop\Desktop\Gamal\Gamal\obj\Release\netcoreapp3.1\Razor\Views\SecretaryRegistration\Register.cshtml.g.cs

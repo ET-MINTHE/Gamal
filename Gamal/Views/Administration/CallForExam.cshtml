@@ -66,11 +66,13 @@
 						@foreach (var exam in @Model)
 						{
 							<tr>
-								<td scope="row">
+								<td style="color:#054e77">
 									<a style="color:#054e77" asp-route-examId=@exam.ExamId asp-controller="Administration"
-										asp-action="ExamEnrollment">
+										asp-action="TeacherBookingBoard">
 										@exam.Name.ToLower()
 									</a>
+										@*asp-action="ExamEnrollment">
+										@exam.Name.ToLower()*@
 								</td>
 								<td style="color:#054e77">@exam.Description</td>
 								<td style="color:#054e77">@exam.Classroom</td>
@@ -80,7 +82,6 @@
 									<form asp-controller="Administration" asp-action="RemoveExam" asp-route-examId="@exam.ExamId" method="post">
 										<button class="btn btn-primary" style="background-color:#054e77; color:white;">Supprimer l'appel d'Examen</button>
 									</form>
-									
 								</td>
 							</tr>
 						}

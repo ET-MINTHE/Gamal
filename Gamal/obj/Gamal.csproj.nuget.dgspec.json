@@ -41,6 +41,26 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "AWSSDK.S3": {
+              "target": "Package",
+              "version": "[3.5.4, )"
+            },
+            "AWSSDK.SecretsManager": {
+              "target": "Package",
+              "version": "[3.5.0.34, )"
+            },
+            "Amazon.CDK": {
+              "target": "Package",
+              "version": "[1.71.0, )"
+            },
+            "Amazon.CDK.AWS.SSM": {
+              "target": "Package",
+              "version": "[1.71.0, )"
+            },
+            "Amazon.Extensions.Configuration.SystemsManager": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "BaseLib": {
               "target": "Package",
               "version": "[1.6.4.315, )"
@@ -100,6 +120,10 @@
               "version": "[3.2.6, )"
             },
             "Nancy": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Serilog.Extensions.Logging.File": {
               "target": "Package",
               "version": "[2.0.0, )"
             },

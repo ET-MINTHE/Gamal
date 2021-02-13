@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Gamal.Models;
 using Gamal.Models.Domain;
 using Gamal.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,19 +19,22 @@ using Microsoft.Extensions.Configuration;
 
 namespace Gamal.Controllers
 {
+   [Authorize]
     public class StudentRegistrationController : Controller
     {
         private StudentRegistrationViewModel studentModel;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IConfiguration config;
+		  private readonly RoleManager<IdentityRole> roleManager;
+		  private readonly IConfiguration config;
         public StudentRegistrationController(SignInManager<ApplicationUser>
-            signInManager, UserManager<ApplicationUser> userManager, IConfiguration config)
+            signInManager, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration config)
         {
             studentModel = new StudentRegistrationViewModel();
             this.signInManager = signInManager;
             this.userManager = userManager;
-            this.config = config;
+			this.roleManager = roleManager;
+			this.config = config;
         }
 
         [HttpGet]
@@ -353,29 +357,46 @@ namespace Gamal.Controllers
                 var result = await userManager.CreateAsync(user, "Fantabamba25?!1_");
                 if (result.Succeeded)
                 {
-                    result = await userManager.AddToRoleAsync(user, "Student");
-                    if (result.Succeeded)
-                    {
-                        TempData["enrolementState"] = "succeed";
-                        TempData["Message"] = $"L'inscription de l'étudiant {user.FirstName} {user.LastName} a été completée avec succes";
+                  TempData["enrolementState"] = "succeed";
+                  TempData["Message"] = $"L'inscription de l'étudiant {user.FirstName} {user.LastName} a été completée avec succes";
 
-                        var student = new UserStudent();
-                        var department = unitOfWork.Departments.Find(d => d.DepartmentName == model.Department).FirstOrDefault();
+                  var student = new UserStudent();
+                  var department = unitOfWork.Departments.Find(d => d.DepartmentName == model.Department).FirstOrDefault();
 
-                        student.DepartmentCode = department.DepartmentCode;
-                        // student.Department = department;
-                        student.SerialNumber = model.SerialNumber;
-                        student.Profile = model.StudentProfile;
-                        student.PartTime = model.PartTime == "SI" ? true : false;
-                        student.Email = model.Email;
-                        student.DepartmentCode = department.DepartmentCode;
-                        unitOfWork.UserStudents.Add(student);
-                        
-                        unitOfWork.Complete();
+                  student.DepartmentCode = department.DepartmentCode;
+                  // student.Department = department;
+                  student.SerialNumber = model.SerialNumber;
+                  student.Profile = model.StudentProfile;
+                  student.PartTime = model.PartTime == "SI" ? true : false;
+                  student.Email = model.Email;
+                  student.DepartmentCode = department.DepartmentCode;
+                  unitOfWork.UserStudents.Add(student);
 
-                        SendEmailConfirmation(student.Email);
-                        return RedirectToAction("Index", "StudentRegistration");
-                    }
+                  var role = await roleManager.FindByNameAsync("Student");
+                  if (role == null)
+                  {
+                        role = new IdentityRole();
+                        role.Name = "Student";
+                        var result1 = await roleManager.CreateAsync(role);
+                        if (!result1.Succeeded)
+                        {
+                           ViewBag.Error = $"Une erreur est survenue durant la creation du role Etudiant!";
+                           return View(model);
+                        }
+                  }
+
+                  var result2 = await userManager.AddToRoleAsync(user, "Student");
+                  if (!result2.Succeeded)
+                  {
+                     ViewBag.Error = $"Impossible d'ajouter l'utilisateur {user.FirstName} {user.LastName} au role Secrétaire";
+                     return View(model);
+                  }
+
+                  unitOfWork.Complete();
+
+                 // SendEmailConfirmation(student.Email);
+                  return RedirectToAction("Index", "StudentRegistration");
+                    
                 }
             }
 
